@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:nvidia.github.io)",
+      "WebFetch(domain:nasa-gibs.github.io)",
+      "WebFetch(domain:gibs.earthdata.nasa.gov)",
+      "WebFetch(domain:worldview.earthdata.nasa.gov)",
+      "WebSearch",
+      "Bash(curl -s 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/1.0.0/WMTSCapabilities.xml')",
+      "Bash(curl -s 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/1.0.0/WMTSCapabilities.xml' -o /tmp/gibs3857.xml)",
+      "Read(//tmp/**)",
+      "Bash(python3 -c ':*)",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/default/1km/3/1/5.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_Ozone_Column_Amount/default/2026-04-14T18:00:00Z/1km/3/1/5.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_Formaldehyde_Vertical_Column/default/default/1km/3/1/5.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_Ozone_UV_Aerosol_Index/default/default/1km/3/1/5.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/VIIRS_Black_Marble/default/500m/3/1/5.jpeg')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/default/1km/3/2/4.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/default/1km/4/5/9.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/2026-04-12T18:09:12Z/1km/5/10/8.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/2026-04-12T18:09:12Z/1km/2/1/2.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/default/1km/2/1/2.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/VIIRS_CityLights_2012/default/500m/3/1/5.jpeg')",
+      "Bash(curl -s -o /tmp/t1.png 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/2026-04-12T18:09:12Z/1km/5/9/18.png')",
+      "Bash(curl -s -o /tmp/t2.png 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/2026-04-12T18:09:12Z/1km/3/2/4.png')",
+      "Bash(curl -s -o /tmp/t3.png 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/default/1km/3/2/4.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/2026-04-12/1km/3/2/4.png')",
+      "Bash(curl -s -o /tmp/t4.png 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/2024-08-15T18:00:00Z/1km/3/2/4.png')",
+      "Read(//private/tmp/**)",
+      "Bash(curl -s -o /tmp/z6.png 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/2026-04-12T18:09:12Z/1km/6/18/36.png')",
+      "Bash(python3)",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/default/1km/3/1/2.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/TEMPO_L3_NO2_Vertical_Column_Troposphere/default/1km/3/1/2.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/Reference_Features_15m/default/15.625m/3/1/2.png')",
+      "Bash(curl -sI 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/Reference_Labels_15m/default/15.625m/3/1/2.png')",
+      "WebFetch(domain:www.nvidia.com)",
+      "Bash(curl -sI 'https://www.nvidia.com/en-us/high-performance-computing/earth-2/demo/?status=0')",
+      "Bash(curl -s 'https://www.nvidia.com/en-us/high-performance-computing/earth-2/demo/?status=0')",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}

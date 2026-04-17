@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LEDT — The Smithsonian Living Earth Digital Twin</title>
+<meta name="description" content="An ecological feedback layer for planetary digital twins. A Smithsonian cross-Unit initiative linking TEMPO, ForestGEO, and the Global Change Research Wetland to NVIDIA Earth-2, NASA ESDT, and DestinE." />
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">◉</span>
+      <span class="brand-text">LEDT<span class="brand-sub">/ Smithsonian</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#tempo">TEMPO</a></li>
+      <li><a href="#earth2">Earth-2</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#network">Field Network</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+    <a class="nav-cta" href="#tempo">Live Data →</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header id="top" class="hero">
+  <canvas id="starfield"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-globe">
+    <div class="orbit orbit-1"></div>
+    <div class="orbit orbit-2"></div>
+    <div class="orbit orbit-3"></div>
+    <div class="globe">
+      <div class="globe-inner"></div>
+      <div class="globe-shine"></div>
+      <div class="globe-atm"></div>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="kicker">
+      <span class="dot"></span>
+      OUSSR Innovation Concept · Seed Award · FY26
+    </div>
+    <h1 class="hero-title">
+      The <span class="grad">Living Earth</span><br/>
+      Digital Twin
+    </h1>
+    <p class="hero-sub">
+      An <strong>ecological feedback layer</strong> for NVIDIA Earth-2, NASA ESDT, and Destination Earth —
+      linking what the atmosphere <em>delivers</em> to how ecosystems <em>respond</em>.
+      A Smithsonian cross-Unit initiative between <span class="unit">SAO</span>, <span class="unit">SERC</span>, and <span class="unit">STRI</span>.
+    </p>
+    <div class="hero-cta">
+      <a href="#tempo" class="btn btn-primary">Explore TEMPO · Live ↗</a>
+      <a href="#architecture" class="btn btn-ghost">Read the Concept</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">~5 Gt</div><div class="stat-lbl">CO₂ / yr sequestered by forests + wetlands</div></div>
+      <div class="stat"><div class="stat-num">Hourly</div><div class="stat-lbl">TEMPO atmospheric chemistry over N. America</div></div>
+      <div class="stat"><div class="stat-num">70+</div><div class="stat-lbl">STRI ForestGEO tropical plots</div></div>
+      <div class="stat"><div class="stat-num">40 yr</div><div class="stat-lbl">SERC elevated-CO₂ wetland experiment</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+</header>
+
+<!-- ================= MISSION ================= -->
+<section id="mission" class="section mission">
+  <div class="container">
+    <div class="eyebrow">01 · The Gap</div>
+    <h2 class="h2">Planetary digital twins are <span class="strike">biologically inert</span>.</h2>
+    <p class="lede">
+      NVIDIA's cBottle, NASA's ESDT, and the EU's DestinE simulate atmospheric physics at kilometer scale,
+      thousands of times faster than traditional numerical models. Yet tropical forests and coastal wetlands — Earth's most
+      important carbon sinks — are treated as <em>static boundary conditions</em>, not as living, reactive systems with
+      nonlinear feedback loops. <strong>Tipping-point behaviors cannot be captured until they are already underway.</strong>
+    </p>
+    <div class="mission-grid">
+      <div class="card">
+        <div class="card-ico">⚠</div>
+        <h3>Abrupt forest mortality</h3>
+        <p>Drought-driven die-offs in the Amazon and boreal crowns are unresolved in current physics-only twins.</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">CH₄</div>
+        <h3>Accelerating wetland methane</h3>
+        <p>Blue carbon ecosystems flip between sink and source under warming — a nonlinearity absent from cBottle.</p>
+      </div>
+      <div class="card">
+        <div class="card-ico">◐</div>
+        <h3>Ecosystem tipping points</h3>
+        <p>Collapse signatures are detectable in orbital data if you know where to look. We do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEMPO LIVE MAP ================= -->
+<section id="tempo" class="section tempo">
+  <div class="container">
+    <div class="eyebrow">02 · Live Orbital Chemistry</div>
+    <h2 class="h2">TEMPO — hourly, North America, from <span class="grad">geostationary orbit</span>.</h2>
+    <p class="lede">
+      SAO's <strong>Tropospheric Emissions: Monitoring of Pollution</strong> instrument measures NO₂, O₃, HCHO,
+      aerosols, and solar-induced chlorophyll fluorescence at unprecedented cadence. Below: a live tile layer served by NASA
+      GIBS, overlaid with Smithsonian field network sites.
+    </p>
+
+    <div class="map-wrap">
+      <div id="map"></div>
+      <div class="map-ctrls">
+        <div class="ctrl-group">
+          <label class="ctrl-label">Species</label>
+          <div class="seg" id="species-seg">
+            <button data-layer="NO2" class="active">NO₂</button>
+            <button data-layer="O3">O₃</button>
+            <button data-layer="HCHO">HCHO</button>
+            <button data-layer="AI">Aerosol</button>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <label class="ctrl-label" for="date-input">Date (UTC)</label>
+          <input type="date" id="date-input" />
+          <label class="ctrl-label slider-label" for="hour-slider">
+            Hour of day · <span id="hour-value">18:00 UTC</span>
+          </label>
+          <input type="range" id="hour-slider" min="12" max="23" step="1" value="18" />
+          <button id="latest-btn" class="latest-btn" type="button">⟲ Latest scan</button>
+          <div id="time-badge" class="time-badge">Showing: latest TEMPO scan (default)</div>
+          <div class="ctrl-hint">
+            TEMPO scans E→W across N. America through daylight (≈ 12–23 UTC).
+            A single timestamp only covers a longitude strip — drag the slider to sweep through the day.
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <label class="ctrl-label">Field Network</label>
+          <div class="seg">
+            <button id="toggle-serc" class="active">SERC</button>
+            <button id="toggle-stri" class="active">STRI</button>
+          </div>
+        </div>
+        <div class="ctrl-group legend">
+          <label class="ctrl-label">Column density</label>
+          <div class="legend-bar"></div>
+          <div class="legend-labels"><span>low</span><span>high</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="map-caption">
+      Tiles: NASA GIBS / TEMPO L3 · Instrument PI: K. Chance (SAO) · This visualization is illustrative; the LEDT
+      prototype will ingest L2 swaths natively via <code>harmony-py</code> and NASA Earthdata.
+    </p>
+  </div>
+</section>
+
+<!-- ================= EARTH-2 INTEGRATION ================= -->
+<section id="earth2" class="section earth2">
+  <div class="container">
+    <div class="eyebrow">03 · Integration Target</div>
+    <h2 class="h2">NVIDIA <span class="grad">Earth-2</span> — the substrate we plug into.</h2>
+    <p class="lede">
+      Earth-2 is NVIDIA's planetary digital twin, powered by the <strong>cBottle</strong> ("Climate in a Bottle")
+      generative AI foundation model and the <code>earth2studio</code> inference toolkit. It simulates kilometer-scale
+      atmospheric state thousands of times faster than traditional numerical weather prediction. LEDT will ride on top
+      of it, contributing the <em>biological feedback layer</em> Earth-2 currently lacks.
+    </p>
+
+    <div class="e2-grid">
+      <!-- LEFT: story + code -->
+      <div class="e2-left">
+        <h3 class="e2-heading">Drop-in diagnostic</h3>
+        <p class="e2-text">
+          LEDT's TEMPO ingest is packaged as an <code>earth2studio</code>-compatible
+          <strong>DiagnosticModel</strong> — the same interface that <code>CorrDiff</code> and
+          <code>PrecipitationAFNO</code> already use. Once wrapped, fusing orbital atmospheric chemistry into an
+          Earth-2 forecast is a handful of lines:
+        </p>
+        <pre class="code"><code><span class="kw">from</span> earth2studio.models.px <span class="kw">import</span> FCN3
+<span class="kw">from</span> earth2studio.data      <span class="kw">import</span> GFS
+<span class="kw">from</span> earth2studio.io        <span class="kw">import</span> ZarrBackend
+<span class="kw">from</span> ledt.diagnostics       <span class="kw">import</span> TEMPONO2Diagnostic
+<span class="kw">import</span> earth2studio.run <span class="kw">as</span> run
+
+prognostic = FCN3.load_model(FCN3.load_default_package())
+tempo_dx   = TEMPONO2Diagnostic(tempo_dataset)   <span class="cm"># our layer</span>
+io         = ZarrBackend(<span class="st">"outputs/fcn3_with_tempo.zarr"</span>)
+
+run.diagnostic(
+    [<span class="st">"2024-08-15T00:00:00"</span>], nsteps=<span class="nm">8</span>,
+    prognostic=prognostic, diagnostic=tempo_dx,
+    data=GFS(), io=io,
+)</code></pre>
+        <div class="e2-callouts">
+          <div class="e2-callout">
+            <div class="e2-callout-title">cBottle</div>
+            <div class="e2-callout-sub">Generative foundation model for global km-scale atmospheric states.</div>
+          </div>
+          <div class="e2-callout">
+            <div class="e2-callout-title">CorrDiff</div>
+            <div class="e2-callout-sub">Diffusion-based regional downscaling. The natural hook point for a <em>CorrDiff-Bio</em> extension.</div>
+          </div>
+          <div class="e2-callout">
+            <div class="e2-callout-title">earth2studio</div>
+            <div class="e2-callout-sub">Open-source Python inference toolkit that glues models, data, and IO. LEDT targets this API.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: video + launch card -->
+      <div class="e2-right">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/qo78lSBYi-U?rel=0&modestbranding=1"
+            title="NVIDIA earth2studio overview"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-cap">NVIDIA earth2studio overview · via YouTube</div>
+
+        <a class="e2-launch"
+           href="https://www.nvidia.com/en-us/high-performance-computing/earth-2/demo/?status=0"
+           target="_blank" rel="noopener">
+          <div class="e2-launch-bg">
+            <div class="e2-launch-grid"></div>
+            <div class="e2-launch-globe"></div>
+          </div>
+          <div class="e2-launch-body">
+            <div class="e2-launch-kicker">
+              <span class="live-dot"></span> Live · NVIDIA Omniverse GDN
+            </div>
+            <div class="e2-launch-title">Launch the Earth-2 Interactive Demo</div>
+            <div class="e2-launch-sub">
+              Streamed from NVIDIA's Graphics Delivery Network. Opens in a new tab —
+              NVIDIA's demo is a WebRTC stream and cannot be embedded cross-origin.
+            </div>
+            <div class="e2-launch-cta">nvidia.com/earth-2/demo ↗</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ARCHITECTURE ================= -->
+<section id="architecture" class="section arch">
+  <div class="container">
+    <div class="eyebrow">04 · Architecture</div>
+    <h2 class="h2">The LEDT sits <em>between</em> the atmosphere and the biosphere.</h2>
+    <p class="lede">
+      Rather than duplicate climate models, we occupy a complementary lane: a biological feedback layer that consumes
+      state from existing planetary twins and returns ecological response — carbon flux shifts, species turnover,
+      tipping-point probabilities — back into the loop.
+    </p>
+
+    <div class="arch-diagram">
+      <!-- Layer 1: Atmosphere -->
+      <div class="arch-row">
+        <div class="arch-label">Atmosphere</div>
+        <div class="arch-cells">
+          <div class="arch-cell atm">
+            <div class="cell-title">TEMPO</div>
+            <div class="cell-sub">NO₂ · O₃ · HCHO · SIF · Aerosol · hourly</div>
+          </div>
+          <div class="arch-cell atm">
+            <div class="cell-title">MethaneSAT</div>
+            <div class="cell-sub">CH₄ plume flux · legacy maps</div>
+          </div>
+          <div class="arch-cell atm">
+            <div class="cell-title">Earth-2 / cBottle</div>
+            <div class="cell-sub">km-scale generative atmospheric state</div>
+          </div>
+        </div>
+      </div>
+      <div class="arch-connector">
+        <svg viewBox="0 0 400 40" preserveAspectRatio="none"><path d="M 0 0 Q 200 40 400 0" class="flow-path" /></svg>
+      </div>
+      <!-- Layer 2: LEDT -->
+      <div class="arch-row ledt-row">
+        <div class="arch-label ledt-label">LEDT</div>
+        <div class="arch-cells">
+          <div class="arch-cell ledt">
+            <div class="cell-title">AI Feedback Model</div>
+            <div class="cell-sub">Ecological response operators · trained on TEMPO × field time series</div>
+            <div class="pulse"></div>
+          </div>
+          <div class="arch-cell ledt">
+            <div class="cell-title">Tipping-Point Detector</div>
+            <div class="cell-sub">Astrophysical signal-processing (AstroAI) ported to ecological regime shifts</div>
+            <div class="pulse"></div>
+          </div>
+          <div class="arch-cell ledt">
+            <div class="cell-title">CorrDiff-Bio</div>
+            <div class="cell-sub">Biogeochemical extension to NVIDIA's CorrDiff downscaling</div>
+            <div class="pulse"></div>
+          </div>
+        </div>
+      </div>
+      <div class="arch-connector flip">
+        <svg viewBox="0 0 400 40" preserveAspectRatio="none"><path d="M 0 40 Q 200 0 400 40" class="flow-path" /></svg>
+      </div>
+      <!-- Layer 3: Biosphere -->
+      <div class="arch-row">
+        <div class="arch-label">Biosphere</div>
+        <div class="arch-cells">
+          <div class="arch-cell bio">
+            <div class="cell-title">STRI ForestGEO</div>
+            <div class="cell-sub">70+ tropical plots · tree census · longest tropical dynamic record</div>
+          </div>
+          <div class="arch-cell bio">
+            <div class="cell-title">SERC GCReW</div>
+            <div class="cell-sub">40 yrs elevated-CO₂ · eddy covariance · tidal wetland</div>
+          </div>
+          <div class="arch-cell bio">
+            <div class="cell-title">Coastal Carbon Network</div>
+            <div class="cell-sub">&gt;15,000 observations · blue carbon globally</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIELD NETWORK ================= -->
+<section id="network" class="section network">
+  <div class="container">
+    <div class="eyebrow">05 · The Smithsonian Advantage</div>
+    <h2 class="h2">The only institution with <span class="grad">orbital + canopy + wetland</span> under one roof.</h2>
+    <div class="net-grid">
+      <div class="net-card">
+        <div class="net-img sao"></div>
+        <div class="net-body">
+          <div class="net-tag">SAO</div>
+          <h3>Smithsonian Astrophysical Observatory</h3>
+          <p>Operates TEMPO, the world's first geostationary air-quality instrument, plus MethaneSAT legacy data. Home of the AstroAI and EarthAI centers.</p>
+        </div>
+      </div>
+      <div class="net-card">
+        <div class="net-img serc"></div>
+        <div class="net-body">
+          <div class="net-tag">SERC</div>
+          <h3>Smithsonian Environmental Research Center</h3>
+          <p>Global Change Research Wetland hosts the world's longest-running elevated-CO₂ experiment. The Coastal Carbon Network aggregates &gt;15,000 blue-carbon observations.</p>
+        </div>
+      </div>
+      <div class="net-card">
+        <div class="net-img stri"></div>
+        <div class="net-body">
+          <div class="net-tag">STRI</div>
+          <h3>Smithsonian Tropical Research Institute</h3>
+          <p>ForestGEO network: 70+ permanent tropical forest plots, the richest longitudinal record of tropical forest dynamics on Earth.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METHANE TO MANGROVE PIPELINE ================= -->
+<section id="pipeline" class="section pipeline">
+  <div class="container">
+    <div class="eyebrow">06 · Prototype Pipeline</div>
+    <h2 class="h2">"Methane-to-Mangrove" — from orbital plume to ecosystem impact.</h2>
+    <p class="lede">
+      A scoped end-to-end test case for the 2026 Innovation Design Lab: trace a detected atmospheric forcing from satellite
+      pixel through transport dynamics to predicted ecological response at a specific SERC / STRI field site.
+    </p>
+    <ol class="pipeline-steps">
+      <li>
+        <div class="step-num">01</div>
+        <div>
+          <h4>Detect</h4>
+          <p>TEMPO L2 identifies elevated NO₂ / HCHO or MethaneSAT flags a CH₄ plume over the Eastern Seaboard or a mangrove coast.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">02</div>
+        <div>
+          <h4>Transport</h4>
+          <p>Earth-2 / cBottle advects the atmospheric state forward; a CorrDiff-Bio extension downscales to the wetland/forest mesh.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">03</div>
+        <div>
+          <h4>Respond</h4>
+          <p>The LEDT surrogate, trained on GCReW eddy-covariance + ForestGEO census, predicts methane-flux and carbon-assimilation anomalies.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">04</div>
+        <div>
+          <h4>Validate</h4>
+          <p>In situ instrumentation at the site returns ground truth; the loop closes into the next training cycle.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section id="team" class="section team">
+  <div class="container">
+    <div class="eyebrow">07 · Principals</div>
+    <h2 class="h2">A genuinely cross-Unit collaboration.</h2>
+    <div class="team-grid">
+      <div class="person"><div class="avatar"></div><div class="role">PI</div><div class="name">Grant Tremblay</div><div class="unit-tag">SAO</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Michael McCarthy</div><div class="unit-tag">SAO</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Randall Smith</div><div class="unit-tag">SAO</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Cecilia Garraffo</div><div class="unit-tag">SAO</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Caroline Nowlan</div><div class="unit-tag">SAO</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Justin Nowakowski</div><div class="unit-tag">SERC</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Patrick Megonigal</div><div class="unit-tag">SERC</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Roy Rich</div><div class="unit-tag">SERC</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Mark Torchin</div><div class="unit-tag">STRI</div></div>
+      <div class="person"><div class="avatar"></div><div class="role">Co-I</div><div class="name">Oris Sanjur</div><div class="unit-tag">STRI</div></div>
+    </div>
+    <div class="partners">
+      <div class="partners-label">Engaged partners</div>
+      <div class="partners-row">
+        <span class="partner">NVIDIA Earth-2</span>
+        <span class="partner">NASA ESDT</span>
+        <span class="partner">DestinE</span>
+        <span class="partner">Bezos Earth Fund</span>
+        <span class="partner">NMNH</span>
+        <span class="partner">Smithsonian Data Science Lab</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="brand footer-brand"><span class="brand-mark">◉</span> LEDT · Smithsonian Living Earth Digital Twin</div>
+      <div class="foot-sub">OUSSR Innovation Concept · PI Grant Tremblay · grant.tremblay@cfa.harvard.edu</div>
+    </div>
+    <div class="foot-links">
+      <a href="https://tempo.si.edu" target="_blank" rel="noopener">TEMPO</a>
+      <a href="https://forestgeo.si.edu" target="_blank" rel="noopener">ForestGEO</a>
+      <a href="https://serc.si.edu/gcrew" target="_blank" rel="noopener">GCReW</a>
+      <a href="https://www.nvidia.com/en-us/high-performance-computing/earth-2/" target="_blank" rel="noopener">Earth-2</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
