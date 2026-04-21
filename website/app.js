@@ -1,47 +1,8 @@
 // ============================================================
 // LEDT · Smithsonian Living Earth Digital Twin
-// Interactive TEMPO map + hero starfield
+// Interactive TEMPO map
+// (Hero background is handled by earth-plexus-bg.js)
 // ============================================================
-
-// ---------- Hero starfield ----------
-(function starfield() {
-  const c = document.getElementById('starfield');
-  if (!c) return;
-  const ctx = c.getContext('2d');
-  let w, h, stars;
-  const STAR_COUNT = 220;
-
-  function resize() {
-    w = c.width = window.innerWidth * devicePixelRatio;
-    h = c.height = (c.parentElement.offsetHeight) * devicePixelRatio;
-    c.style.width = window.innerWidth + 'px';
-    c.style.height = c.parentElement.offsetHeight + 'px';
-    stars = Array.from({ length: STAR_COUNT }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: Math.random() * 1.4 * devicePixelRatio + 0.3,
-      tw: Math.random() * Math.PI * 2,
-      sp: 0.005 + Math.random() * 0.02,
-      hue: Math.random() < 0.15 ? 'accent' : 'white'
-    }));
-  }
-  function frame(t) {
-    ctx.clearRect(0, 0, w, h);
-    for (const s of stars) {
-      s.tw += s.sp;
-      const a = 0.35 + Math.abs(Math.sin(s.tw)) * 0.65;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      if (s.hue === 'accent') ctx.fillStyle = `rgba(62, 225, 200, ${a})`;
-      else ctx.fillStyle = `rgba(231, 236, 247, ${a})`;
-      ctx.fill();
-    }
-    requestAnimationFrame(frame);
-  }
-  resize();
-  window.addEventListener('resize', resize);
-  requestAnimationFrame(frame);
-})();
 
 // ---------- TEMPO interactive map ----------
 (function tempoMap() {

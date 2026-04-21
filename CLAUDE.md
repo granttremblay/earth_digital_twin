@@ -29,7 +29,8 @@ earth_digital_twin/
 ├── website/                       # sophisticated landing page + live TEMPO map
 │   ├── index.html
 │   ├── styles.css
-│   └── app.js
+│   ├── app.js                     # TEMPO map + misc interactivity
+│   └── earth-plexus-bg.js         # animated 3-D plexus-Earth hero background
 └── notebooks/
     └── tempo_earth2_integration.ipynb   # CPU-only TEMPO → earth2studio demo
 ```
@@ -127,6 +128,37 @@ Hard rules for keeping Pages working:
   `path:` field, the README, and this file in the same commit.
 - **One-time GitHub setting** (already done if the site is live): Settings →
   Pages → Source: GitHub Actions. If Pages stops deploying, check that first.
+
+### Hero background — `earth-plexus-bg.js`
+
+The hero's animated 3-D "plexus Earth" is its own self-contained module. It
+was ported from the SolarSMA site's `solar-sma-bg.js` (at
+`~/Repositories/ngSMA_Website/`) with a blue-green palette instead of
+solar yellow/orange, and scoped to the `.hero` element (not fixed full-page)
+so the rest of the site's section backgrounds are unaffected.
+
+Key facts:
+
+- **Injects its own DOM and CSS** into `.hero`. Don't try to style its
+  internals from `styles.css` — edit `earth-plexus-bg.js` directly.
+- **Uses two canvases**: `#ledt-canvas-far` (blurred, back hemisphere) and
+  `#ledt-canvas-near` (sharp, front hemisphere + all connecting lines).
+  This is what gives the depth illusion — don't "simplify" to one canvas.
+- **Color ramp** in `earthColor(t, heat)` goes mint-white → teal
+  (`#3ee1c8`, the site's `--accent`) → ocean blue → deep navy with depth.
+  Keep it blue-green; this is explicitly the Earth counterpart to the
+  solar/yellow original. If adding another accent, stay within the site's
+  palette (`--accent`, `--accent-2`).
+- **Replaced** the previous hero: old `<canvas id="starfield">`,
+  `.hero-globe`, `.orbit-*`, `.globe*` CSS, and the starfield IIFE in
+  `app.js` are all gone. Don't resurrect them — the plexus supersedes
+  the CSS globe.
+- **Respects `prefers-reduced-motion: reduce`** — rotation + breathing
+  halos freeze. Any new effects here should do the same.
+- **Do NOT move this to a fixed full-page background** without also
+  making the sections below the hero transparent or semi-transparent —
+  sections currently use opaque `var(--bg-1)`/`var(--bg-2)` backgrounds
+  that would cover a fixed plexus anyway.
 
 ### Field-site markers
 

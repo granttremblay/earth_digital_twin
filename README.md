@@ -28,6 +28,8 @@ python -m http.server 8000
 
 The TEMPO overlay pulls directly from NASA GIBS WMTS. GIBS near-real-time TEMPO products typically run 24–48 h behind; the date picker lets you scrub back. CartoDB dark basemap, Leaflet 1.9, vanilla JS — no framework, no build, no bundler.
 
+The hero background is an animated 3-D "plexus Earth" — a slowly-rotating sphere of connected nodes in a blue-green (teal → ocean → navy) gradient, with two canvases for depth (far-blurred, near-sharp) and a breathing cyan atmospheric halo. Code lives in [`website/earth-plexus-bg.js`](website/earth-plexus-bg.js) and injects its own DOM into the `.hero` element; no CSS changes required to enable it. `prefers-reduced-motion: reduce` freezes the animation.
+
 ### Public deploy (GitHub Pages)
 
 The site auto-publishes to **https://granttremblay.github.io/earth_digital_twin/** on every push to `main` that touches `website/`. The deploy is driven by [`.github/workflows/pages.yml`](.github/workflows/pages.yml), which uploads the `website/` directory as-is — no build step, no branch dance.
