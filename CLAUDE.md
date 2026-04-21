@@ -23,6 +23,7 @@ earth_digital_twin/
 ├── pyproject.toml                 # Python deps (managed with uv)
 ├── uv.lock                        # pinned resolution — commit this
 ├── .python-version                # pinned interpreter (3.12) — commit this
+├── .github/workflows/pages.yml    # auto-deploys website/ to GitHub Pages
 ├── proposal/
 │   └── Smithsonian Living Earth Digital Twin.pdf
 ├── website/                       # sophisticated landing page + live TEMPO map
@@ -103,6 +104,29 @@ the map code:
    is the standard GIBS empty/transparent PNG and means the tile you requested
    has no data at that time (likely outside TEMPO's current scan strip — pick
    a different tile or hour).
+
+### GitHub Pages deploy
+
+The site is published at **https://granttremblay.github.io/earth_digital_twin/**
+via [`.github/workflows/pages.yml`](.github/workflows/pages.yml). Trigger:
+push to `main` touching `website/` (or manual `workflow_dispatch`). The
+workflow uploads `website/` as-is with `actions/upload-pages-artifact@v3` —
+no build step.
+
+Hard rules for keeping Pages working:
+
+- **Never use root-relative paths** (`/styles.css`, `/app.js`) in the website.
+  Pages serves from `/earth_digital_twin/`, so root-rooted links 404. Always
+  use relative (`styles.css`) or absolute-URL externals. The current site is
+  clean — keep it that way.
+- **Don't introduce a build step.** The workflow uploads the directory
+  verbatim. If you reach for Vite/webpack/etc., pause — the whole site is
+  ~1300 lines of HTML/CSS/JS and a bundler would be net-negative.
+- **Don't rename `website/` → `docs/`.** The workflow points at `website/`
+  and the repo's docs do too. If you rename, update the workflow's
+  `path:` field, the README, and this file in the same commit.
+- **One-time GitHub setting** (already done if the site is live): Settings →
+  Pages → Source: GitHub Actions. If Pages stops deploying, check that first.
 
 ### Field-site markers
 

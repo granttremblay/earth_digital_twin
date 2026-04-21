@@ -28,6 +28,17 @@ python -m http.server 8000
 
 The TEMPO overlay pulls directly from NASA GIBS WMTS. GIBS near-real-time TEMPO products typically run 24–48 h behind; the date picker lets you scrub back. CartoDB dark basemap, Leaflet 1.9, vanilla JS — no framework, no build, no bundler.
 
+### Public deploy (GitHub Pages)
+
+The site auto-publishes to **https://granttremblay.github.io/earth_digital_twin/** on every push to `main` that touches `website/`. The deploy is driven by [`.github/workflows/pages.yml`](.github/workflows/pages.yml), which uploads the `website/` directory as-is — no build step, no branch dance.
+
+One-time setup on the GitHub repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+Notes:
+- The site lives at a **subpath** (`/earth_digital_twin/`), so keep all internal links relative (`styles.css`, `app.js`, etc.) and never root-rooted (`/styles.css` would 404).
+- External resources (GIBS tiles, CDN-hosted Leaflet / fonts) are absolute HTTPS URLs and work fine on Pages.
+- `workflow_dispatch` is enabled — you can trigger a redeploy manually from the Actions tab.
+
 ## Python environment (uv)
 
 This repo uses [**uv**](https://docs.astral.sh/uv/) for Python dependency management — no conda, no manual venv, no build step. Dependencies are declared in [`pyproject.toml`](pyproject.toml); [`uv.lock`](uv.lock) pins the exact resolved versions; [`.python-version`](.python-version) pins the interpreter (3.12).
