@@ -13,6 +13,7 @@ Seed-award prototype repository for the **Living Earth Digital Twin** (LEDT) —
 | [`proposal/`](proposal/) | The authoritative OUSSR proposal PDF. Read first. |
 | [`website/`](website/) | Interactive landing site with live NASA GIBS TEMPO tiles, field-network map, architecture diagram, team / pipeline. |
 | [`notebooks/tempo_earth2_integration.ipynb`](notebooks/tempo_earth2_integration.ipynb) | Runnable CPU-only demo: fetches TEMPO NO₂, wraps it as an `earth2studio`-compatible diagnostic model, sketches the TEMPO → ecological-response linkage. |
+| [`pyproject.toml`](pyproject.toml) / [`uv.lock`](uv.lock) | Python deps for the notebook, managed with [`uv`](https://docs.astral.sh/uv/). See [Python environment](#python-environment-uv) below. |
 | [`CLAUDE.md`](CLAUDE.md) | Working notes for anyone (human or AI) picking up this repo — repo layout, GIBS/TEMPO gotchas, conventions, don'ts. |
 
 ## Running the website
@@ -27,12 +28,37 @@ python -m http.server 8000
 
 The TEMPO overlay pulls directly from NASA GIBS WMTS. GIBS near-real-time TEMPO products typically run 24–48 h behind; the date picker lets you scrub back. CartoDB dark basemap, Leaflet 1.9, vanilla JS — no framework, no build, no bundler.
 
+## Python environment (uv)
+
+This repo uses [**uv**](https://docs.astral.sh/uv/) for Python dependency management — no conda, no manual venv, no build step. Dependencies are declared in [`pyproject.toml`](pyproject.toml); [`uv.lock`](uv.lock) pins the exact resolved versions; [`.python-version`](.python-version) pins the interpreter (3.12).
+
+```bash
+# install uv once (macOS): brew install uv
+uv sync    # creates .venv/ and installs everything in pyproject.toml + uv.lock
+```
+
+That's it. No activation required — `uv run <cmd>` picks up `.venv` automatically. You *can* still `source .venv/bin/activate` if you prefer.
+
+### Common commands
+
+```bash
+uv run jupyter lab notebooks/tempo_earth2_integration.ipynb   # run the notebook
+uv run python -c "import xarray; print(xarray.__version__)"   # one-off python
+uv add pyresample                                              # add a dep
+uv remove h5netcdf                                             # remove one
+uv sync                                                        # re-sync after a git pull
+```
+
+Notes:
+- Commit **`uv.lock`** and **`.python-version`** — they're the reproducibility guarantee (the conda equivalent of a frozen env spec).
+- uv will auto-download Python 3.12 if your machine doesn't have it — no `pyenv` needed.
+- In JupyterLab, pick the **"Python 3 (ipykernel)"** kernel when launched via `uv run jupyter lab`.
+- `earth2studio` is intentionally **not** pinned here — it's GPU-only and gated behind the "needs GPU" cell at the end of the notebook. Install it separately on a GPU host when you need it.
+
 ## Running the notebook
 
 ```bash
-cd notebooks
-pip install numpy xarray netcdf4 matplotlib cartopy requests earthaccess
-jupyter lab tempo_earth2_integration.ipynb
+uv run jupyter lab notebooks/tempo_earth2_integration.ipynb
 ```
 
 On first run `earthaccess` will prompt for a free NASA Earthdata login. If Earthdata is unreachable the notebook falls back to a synthetic TEMPO-like field so the rest of the pipeline still runs.

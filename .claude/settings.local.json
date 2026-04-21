@@ -36,7 +36,11 @@
       "WebFetch(domain:www.nvidia.com)",
       "Bash(curl -sI 'https://www.nvidia.com/en-us/high-performance-computing/earth-2/demo/?status=0')",
       "Bash(curl -s 'https://www.nvidia.com/en-us/high-performance-computing/earth-2/demo/?status=0')",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(uv --version)",
+      "Bash(uv python *)",
+      "Bash(uv sync *)",
+      "Bash(uv run *)"
     ]
   }
 }

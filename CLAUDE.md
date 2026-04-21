@@ -20,6 +20,9 @@ Headline idea: Earth-2 / DestinE / ESDT model atmospheric physics at km scale, b
 earth_digital_twin/
 ├── CLAUDE.md                      # this file
 ├── README.md                      # human-facing project README
+├── pyproject.toml                 # Python deps (managed with uv)
+├── uv.lock                        # pinned resolution — commit this
+├── .python-version                # pinned interpreter (3.12) — commit this
 ├── proposal/
 │   └── Smithsonian Living Earth Digital Twin.pdf
 ├── website/                       # sophisticated landing page + live TEMPO map
@@ -125,6 +128,38 @@ for the Year-2 TEMPO + MethaneSAT + DestinE fusion roadmap.
 
 ---
 
+## Python environment (`uv`)
+
+This repo uses **uv** (not conda, not plain venv). Dependencies in
+`pyproject.toml`, pinned via `uv.lock`, interpreter pinned via
+`.python-version` (3.12).
+
+```bash
+uv sync                                                       # install everything
+uv run jupyter lab notebooks/tempo_earth2_integration.ipynb   # run notebook
+uv run python -c "import xarray; print(xarray.__version__)"   # one-off python
+uv add <pkg>         # add a dep (also updates pyproject.toml + uv.lock)
+uv remove <pkg>      # remove one
+```
+
+Rules when modifying deps:
+
+- **Always go through `uv add` / `uv remove`**, never hand-edit
+  `pyproject.toml` without running `uv sync` afterward — the lockfile must stay
+  consistent.
+- **Commit `pyproject.toml`, `uv.lock`, and `.python-version`** together in
+  the same commit. These three files are one unit of reproducibility.
+- **Do NOT pin `earth2studio` here.** It's GPU-only and intentionally gated
+  behind the "needs GPU" cell at the end of the notebook. It will be
+  installed separately on a GPU host when needed.
+- **Do NOT switch to conda / pip / poetry.** Grant moved off conda
+  specifically; stay on uv.
+- When you add a Python dependency for the notebook, update both this file's
+  dependency list mentions (if any) and the README's deps section if the
+  change is user-visible.
+
+---
+
 ## The notebook (`notebooks/tempo_earth2_integration.ipynb`)
 
 A CPU-only, runnable prototype demonstrating:
@@ -167,6 +202,11 @@ A CPU-only, runnable prototype demonstrating:
 
 ### Do
 
+- **Keep `README.md` and `CLAUDE.md` in sync with every substantive change.**
+  If you add a dependency, change how the notebook/website runs, add a
+  directory, or change a convention — update both files in the same change.
+  README is for humans landing on the repo; CLAUDE.md is for future Claude
+  sessions. They should never disagree. Grant asked for this explicitly.
 - **Follow the proposal.** Section 1 (sustainability challenge), §2 (animating
   question about solar-variability → atmosphere → ecosystems), §5 (Year 1/2/3
   phasing) are the canonical framing. Use their language.
