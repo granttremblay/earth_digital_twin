@@ -30,7 +30,9 @@ earth_digital_twin/
 │   ├── index.html
 │   ├── styles.css
 │   ├── app.js                     # TEMPO map + misc interactivity
-│   └── earth-plexus-bg.js         # animated 3-D plexus-Earth hero background
+│   ├── earth-plexus-bg.js         # animated 3-D plexus-Earth hero background
+│   └── assets/
+│       └── digital_earth_logo.svg # project emblem — rendered via CSS mask
 └── notebooks/
     └── tempo_earth2_integration.ipynb   # CPU-only TEMPO → earth2studio demo
 ```
@@ -172,7 +174,27 @@ for the Year-2 TEMPO + MethaneSAT + DestinE fusion roadmap.
 
 ### Styling notes
 
-- Dark theme, Inter / Space Grotesk / JetBrains Mono stack
+- Dark theme, Inter / Space Grotesk / JetBrains Mono stack, with **Cormorant
+  Garamond** (classical serif) reserved for the hero title only, rendered at
+  weight **700** (its ceiling on Google Fonts). CSS var is `--font-serif`;
+  don't bleed it into other section headings unless the user asks — the
+  section rhythm uses Space Grotesk (`--font-disp`) by design. Grant tried
+  the heavier EB Garamond 800 and preferred Cormorant — don't swap back
+  without asking.
+- Hero title text: "The Smithsonian / Living Earth / Digital Twin" on three
+  lines, with the site's blue-green gradient (`.grad` class) applied to
+  "Living Earth" only. Don't move the `<br/>`s without asking — the line
+  break rhythm is intentional. Grant tried a `shape-outside` magazine-wrap
+  of the title around the emblem and disliked it; don't re-try it without
+  asking.
+- Hero emblem (`.hero-emblem`) sits above the `<h1>` (between the kicker
+  and the title) and uses the SVG at
+  `website/assets/digital_earth_logo.svg` via CSS `mask-image`, filled with
+  `var(--grad-hero)` and animated with the same `gradShift` keyframes as
+  the title's `.grad` span. The class is **`.hero-emblem`**, NOT
+  `.brand-mark` — the latter already exists on the nav's `◉` icon and
+  colliding classes caused a bug where the nav icon turned into the whole
+  emblem. Keep them separate.
 - Accent palette: `--accent` teal (#3ee1c8, "bio"), `--accent-2` blue (#7cc7ff,
   "atmosphere"), `--accent-ledt` violet (#c794ff, "LEDT layer"),
   `--accent-3` amber (#ffb347, "methane/sun"), `--accent-4` pink (#ff5e87,

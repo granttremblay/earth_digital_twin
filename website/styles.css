@@ -25,6 +25,7 @@
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-disp: 'Space Grotesk', 'Inter', sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --container: 1240px;
@@ -197,12 +198,29 @@ code {
   50% { opacity: 0.5; transform: scale(1.3); }
 }
 
+/* Hero emblem — SVG mask filled with the same animated gradient as "Living Earth" */
+.hero-emblem {
+  display: block;
+  width: clamp(110px, 14vw, 180px);
+  aspect-ratio: 601.71 / 516.63;
+  margin: 0 auto 18px;
+  -webkit-mask: url('assets/digital_earth_logo.svg') no-repeat center / contain;
+          mask: url('assets/digital_earth_logo.svg') no-repeat center / contain;
+  background: var(--grad-hero);
+  background-size: 200% 100%;
+  animation: gradShift 8s ease infinite;
+  filter: drop-shadow(0 0 24px rgba(62, 225, 200, 0.25));
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-emblem { animation: gradShift 8s ease infinite; }
+}
+
 .hero-title {
-  font-family: var(--font-disp);
+  font-family: var(--font-serif);
   font-size: clamp(48px, 8vw, 104px);
   font-weight: 700;
   line-height: 1.02;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.015em;
   margin-bottom: 28px;
 }
 .grad {
