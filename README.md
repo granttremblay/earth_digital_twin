@@ -26,6 +26,8 @@ python -m http.server 8000
 # open http://localhost:8000
 ```
 
+The site is currently framed around the **Summer 2026 SAO + SERC + STRI Innovation Lab** — the upcoming working meeting where LEDT will be scoped and prototyped. Venue is being finalized between a Chesapeake Bay site and Cambridge, MA (SAO); travel + lodging for all Smithsonian attendees will be covered by the OUSSR seed award. The page includes an **Early Registration** form (`#register`) — name / email / affiliation / comments — implemented as a `mailto:` stopgap until a real backend (Formspree / FormSubmit.co / Netlify Forms) is wired up.
+
 The TEMPO overlay pulls directly from NASA GIBS WMTS. GIBS near-real-time TEMPO products typically run 24–48 h behind; the date picker lets you scrub back. CartoDB dark basemap, Leaflet 1.9, vanilla JS — no framework, no build, no bundler.
 
 The hero background is an animated 3-D "plexus Earth" — a slowly-rotating sphere of connected nodes in a blue-green (teal → ocean → navy) gradient, with two canvases for depth (far-blurred, near-sharp) and a breathing cyan atmospheric halo. Code lives in [`website/earth-plexus-bg.js`](website/earth-plexus-bg.js) and injects its own DOM into the `.hero` element; no CSS changes required to enable it. `prefers-reduced-motion: reduce` freezes the animation.

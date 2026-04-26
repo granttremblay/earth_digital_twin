@@ -35,14 +35,12 @@
       </a>
       <ul class="nav-links">
         <li><a href="#mission">Mission</a></li>
+        <li><a href="#lab">Innovation Lab</a></li>
         <li><a href="#tempo">TEMPO</a></li>
-        <li><a href="#earth2">Earth-2</a></li>
         <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#network">Field Network</a></li>
-        <li><a href="#pipeline">Pipeline</a></li>
         <li><a href="#team">Team</a></li>
       </ul>
-      <a class="nav-cta" href="#tempo">Live Data →</a>
+      <a class="nav-cta" href="#register">Early Registration →</a>
     </div>
   </nav>
 
@@ -62,14 +60,14 @@
         Digital Twin
       </h1>
       <p class="hero-sub">
-        An <strong>ecological feedback layer</strong> for NVIDIA Earth-2, NASA ESDT, and Destination Earth —
-        linking what the atmosphere <em>delivers</em> to how ecosystems <em>respond</em>.
-        A Smithsonian cross-Unit initiative between <span class="unit">SAO</span>, <span class="unit">SERC</span>, and
-        <span class="unit">STRI</span>.
+        The Smithsonian's <strong>ecological feedback layer</strong> for NVIDIA Earth-2, NASA ESDT, and
+        Destination Earth. This summer, scientists from <span class="unit">SAO</span>,
+        <span class="unit">SERC</span>, and <span class="unit">STRI</span> will convene for an
+        <em>Innovation Lab</em> to scope, ideate, and prototype it together.
       </p>
       <div class="hero-cta">
-        <a href="#tempo" class="btn btn-primary">Explore TEMPO · Live ↗</a>
-        <a href="#architecture" class="btn btn-ghost">Read the Concept</a>
+        <a href="#register" class="btn btn-primary">Register Interest →</a>
+        <a href="#tempo" class="btn btn-ghost">Explore TEMPO ↗</a>
       </div>
       <div class="hero-stats">
         <div class="stat">
@@ -129,10 +127,90 @@
     </div>
   </section>
 
+  <!-- ================= INNOVATION LAB ================= -->
+  <section id="lab" class="section lab">
+    <div class="container">
+      <div class="eyebrow">02 · Innovation Lab</div>
+      <h2 class="h2">Summer 2026 · <span class="grad">SAO + SERC + STRI</span> convene to build it.</h2>
+      <p class="lede">
+        LEDT needs its people in one room. This summer, Smithsonian scientists from the Astrophysical Observatory,
+        the Environmental Research Center, and the Tropical Research Institute will gather for a multi-day
+        <strong>Innovation Lab</strong> to ideate, scope, and begin prototyping the ecological feedback layer —
+        together with partners from NVIDIA Earth-2, NASA ESDT, and DestinE.
+      </p>
+      <div class="mission-grid">
+        <div class="card">
+          <div class="card-ico">⌖</div>
+          <h3>Venue — locking in</h3>
+          <p>We're finalizing between a <strong>Chesapeake Bay</strong> site near SERC, or <strong>Cambridge, MA</strong>
+            at SAO. Announcement as soon as the contract lands.</p>
+        </div>
+        <div class="card">
+          <div class="card-ico">◎</div>
+          <h3>Dates — summer 2026</h3>
+          <p>A focused three-to-four-day working meeting. Exact dates will follow the venue confirmation.</p>
+        </div>
+        <div class="card">
+          <div class="card-ico">✦</div>
+          <h3>Fully funded for Smithsonian</h3>
+          <p>Travel and lodging for all Smithsonian scientists will be covered by the OUSSR seed award — no cost to
+            attendees' home units.</p>
+        </div>
+      </div>
+      <div class="lab-note">
+        A formal sign-up page is coming soon. In the meantime, please register your interest below so we can reach you
+        with venue + date confirmation.
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EARLY REGISTRATION ================= -->
+  <section id="register" class="section register">
+    <div class="container">
+      <div class="eyebrow">03 · Early Registration</div>
+      <h2 class="h2">Tell us you're <span class="grad">coming</span>.</h2>
+      <p class="lede">
+        Not a commitment — a signal. We'll send venue and date confirmation the moment it's locked, along with travel
+        logistics for Smithsonian attendees.
+      </p>
+      <!--
+        Stopgap: mailto: form. When ready, swap action/method to a Formspree, FormSubmit.co,
+        or equivalent endpoint so submissions land in a database instead of the user's mail client.
+      -->
+      <form class="register-form" method="post" action="mailto:grant.tremblay@cfa.harvard.edu"
+        enctype="text/plain">
+        <div class="field">
+          <label for="reg-name">Name</label>
+          <input type="text" id="reg-name" name="Name" required autocomplete="name"
+            placeholder="Your full name" />
+        </div>
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" name="Email" required autocomplete="email"
+            placeholder="you@si.edu" />
+        </div>
+        <div class="field">
+          <label for="reg-affil">Affiliation</label>
+          <input type="text" id="reg-affil" name="Affiliation" required autocomplete="organization"
+            placeholder="SAO / SERC / STRI / other — unit, title, group" />
+        </div>
+        <div class="field">
+          <label for="reg-comment">Comments <span class="optional">(optional)</span></label>
+          <textarea id="reg-comment" name="Comments" rows="4"
+            placeholder="Session ideas, collaborators you'd like to see, dietary needs, scheduling conflicts…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">Submit early registration →</button>
+        <p class="form-note">
+          Smithsonian scientists: your attendance will be <strong>fully funded</strong> by the OUSSR seed award.
+        </p>
+      </form>
+    </div>
+  </section>
+
   <!-- ================= TEMPO LIVE MAP ================= -->
   <section id="tempo" class="section tempo">
     <div class="container">
-      <div class="eyebrow">02 · Live Orbital Chemistry</div>
+      <div class="eyebrow">04 · Live Orbital Chemistry</div>
       <h2 class="h2">TEMPO — hourly, North America, from <span class="grad">geostationary orbit</span>.</h2>
       <p class="lede">
         SAO's <strong>Tropospheric Emissions: Monitoring of Pollution</strong> instrument measures NO₂, O₃, HCHO,
@@ -191,7 +269,7 @@
   <!-- ================= EARTH-2 INTEGRATION ================= -->
   <section id="earth2" class="section earth2">
     <div class="container">
-      <div class="eyebrow">03 · Integration Target</div>
+      <div class="eyebrow">05 · Integration Target</div>
       <h2 class="h2">NVIDIA <span class="grad">Earth-2</span> — the substrate we plug into.</h2>
       <p class="lede">
         Earth-2 is NVIDIA's planetary digital twin, powered by the <strong>cBottle</strong> ("Climate in a Bottle")
@@ -279,7 +357,7 @@ run.diagnostic(
   <!-- ================= ARCHITECTURE ================= -->
   <section id="architecture" class="section arch">
     <div class="container">
-      <div class="eyebrow">04 · Architecture</div>
+      <div class="eyebrow">06 · Architecture</div>
       <h2 class="h2">The LEDT sits <em>between</em> the atmosphere and the biosphere.</h2>
       <p class="lede">
         Rather than duplicate climate models, we occupy a complementary lane: a biological feedback layer that consumes
@@ -362,7 +440,7 @@ run.diagnostic(
   <!-- ================= FIELD NETWORK ================= -->
   <section id="network" class="section network">
     <div class="container">
-      <div class="eyebrow">05 · The Smithsonian Advantage</div>
+      <div class="eyebrow">07 · The Smithsonian Advantage</div>
       <h2 class="h2">The only institution with <span class="grad">orbital + canopy + wetland</span> under one roof.</h2>
       <div class="net-grid">
         <div class="net-card">
@@ -396,57 +474,10 @@ run.diagnostic(
     </div>
   </section>
 
-  <!-- ================= METHANE TO MANGROVE PIPELINE ================= -->
-  <section id="pipeline" class="section pipeline">
-    <div class="container">
-      <div class="eyebrow">06 · Prototype Pipeline</div>
-      <h2 class="h2">"Methane-to-Mangrove" — from orbital plume to ecosystem impact.</h2>
-      <p class="lede">
-        A scoped end-to-end test case for the 2026 Innovation Design Lab: trace a detected atmospheric forcing from
-        satellite
-        pixel through transport dynamics to predicted ecological response at a specific SERC / STRI field site.
-      </p>
-      <ol class="pipeline-steps">
-        <li>
-          <div class="step-num">01</div>
-          <div>
-            <h4>Detect</h4>
-            <p>TEMPO L2 identifies elevated NO₂ / HCHO or MethaneSAT flags a CH₄ plume over the Eastern Seaboard or a
-              mangrove coast.</p>
-          </div>
-        </li>
-        <li>
-          <div class="step-num">02</div>
-          <div>
-            <h4>Transport</h4>
-            <p>Earth-2 / cBottle advects the atmospheric state forward; a CorrDiff-Bio extension downscales to the
-              wetland/forest mesh.</p>
-          </div>
-        </li>
-        <li>
-          <div class="step-num">03</div>
-          <div>
-            <h4>Respond</h4>
-            <p>The LEDT surrogate, trained on GCReW eddy-covariance + ForestGEO census, predicts methane-flux and
-              carbon-assimilation anomalies.</p>
-          </div>
-        </li>
-        <li>
-          <div class="step-num">04</div>
-          <div>
-            <h4>Validate</h4>
-            <p>In situ instrumentation at the site returns ground truth; the loop closes into the next training cycle.
-            </p>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </section>
-
   <!-- ================= TEAM ================= -->
   <section id="team" class="section team">
     <div class="container">
-      <div class="eyebrow">07 · Principals</div>
+      <div class="eyebrow">08 · Principals</div>
       <h2 class="h2">A genuinely cross-Unit collaboration.</h2>
       <div class="team-grid">
         <div class="person">

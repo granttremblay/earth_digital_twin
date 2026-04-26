@@ -52,13 +52,16 @@ cd website && python -m http.server 8000
 
 ### What it contains
 
-- **Hero** with animated orbiting-globe + starfield canvas
-- **Mission / Gap** section (the "biologically inert" framing from proposal §1)
-- **Live TEMPO map** — interactive, tiled from NASA GIBS
-- **Architecture diagram** (Atmosphere → LEDT → Biosphere)
-- **Field Network** (SAO / SERC / STRI cards)
-- **Methane-to-Mangrove pipeline** (4-step)
-- **Team / partners** (all 10 Co-Is from the proposal, plus engaged partners)
+- **Hero** with animated plexus-Earth background, emblem + Cormorant title, CTAs to `#register` and `#tempo`
+- **Mission / Gap** — 01 · the "biologically inert" framing from proposal §1
+- **Innovation Lab** — 02 · pitch for the Summer 2026 SAO+SERC+STRI working meeting (venue TBD between Chesapeake Bay / Cambridge; travel funded for Smithsonian attendees)
+- **Early Registration** — 03 · mailto: form (name / email / affiliation / comments). **Stopgap**: `mailto:` opens the user's mail client. Swap `action=` to a Formspree / FormSubmit.co / Netlify-forms endpoint when Grant wants real submissions persisted. Note the HTML comment above the form flags this.
+- **Live TEMPO map** — 04 · interactive, tiled from NASA GIBS
+- **Integration Target (Earth-2)** — 05 · NVIDIA cBottle / earth2studio integration story
+- **Architecture diagram** — 06 · Atmosphere → LEDT → Biosphere
+- **Field Network** — 07 · SAO / SERC / STRI cards
+- **Team / partners** — 08 · all 10 Co-Is, plus engaged partners
+- **Note:** the old "Methane-to-Mangrove pipeline" section was removed on 2026-04-21 during the pivot to Innovation-Lab framing. Don't resurrect it without asking.
 
 ### NASA GIBS / TEMPO integration — CRITICAL FACTS
 
