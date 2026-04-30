@@ -25,7 +25,7 @@
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-disp: 'Space Grotesk', 'Inter', sans-serif;
-  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Ropa Sans', 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --container: 1240px;
@@ -198,30 +198,33 @@ code {
   50% { opacity: 0.5; transform: scale(1.3); }
 }
 
-/* Hero emblem — SVG mask filled with the same animated gradient as "Living Earth" */
+/* Hero emblem — img + ::after gradient overlay via mix-blend-mode (works with file://) */
 .hero-emblem {
   display: block;
+  position: relative;
   width: clamp(110px, 14vw, 180px);
-  aspect-ratio: 601.71 / 516.63;
+  aspect-ratio: 583.93 / 492.58;
   margin: 0 auto 18px;
-  -webkit-mask: url('assets/digital_earth_logo.svg') no-repeat center / contain;
-          mask: url('assets/digital_earth_logo.svg') no-repeat center / contain;
-  background: var(--grad-hero);
-  background-size: 200% 100%;
-  animation: gradShift 8s ease infinite;
+  isolation: isolate;
   filter: drop-shadow(0 0 24px rgba(62, 225, 200, 0.25));
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-emblem { animation: gradShift 8s ease infinite; }
+  .hero-emblem svg animateTransform { display: none; }
 }
 
 .hero-title {
   font-family: var(--font-serif);
   font-size: clamp(48px, 8vw, 104px);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.015em;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
   margin-bottom: 28px;
+}
+.hero-si-logo {
+  height: clamp(36px, 5.5vw, 72px);
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
 }
 .grad {
   background: var(--grad-hero);
