@@ -52,13 +52,16 @@ cd website && python -m http.server 8000
 
 ### What it contains
 
-- **Hero** with animated orbiting-globe + starfield canvas
-- **Mission / Gap** section (the "biologically inert" framing from proposal §1)
-- **Live TEMPO map** — interactive, tiled from NASA GIBS
-- **Architecture diagram** (Atmosphere → LEDT → Biosphere)
-- **Field Network** (SAO / SERC / STRI cards)
-- **Methane-to-Mangrove pipeline** (4-step)
-- **Team / partners** (all 10 Co-Is from the proposal, plus engaged partners)
+- **Hero** with animated plexus-Earth background, emblem + Cormorant title, CTAs to `#register` and `#tempo`
+- **Mission / Gap** — 01 · the "biologically inert" framing from proposal §1
+- **Innovation Lab** — 02 · pitch for the Summer 2026 SAO+SERC+STRI working meeting (venue TBD between Chesapeake Bay / Cambridge; travel funded for Smithsonian attendees)
+- **Early Registration** — 03 · Formspree-backed form (name / email / affiliation / comments). Posts to `https://formspree.io/f/xdabeeow` → emails `granttremblay@gmail.com`. Includes a `_gotcha` honeypot for spam. If spam gets through, enable reCAPTCHA in the Formspree dashboard, or layer Cloudflare Turnstile. The email field is intentionally lower-cased (`name="email"`) so Formspree auto-populates Reply-To.
+- **Live TEMPO map** — 04 · interactive, tiled from NASA GIBS
+- **Integration Target (Earth-2)** — 05 · NVIDIA cBottle / earth2studio integration story
+- **Architecture diagram** — 06 · Atmosphere → LEDT → Biosphere
+- **Field Network** — 07 · SAO / SERC / STRI cards
+- **Team / partners** — 08 · all 10 Co-Is, plus engaged partners
+- **Note:** the old "Methane-to-Mangrove pipeline" section was removed on 2026-04-21 during the pivot to Innovation-Lab framing. Don't resurrect it without asking.
 
 ### NASA GIBS / TEMPO integration — CRITICAL FACTS
 
@@ -174,22 +177,21 @@ for the Year-2 TEMPO + MethaneSAT + DestinE fusion roadmap.
 
 ### Styling notes
 
-- Dark theme, Inter / Space Grotesk / JetBrains Mono stack, with **Cormorant
-  Garamond** (classical serif) reserved for the hero title only, rendered at
-  weight **700** (its ceiling on Google Fonts). CSS var is `--font-serif`;
-  don't bleed it into other section headings unless the user asks — the
-  section rhythm uses Space Grotesk (`--font-disp`) by design. Grant tried
-  the heavier EB Garamond 800 and preferred Cormorant — don't swap back
-  without asking.
-- Hero title text: "The Smithsonian / Living Earth / Digital Twin" on three
-  lines, with the site's blue-green gradient (`.grad` class) applied to
-  "Living Earth" only. Don't move the `<br/>`s without asking — the line
-  break rhythm is intentional. Grant tried a `shape-outside` magazine-wrap
-  of the title around the emblem and disliked it; don't re-try it without
-  asking.
+- Dark theme, Inter / Space Grotesk / JetBrains Mono stack, with **Ropa Sans**
+  (single-weight sans-serif, weight 400) used for the hero title only. CSS var
+  is `--font-serif` (name kept for continuity); don't bleed it into other
+  section headings — the section rhythm uses Space Grotesk (`--font-disp`) by
+  design. Grant switched from Cormorant Garamond to Ropa Sans on 2026-04-30.
+- Hero title: the first line is the **Smithsonian logo SVG**
+  (`assets/si_logo-primary-white.svg`, class `.hero-si-logo`) replacing the
+  plain "The Smithsonian" text. The SVG has a tightly-cropped viewBox
+  (`58 158 238 42`) and explicit `width="238" height="42"` attributes so
+  browsers use the correct 238:42 aspect ratio. Below it: "Living Earth"
+  (`.grad` gradient) and "Digital Twin" on separate lines via `<br/>`. Don't
+  move the `<br/>`s or swap the logo back to text without asking.
 - Hero emblem (`.hero-emblem`) sits above the `<h1>` (between the kicker
   and the title) and uses the SVG at
-  `website/assets/digital_earth_logo.svg` via CSS `mask-image`, filled with
+  `website/assets/digital_earth_logo_primary.svg` via CSS `mask-image`, filled with
   `var(--grad-hero)` and animated with the same `gradShift` keyframes as
   the title's `.grad` span. The class is **`.hero-emblem`**, NOT
   `.brand-mark` — the latter already exists on the nav's `◉` icon and
