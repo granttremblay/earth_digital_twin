@@ -55,7 +55,7 @@ cd website && python -m http.server 8000
 - **Hero** with animated plexus-Earth background, emblem + Cormorant title, CTAs to `#register` and `#tempo`
 - **Mission / Gap** — 01 · the "biologically inert" framing from proposal §1
 - **Innovation Lab** — 02 · pitch for the Summer 2026 SAO+SERC+STRI working meeting (venue TBD between Chesapeake Bay / Cambridge; travel funded for Smithsonian attendees)
-- **Early Registration** — 03 · mailto: form (name / email / affiliation / comments). **Stopgap**: `mailto:` opens the user's mail client. Swap `action=` to a Formspree / FormSubmit.co / Netlify-forms endpoint when Grant wants real submissions persisted. Note the HTML comment above the form flags this.
+- **Early Registration** — 03 · Formspree-backed form (name / email / affiliation / comments). Posts to `https://formspree.io/f/xdabeeow` → emails `granttremblay@gmail.com`. Includes a `_gotcha` honeypot for spam. If spam gets through, enable reCAPTCHA in the Formspree dashboard, or layer Cloudflare Turnstile. The email field is intentionally lower-cased (`name="email"`) so Formspree auto-populates Reply-To.
 - **Live TEMPO map** — 04 · interactive, tiled from NASA GIBS
 - **Integration Target (Earth-2)** — 05 · NVIDIA cBottle / earth2studio integration story
 - **Architecture diagram** — 06 · Atmosphere → LEDT → Biosphere

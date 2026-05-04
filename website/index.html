@@ -216,11 +216,14 @@
         logistics for Smithsonian attendees.
       </p>
       <!--
-        Stopgap: mailto: form. When ready, swap action/method to a Formspree, FormSubmit.co,
-        or equivalent endpoint so submissions land in a database instead of the user's mail client.
+        Submissions go to Formspree (form ID xdabeeow → granttremblay@gmail.com).
+        _subject sets the email subject; _gotcha is a honeypot — bots fill it, humans don't see it.
+        If spam gets through, enable reCAPTCHA in the Formspree dashboard or layer Cloudflare Turnstile.
       -->
-      <form class="register-form" method="post" action="mailto:grant.tremblay@cfa.harvard.edu"
-        enctype="text/plain">
+      <form class="register-form" method="post" action="https://formspree.io/f/xdabeeow">
+        <input type="hidden" name="_subject" value="LEDT — new early registration" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+          aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0;" />
         <div class="field">
           <label for="reg-name">Name</label>
           <input type="text" id="reg-name" name="Name" required autocomplete="name"
@@ -228,7 +231,7 @@
         </div>
         <div class="field">
           <label for="reg-email">Email</label>
-          <input type="email" id="reg-email" name="Email" required autocomplete="email"
+          <input type="email" id="reg-email" name="email" required autocomplete="email"
             placeholder="you@si.edu" />
         </div>
         <div class="field">
