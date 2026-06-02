@@ -90,16 +90,20 @@ code {
   font-weight: 700;
   letter-spacing: -0.01em;
 }
-.brand-mark {
-  font-size: 20px;
-  background: var(--grad-hero);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 8px rgba(62, 225, 200, 0.5));
+.brand-logo {
+  display: block;
+  width: 56px;
+  aspect-ratio: 583.93 / 492.58;
+  background: #fff;
+  -webkit-mask: url('assets/digital_earth_logo_primary.svg') center / contain no-repeat;
+          mask: url('assets/digital_earth_logo_primary.svg') center / contain no-repeat;
 }
-.brand-text { font-size: 16px; }
-.brand-sub { color: var(--ink-mute); font-weight: 400; margin-left: 4px; }
+.brand-logo.footer-logo {
+  width: 28px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
 
 .nav-links {
   list-style: none;
@@ -116,6 +120,7 @@ code {
 .nav-links a:hover { color: var(--ink); }
 
 .nav-cta {
+  margin-left: auto;
   padding: 8px 16px;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
@@ -213,18 +218,31 @@ code {
 }
 
 .hero-title {
-  font-family: var(--font-serif);
-  font-size: clamp(48px, 8vw, 104px);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: 0.01em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 24px);
   margin-bottom: 28px;
 }
 .hero-si-logo {
   height: clamp(36px, 5.5vw, 72px);
   width: auto;
-  display: inline-block;
-  vertical-align: middle;
+  display: block;
+}
+.hero-living-earth {
+  display: block;
+  width: clamp(280px, 56vw, 720px);
+  aspect-ratio: 859.55 / 201.53;
+  background: var(--grad-hero);
+  background-size: 200% 100%;
+  -webkit-mask: url('assets/living_earth_wordmark.svg') center / contain no-repeat;
+          mask: url('assets/living_earth_wordmark.svg') center / contain no-repeat;
+  animation: gradShift 8s ease infinite;
+}
+.hero-digital-twin {
+  display: block;
+  width: clamp(280px, 56vw, 720px);
+  height: auto;
 }
 .grad {
   background: var(--grad-hero);
@@ -364,6 +382,103 @@ code {
 .section {
   padding: 140px 0;
   position: relative;
+}
+
+/* ===== Workshop banner (earth backdrop) ===== */
+.workshop {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 75% 50%, rgba(5,7,13,0) 0%, rgba(5,7,13,0.55) 60%, rgba(5,7,13,0.92) 100%),
+    #000 url('assets/earth_backdrop.png') right center / cover no-repeat;
+  min-height: clamp(620px, 78vh, 880px);
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.workshop::before {
+  /* soft left-side darkening so the wordmarks always have contrast */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5,7,13,0.88) 0%, rgba(5,7,13,0.55) 38%, rgba(5,7,13,0) 60%);
+  pointer-events: none;
+}
+.workshop-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(80px, 12vw, 140px) 32px;
+}
+.workshop-text {
+  max-width: 560px;
+}
+.ws-join {
+  display: block;
+  width: clamp(200px, 24vw, 300px);
+  height: auto;
+  margin-bottom: 18px;
+  opacity: 0.92;
+}
+.ws-headline {
+  display: block;
+  width: clamp(300px, 42vw, 540px);
+  height: auto;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 4px 30px rgba(0,0,0,0.6));
+}
+.ws-date {
+  display: block;
+  width: clamp(260px, 34vw, 420px);
+  height: auto;
+  margin-bottom: 36px;
+  opacity: 0.95;
+}
+.ws-loc {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.ws-loc-sub {
+  color: var(--ink-dim);
+  margin-bottom: 20px;
+}
+.ws-deadline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  letter-spacing: 0.06em;
+  color: var(--accent-4);
+  max-width: 520px;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+.ws-deadline a {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+}
+.ws-deadline a:hover { color: var(--ink); }
+.ws-cta {
+  display: inline-flex;
+}
+@media (max-width: 900px) {
+  .workshop {
+    background:
+      linear-gradient(180deg, rgba(5,7,13,0.5) 0%, rgba(5,7,13,0.85) 100%),
+      #000 url('assets/earth_backdrop.png') center / cover no-repeat;
+    min-height: 0;
+  }
+  .workshop::before { display: none; }
+  .workshop-text { max-width: 100%; text-align: center; margin: 0 auto; }
+  .ws-join, .ws-headline, .ws-date { margin-left: auto; margin-right: auto; }
+  .ws-loc, .ws-deadline { margin-left: auto; margin-right: auto; }
 }
 .eyebrow {
   font-family: var(--font-mono);
@@ -1266,6 +1381,18 @@ code {
   font-size: 15px;
   line-height: 1.55;
 }
+.lab-note.lab-deadline {
+  border-style: solid;
+  border-color: rgba(255, 94, 135, 0.55);
+  background: rgba(255, 94, 135, 0.06);
+  color: var(--ink);
+}
+.lab-note.lab-deadline strong { color: var(--accent-4); }
+.lab-note.lab-deadline a {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+}
+.lab-note.lab-deadline a:hover { color: var(--ink); }
 
 /* ============================================================
    EARLY REGISTRATION

@@ -12,5 +12,10 @@ data/
 *.hdf5
 *.h5
 
+# Design source files (Illustrator / Photoshop) — too large for git,
+# export to SVG/PNG under website/assets/ instead.
+*.ai
+*.psd
+
 # OS
 .DS_Store

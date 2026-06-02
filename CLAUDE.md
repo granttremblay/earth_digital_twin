@@ -52,16 +52,16 @@ cd website && python -m http.server 8000
 
 ### What it contains
 
-- **Hero** with animated plexus-Earth background, emblem + Cormorant title, CTAs to `#register` and `#tempo`
+- **Hero** with animated plexus-Earth background, emblem + Ropa-Sans Smithsonian logo, the `living_earth_wordmark.svg` (animated gradient via CSS mask) and `digital_twin_wordmark.svg` (white). Kicker reads `INNOVATION WORKSHOP · SEPT 14–16, 2026 · SAO CAMBRIDGE, MA`. CTAs go to `#register` and `#tempo`.
+- **Workshop banner** — full-width section right under the hero with `assets/earth_backdrop.png` as the backdrop (positioned right-of-center, with a left-side gradient overlay for text contrast) and the `join_us.svg` / `innovation_workshop.svg` / `cambrige.svg` wordmarks stacked on the left. Confirms the venue (**SAO, Cambridge MA**), dates (**Sept 14–16, 2026**), the **Sunday Sept 13 welcome reception**, full Smithsonian travel funding, and the hard **July 25, 2026 booking deadline**. CTA links to `#register`.
 - **Mission / Gap** — 01 · the "biologically inert" framing from proposal §1
-- **Innovation Lab** — 02 · pitch for the Summer 2026 SAO+SERC+STRI working meeting (venue TBD between Chesapeake Bay / Cambridge; travel funded for Smithsonian attendees)
-- **Early Registration** — 03 · Formspree-backed form (name / email / affiliation / comments). Posts to `https://formspree.io/f/xdabeeow` → emails `granttremblay@gmail.com`. Includes a `_gotcha` honeypot for spam. If spam gets through, enable reCAPTCHA in the Formspree dashboard, or layer Cloudflare Turnstile. The email field is intentionally lower-cased (`name="email"`) so Formspree auto-populates Reply-To.
+- **Innovation Workshop** — 02 · detail block for the SAO+SERC+STRI Innovation Workshop. Venue is **Smithsonian Astrophysical Observatory, 60 Garden Street, Cambridge, MA**; dates are **Sept 14–16, 2026** (Mon–Wed); welcome reception is **Sunday evening Sept 13**; hotel block + lodging info forthcoming. Travel for all Smithsonian scientists can be fully funded by the OUSSR seed award. Per funding restrictions, **all travel must be booked by July 25, 2026** — the `.lab-deadline` call-out at the bottom of the section spells this out and links to `grant.tremblay@cfa.harvard.edu`. Don't soften that deadline language without asking.
+- **Early Registration** — 03 · Formspree-backed form (name / email / affiliation / comments). Posts to `https://formspree.io/f/xdabeeow` → emails `granttremblay@gmail.com`. Includes a `_gotcha` honeypot for spam. If spam gets through, enable reCAPTCHA in the Formspree dashboard, or layer Cloudflare Turnstile. The email field is intentionally lower-cased (`name="email"`) so Formspree auto-populates Reply-To. The lede + `form-note` both repeat the July 25 booking deadline and the `grant.tremblay@cfa.harvard.edu` contact.
 - **Live TEMPO map** — 04 · interactive, tiled from NASA GIBS
 - **Integration Target (Earth-2)** — 05 · NVIDIA cBottle / earth2studio integration story
 - **Architecture diagram** — 06 · Atmosphere → LEDT → Biosphere
 - **Field Network** — 07 · SAO / SERC / STRI cards
-- **Team / partners** — 08 · all 10 Co-Is, plus engaged partners
-- **Note:** the old "Methane-to-Mangrove pipeline" section was removed on 2026-04-21 during the pivot to Innovation-Lab framing. Don't resurrect it without asking.
+- **Note:** the old "Methane-to-Mangrove pipeline" section was removed on 2026-04-21 during the pivot to Innovation-Workshop framing. Don't resurrect it without asking. The Principals/Team + Engaged partners block was also removed on 2026-06-02 — Grant will add a final cohort list later; don't re-add a placeholder grid in the meantime.
 
 ### NASA GIBS / TEMPO integration — CRITICAL FACTS
 

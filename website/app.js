@@ -117,8 +117,8 @@
   //   'latest'  → use GIBS 'default' time (latest scan worldwide)
   //   'custom'  → use activeDate + activeHourUTC
   // TEMPO L3 on GIBS runs ~24–48 h behind real time, so "today" usually
-  // returns HTTP 404. Default to yesterday so the time-loop animation has
-  // guaranteed data to play.
+  // returns HTTP 404. Default to yesterday so the slider has guaranteed
+  // data to scrub through.
   function todayUTC()     { return new Date().toISOString().slice(0, 10); }
   function yesterdayUTC() {
     const d = new Date();
@@ -251,46 +251,15 @@
     setTempoLayer();
   });
 
-  // ---------- Hour-of-day slider + auto-animation ----------
-  // TEMPO scans North America E→W over its daylight window (≈ 12-23 UTC).
-  // A single timestamp only covers a longitude strip. We loop through the
-  // 12 daylight hours automatically to show TEMPO's east-to-west sweep as a
-  // short movie; any user interaction pauses the loop; 5 s of idle resumes.
+  // ---------- Hour-of-day slider ----------
+  // TEMPO scans North America E→W over its daylight window (≈ 12-23 UTC),
+  // so a single timestamp only covers a longitude strip. The slider lets
+  // the user step through the day manually; auto-animation is intentionally
+  // disabled to avoid chewing through GIBS requests while users read the
+  // surrounding sections.
   const hourSlider = document.getElementById('hour-slider');
   const hourValue = document.getElementById('hour-value');
   const HOUR_MIN = 12, HOUR_MAX = 23;
-  const PLAY_INTERVAL_MS = 900;  // ~1 hour of TEMPO coverage per frame
-  const IDLE_RESUME_MS = 5000;
-
-  let playTimer = null;
-  let idleTimer = null;
-
-  function stepHour() {
-    activeHourUTC = activeHourUTC >= HOUR_MAX ? HOUR_MIN : activeHourUTC + 1;
-    activeTimeMode = 'custom';
-    if (hourSlider) hourSlider.value = activeHourUTC;
-    if (hourValue) hourValue.textContent = `${activeHourUTC}:00 UTC`;
-    setTempoLayer();
-  }
-  function startPlaying() {
-    if (playTimer) return;
-    // If we're in 'latest' mode, seed from the default daylight hour.
-    activeTimeMode = 'custom';
-    playTimer = setInterval(stepHour, PLAY_INTERVAL_MS);
-    document.body.classList.add('tempo-playing');
-  }
-  function stopPlaying() {
-    if (playTimer) { clearInterval(playTimer); playTimer = null; }
-    document.body.classList.remove('tempo-playing');
-  }
-  function scheduleResume() {
-    if (idleTimer) clearTimeout(idleTimer);
-    idleTimer = setTimeout(startPlaying, IDLE_RESUME_MS);
-  }
-  function userInterrupt() {
-    stopPlaying();
-    scheduleResume();
-  }
 
   if (hourSlider) {
     hourSlider.min = HOUR_MIN;
@@ -300,7 +269,6 @@
     if (hourValue) hourValue.textContent = `${activeHourUTC}:00 UTC`;
 
     hourSlider.addEventListener('input', (e) => {
-      userInterrupt();
       activeHourUTC = parseInt(e.target.value, 10);
       if (hourValue) hourValue.textContent = `${activeHourUTC}:00 UTC`;
       activeTimeMode = 'custom';
@@ -313,30 +281,10 @@
   const latestBtn = document.getElementById('latest-btn');
   if (latestBtn) {
     latestBtn.addEventListener('click', () => {
-      stopPlaying();
-      if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
       activeTimeMode = 'latest';
       dateInput.value = '';
       setTempoLayer();
     });
-  }
-
-  // Pause the time-loop whenever the user pans, zooms, or switches species.
-  map.on('mousedown touchstart zoomstart dragstart', userInterrupt);
-  dateInput.addEventListener('focus', userInterrupt);
-
-  // Only auto-play when the map is actually in the viewport, to avoid
-  // chewing through GIBS requests while the user is reading other sections.
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) startPlaying();
-        else stopPlaying();
-      });
-    }, { threshold: 0.35 });
-    io.observe(mapEl);
-  } else {
-    startPlaying();
   }
 
   // ---------- Field network site markers ----------
