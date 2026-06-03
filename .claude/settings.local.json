@@ -42,7 +42,9 @@
       "Bash(uv sync *)",
       "Bash(uv run *)",
       "Bash(git fetch *)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(gh pr create --base main --head lab --title 'Workshop banner, wordmarks, and confirmed Sept 14–16 Cambridge details' --body ' *)",
+      "Bash(which gh; ls /opt/homebrew/bin/gh /usr/local/bin/gh 2>&1; type gh 2>&1)"
     ]
   }
 }
