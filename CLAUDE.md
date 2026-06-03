@@ -31,6 +31,7 @@ earth_digital_twin/
 │   ├── styles.css
 │   ├── app.js                     # TEMPO map + misc interactivity
 │   ├── earth-plexus-bg.js         # animated 3-D plexus-Earth hero background
+│   ├── arch-plexus-bg.js          # flowing-water plexus behind the architecture diagram
 │   └── assets/
 │       └── digital_earth_logo.svg # project emblem — rendered via CSS mask
 └── notebooks/
@@ -59,7 +60,7 @@ cd website && python -m http.server 8000
 - **Early Registration** — 03 · Formspree-backed form (name / email / affiliation / comments). Posts to `https://formspree.io/f/xdabeeow` → emails `granttremblay@gmail.com`. Includes a `_gotcha` honeypot for spam. If spam gets through, enable reCAPTCHA in the Formspree dashboard, or layer Cloudflare Turnstile. The email field is intentionally lower-cased (`name="email"`) so Formspree auto-populates Reply-To. The lede + `form-note` both repeat the July 25 booking deadline and the `grant.tremblay@cfa.harvard.edu` contact.
 - **Live TEMPO map** — 04 · interactive, tiled from NASA GIBS
 - **Integration Target (Earth-2)** — 05 · NVIDIA cBottle / earth2studio integration story
-- **Architecture diagram** — 06 · Atmosphere → LEDT → Biosphere
+- **Architecture diagram** — 06 · Atmosphere → LEDT → Biosphere. The three rows of cells sit on top of a horizontally-flowing plexus background (`arch-plexus-bg.js`) that uses the same `earthColor()` mint→teal→ocean→navy ramp as the hero. Nodes drift left-to-right with a gentle vertical sine bob and wrap when they exit the right edge, reading as a "current of light" rather than a sphere. The old SVG `.arch-connector` dashed lines between rows were removed on 2026-06-02 in favour of this plexus.
 - **Field Network** — 07 · SAO / SERC / STRI cards
 - **Note:** the old "Methane-to-Mangrove pipeline" section was removed on 2026-04-21 during the pivot to Innovation-Workshop framing. Don't resurrect it without asking. The Principals/Team + Engaged partners block was also removed on 2026-06-02 — Grant will add a final cohort list later; don't re-add a placeholder grid in the meantime.
 
@@ -164,6 +165,32 @@ Key facts:
   making the sections below the hero transparent or semi-transparent —
   sections currently use opaque `var(--bg-1)`/`var(--bg-2)` backgrounds
   that would cover a fixed plexus anyway.
+
+### Architecture-section flow — `arch-plexus-bg.js`
+
+Sibling module to the hero plexus, scoped to the **`.arch` section**
+(full-bleed — not the inner `.arch-diagram` box, which would clip at the
+container's max-width and read as "in a frame"). Same `earthColor()`
+ramp, same two-canvas depth trick (`#ledt-arch-canvas-far` blurred +
+`#ledt-arch-canvas-near` sharp), but nodes live in a 3-D box that
+flows left → right (positive `vx`, with a per-node depth-modulated
+multiplier so the field has internal current) and gently bob vertically
+on per-node sine phases. Wraps around the right edge.
+
+- `.arch` is the positioning context (`position: relative; isolation: isolate; overflow: hidden`).
+  `.arch > .container` (which holds the heading, lede, and diagram) sits at
+  `z-index: 2` so all of it floats above the canvas. Cell `.atm` / `.bio`
+  / `.ledt` backgrounds are intentionally low-alpha so the plexus glows
+  through and across them.
+- The old SVG `.arch-connector` dashed flow-lines between rows were
+  removed when this landed (2026-06-02). Don't reintroduce them — the
+  plexus replaces that affordance.
+- `IntersectionObserver` pauses the loop when the section scrolls
+  off-screen so it doesn't burn CPU. Respects `prefers-reduced-motion`
+  (renders a single static frame and stops).
+- If you tune density: `NODE_COUNT`, `CONNECT_DIST`, and `FLOW_SPEED`
+  are the three knobs. Don't push density so high that the cell text
+  becomes hard to read against the lacework.
 
 ### Field-site markers
 

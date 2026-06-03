@@ -815,13 +815,21 @@ code {
 .arch {
   background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
   border-top: 1px solid var(--line);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
+/* Heading + diagram float above the flowing plexus canvas (z-index:0)
+   injected into `.arch` by arch-plexus-bg.js. */
+.arch > .container { position: relative; z-index: 2; }
 .arch-diagram {
   margin-top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 40px;
+  padding: 16px 0;
 }
+.arch-row { position: relative; }
 .arch-row {
   display: grid;
   grid-template-columns: 120px 1fr;
@@ -894,32 +902,10 @@ code {
   animation: pulse 2s ease-in-out infinite;
 }
 
-.arch-connector {
-  height: 40px;
-  padding-left: 144px;
-  padding-right: 0;
-}
-.arch-connector svg {
-  width: 100%; height: 100%;
-  overflow: visible;
-}
-.flow-path {
-  fill: none;
-  stroke: url(#flowGradient);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 4;
-  animation: flowDash 4s linear infinite;
-}
-.arch-connector .flow-path { stroke: rgba(199,148,255,0.5); }
-@keyframes flowDash {
-  to { stroke-dashoffset: -32; }
-}
-
 @media (max-width: 900px) {
   .arch-row { grid-template-columns: 1fr; }
   .arch-label { text-align: left; padding: 0; border: none; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
   .arch-cells { grid-template-columns: 1fr; }
-  .arch-connector { padding-left: 0; display: none; }
 }
 
 /* ============================================================
