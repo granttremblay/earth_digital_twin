@@ -331,7 +331,7 @@ A CPU-only, runnable prototype demonstrating:
 
 ## Principals (from proposal)
 
-- **PI:** Grant Tremblay (SAO) — grant.tremblay@cfa.harvard.edu
+- **PI:** Grant Tremblay (SAO) — TremblayG@si.edu
 - **SAO Co-Is:** Michael McCarthy, Randall Smith, Cecilia Garraffo, Caroline Nowlan
 - **SERC Co-Is:** Justin Nowakowski, Patrick Megonigal, Roy Rich
 - **STRI Co-Is:** Mark Torchin, Oris Sanjur
