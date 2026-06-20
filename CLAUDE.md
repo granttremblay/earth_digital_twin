@@ -58,7 +58,9 @@ cd website && python -m http.server 8000
 - **Mission / Gap** — 01 · the "biologically inert" framing from proposal §1
 - **Our Idea** — 02 · bridge between §1 (problem) and §3 (workshop). Names LEDT as the ecological feedback layer, sets up the animating question as a violet-bordered blockquote (`.idea-quote`), and walks through the SAO→LEDT→SERC/STRI asset pipeline (TEMPO/MethaneSAT → ForestGEO/GCReW/Coastal Carbon Network). Ends with the line "The work begins this September." which segues directly into the workshop section's H2. Added 2026-06-03 because the prior 01→02 transition jumped straight from "the problem" to "we're convening to fix it" without ever naming the solution. The proposal language is lifted verbatim from §2 — keep it that way unless Grant rewords the proposal itself.
 - **Innovation Workshop** — 03 · detail block for the SAO+SERC+STRI Innovation Workshop. Venue is **Smithsonian Astrophysical Observatory, 60 Garden Street, Cambridge, MA**; dates are **Sept 14–16, 2026** (Mon–Wed); welcome reception is **Sunday evening Sept 13**; hotel block + lodging info forthcoming. Travel for all Smithsonian scientists can be fully funded by the OUSSR seed award. Per funding restrictions, **all travel must be booked by July 25, 2026** — the `.lab-deadline` call-out at the bottom of the section spells this out and links to `TremblayG@si.edu`. Don't soften that deadline language without asking.
-- **Early Registration** — 04 · Formspree-backed form (name / email / affiliation / comments). Posts to `https://formspree.io/f/xdabeeow` → emails `granttremblay@gmail.com`. Includes a `_gotcha` honeypot for spam. If spam gets through, enable reCAPTCHA in the Formspree dashboard, or layer Cloudflare Turnstile. The email field is intentionally lower-cased (`name="email"`) so Formspree auto-populates Reply-To. The lede + `form-note` both repeat the July 25 booking deadline and the `TremblayG@si.edu` contact.
+- **Early Registration** — 04 · Formspree-backed form (name / email / affiliation / comments / preferred travel details / acknowledgment checkbox). Posts to `https://formspree.io/f/xdabeeow` → emails `granttremblay@gmail.com`. Includes a `_gotcha` honeypot for spam. If spam gets through, enable reCAPTCHA in the Formspree dashboard, or layer Cloudflare Turnstile. The email field is intentionally lower-cased (`name="email"`) so Formspree auto-populates Reply-To. The lede + `form-note` both repeat the July 25 booking deadline and the `TremblayG@si.edu` contact.
+  - **Preferred travel details** (`name="Preferred travel details"`, textarea, optional but "strongly preferred") — freeform itinerary box (airports / dates / lodging needs, e.g. "PTY → BOS, depart Sept 13, return Sept 17, govt-rate room needed"). Its `.field-hint` makes clear this is only for **cost estimation / budgeting** and does **not** book anything — to actually book, the registrant must email `TremblayG@si.edu` (SAO's travel office helps), and all travel must be booked (funding encumbered) by **July 25, 2026**. Don't soften that.
+  - **Acknowledgment** (`name="Acknowledgment"`, checkbox, **required**) — `.field-check` / `.check-label` styled checkbox labelled "I acknowledge 🫡" warning that the workshop is a working sprint/hackathon, not three days of talks, with a little pre-work homework and **2–3 virtual mini-prep meetings in July and August**. The custom check uses a visually-hidden `<input>` + `.check-box` square (teal when `:checked`); don't restyle it back to a native checkbox.
 - **Live TEMPO map** — 05 · interactive, tiled from NASA GIBS
 - **Integration Target (Earth-2)** — 06 · NVIDIA cBottle / earth2studio integration story
 - **Architecture diagram** — 07 · Atmosphere → LEDT → Biosphere. The three rows of cells sit on top of a horizontally-flowing plexus background (`arch-plexus-bg.js`) that uses the same `earthColor()` mint→teal→ocean→navy ramp as the hero. Nodes drift left-to-right with a gentle vertical sine bob and wrap when they exit the right edge, reading as a "current of light" rather than a sphere. The old SVG `.arch-connector` dashed lines between rows were removed on 2026-06-02 in favour of this plexus.
@@ -214,17 +216,30 @@ for the Year-2 TEMPO + MethaneSAT + DestinE fusion roadmap.
   (`assets/si_logo-primary-white.svg`, class `.hero-si-logo`) replacing the
   plain "The Smithsonian" text. The SVG has a tightly-cropped viewBox
   (`58 158 238 42`) and explicit `width="238" height="42"` attributes so
-  browsers use the correct 238:42 aspect ratio. Below it: "Living Earth"
-  (`.grad` gradient) and "Digital Twin" on separate lines via `<br/>`. Don't
-  move the `<br/>`s or swap the logo back to text without asking.
+  browsers use the correct 238:42 aspect ratio. Below it are two stacked
+  block elements (no `<br/>`): "Living Earth" is a `.hero-living-earth`
+  `<span>` that paints `var(--grad-hero)` through a CSS `mask` of
+  `assets/living_earth_wordmark.svg` (animated via `gradShift`), and
+  "Digital Twin" is a plain `<img class="hero-digital-twin">` of
+  `assets/digital_twin_wordmark.svg`. Don't swap the logo back to text
+  without asking.
+  - **Mask SVGs must carry explicit `width`/`height` attributes**, not just a
+    `viewBox`. `living_earth_wordmark.svg` originally had only `viewBox`,
+    which Chrome tolerates as a `mask` source but Safari/Firefox can't size
+    with `mask-size: contain` — so the wordmark rendered as an invisible gap
+    in those browsers (fixed 2026-06-20 by adding `width="859.55"
+    height="201.53"`). Any future SVG used as a CSS `mask`/`-webkit-mask`
+    source needs the same explicit dimensions. (The hero emblem is exempt —
+    it's an *inline* `<svg>` in the markup, not an external mask file.)
 - Hero emblem (`.hero-emblem`) sits above the `<h1>` (between the kicker
-  and the title) and uses the SVG at
-  `website/assets/digital_earth_logo_primary.svg` via CSS `mask-image`, filled with
-  `var(--grad-hero)` and animated with the same `gradShift` keyframes as
-  the title's `.grad` span. The class is **`.hero-emblem`**, NOT
-  `.brand-mark` — the latter already exists on the nav's `◉` icon and
-  colliding classes caused a bug where the nav icon turned into the whole
-  emblem. Keep them separate.
+  and the title). It's an **inline `<svg>`** in `index.html` (not an external
+  file or a CSS mask): its paths use `fill: url(#ledt-grad)`, where
+  `#ledt-grad` is a `<linearGradient>` ramping teal → blue → violet → blue →
+  teal and animated by an embedded `<animateTransform>` (the SVG's own
+  8s gradient slide, mirroring the title's `gradShift`). The class is
+  **`.hero-emblem`**, NOT `.brand-mark` — the latter already exists on the
+  nav's `◉` icon and colliding classes caused a bug where the nav icon
+  turned into the whole emblem. Keep them separate.
 - Accent palette: `--accent` teal (#3ee1c8, "bio"), `--accent-2` blue (#7cc7ff,
   "atmosphere"), `--accent-ledt` violet (#c794ff, "LEDT layer"),
   `--accent-3` amber (#ffb347, "methane/sun"), `--accent-4` pink (#ff5e87,

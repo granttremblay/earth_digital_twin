@@ -1524,6 +1524,93 @@ code {
   color: var(--ink-mute);
   font-weight: 400;
 }
+.register-form .field-hint {
+  margin: -2px 0 2px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-mute);
+}
+.register-form .field-hint em {
+  color: var(--ink-dim);
+  font-style: italic;
+}
+.register-form .field-hint a {
+  color: var(--accent);
+}
+.register-form .field-check {
+  margin-top: 2px;
+}
+.register-form .check-label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+.register-form .check-label input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+}
+.register-form .check-box {
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(5, 7, 13, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.register-form .check-box::after {
+  content: "";
+  width: 11px;
+  height: 6px;
+  border-left: 2px solid var(--bg-1);
+  border-bottom: 2px solid var(--bg-1);
+  transform: rotate(-45deg) translateY(-1px);
+  opacity: 0;
+  transition: opacity .15s;
+}
+.register-form .check-label input:checked ~ .check-box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.register-form .check-label input:checked ~ .check-box::after {
+  opacity: 1;
+}
+.register-form .check-label input:focus-visible ~ .check-box {
+  box-shadow: 0 0 0 3px rgba(62, 225, 200, 0.15);
+  border-color: var(--accent);
+}
+.register-form .check-text {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-mute);
+}
+.register-form .check-text strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-disp);
+  font-size: 14px;
+  color: var(--ink);
+}
+.register-form .check-text strong:not(:first-child) {
+  display: inline;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--ink-dim);
+}
 .register-form input,
 .register-form textarea {
   font-family: var(--font-sans);
