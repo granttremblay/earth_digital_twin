@@ -52,7 +52,9 @@
       "Bash(/opt/anaconda3/bin/python3 -)",
       "Bash(grep -n \"Hero emblem \\(.hero-emblem\\)\\\\|inline .<svg>.\\\\|notebooks/$\\\\|└── notebooks\\\\|class is\\\\|brand-mark\" CLAUDE.md)",
       "Bash(/opt/anaconda3/bin/python3 -c \"from PIL import Image; im=Image.open\\('website/assets/og-card.png'\\); print\\('size', im.size, 'mode', im.mode\\)\")",
-      "Bash(awk '{print $5, $NF}')"
+      "Bash(awk '{print $5, $NF}')",
+      "Bash(xxd website/CNAME)",
+      "Bash(curl -sI https://livingearthtwin.org/)"
     ]
   }
 }

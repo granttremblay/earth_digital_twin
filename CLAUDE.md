@@ -78,10 +78,12 @@ cd website && python -m http.server 8000
 ### Social sharing card (Open Graph / Twitter)
 
 - `<head>` carries `og:*` + `twitter:card` (`summary_large_image`) tags pointing
-  at `assets/og-card.png`. **The `og:image` / `twitter:image` URLs are absolute**
-  (`https://granttremblay.github.io/earth_digital_twin/assets/og-card.png`) —
-  social crawlers won't follow relative paths. If the Pages URL ever changes,
-  update those two absolute URLs.
+  at `assets/og-card.png`. **The `og:url`, `og:image`, `twitter:image`, and the
+  `<link rel="canonical">` are absolute** and use the **custom domain**
+  (`https://livingearthtwin.org/…`, served from the **root**, not the old
+  `/earth_digital_twin/` subpath) — social crawlers won't follow relative paths.
+  If the canonical domain ever changes, update all four (canonical + og:url +
+  og:image + twitter:image) together.
 - **The live `og-card.png` is hand-authored by Grant** (he replaced the
   generated one on 2026-06-24). It is 1200×630 — keep that size so the
   `og:image:width`/`height` tags stay accurate. **Do NOT re-run
@@ -147,18 +149,27 @@ the map code:
 
 ### GitHub Pages deploy
 
-The site is published at **https://granttremblay.github.io/earth_digital_twin/**
+The site is published at the **custom domain https://livingearthtwin.org/**
 via [`.github/workflows/pages.yml`](.github/workflows/pages.yml). Trigger:
 push to `main` touching `website/` (or manual `workflow_dispatch`). The
 workflow uploads `website/` as-is with `actions/upload-pages-artifact@v3` —
-no build step.
+no build step. The default `*.github.io/earth_digital_twin/` URL still resolves
+and redirects to the custom domain.
+
+- **Custom domain is bound by [`website/CNAME`](website/CNAME)** (contains
+  `livingearthtwin.org`). It lives inside `website/` so it lands at the
+  published-site root. **Don't delete it** — GitHub Pages would drop the custom
+  domain on the next deploy. DNS: an `ALIAS`/`ANAME` (or four `A` records to
+  GitHub's Pages IPs) on the apex + a `CNAME` for `www`. "Enforce HTTPS" is a
+  one-time toggle in Settings → Pages (enable once the cert provisions).
 
 Hard rules for keeping Pages working:
 
 - **Never use root-relative paths** (`/styles.css`, `/app.js`) in the website.
-  Pages serves from `/earth_digital_twin/`, so root-rooted links 404. Always
-  use relative (`styles.css`) or absolute-URL externals. The current site is
-  clean — keep it that way.
+  Although the custom domain now serves from `/` (where root-relative *would*
+  resolve), the default `github.io/earth_digital_twin/` URL still serves from a
+  subpath where they'd 404 — so keep using relative (`styles.css`) or
+  absolute-URL externals. The current site is clean — keep it that way.
 - **Don't introduce a build step.** The workflow uploads the directory
   verbatim. If you reach for Vite/webpack/etc., pause — the whole site is
   ~1300 lines of HTML/CSS/JS and a bundler would be net-negative.

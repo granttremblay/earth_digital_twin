@@ -42,7 +42,7 @@ Posting a link to Twitter/Facebook/Slack shows a 1200×630 preview card ([`websi
 
 ### Public deploy (GitHub Pages)
 
-The site auto-publishes to **https://granttremblay.github.io/earth_digital_twin/** on every push to `main` that touches `website/`. The deploy is driven by [`.github/workflows/pages.yml`](.github/workflows/pages.yml), which uploads the `website/` directory as-is — no build step, no branch dance.
+The site auto-publishes to its custom domain **https://livingearthtwin.org/** on every push to `main` that touches `website/`. The deploy is driven by [`.github/workflows/pages.yml`](.github/workflows/pages.yml), which uploads the `website/` directory as-is — no build step, no branch dance. The custom domain is bound by [`website/CNAME`](website/CNAME); don't delete it or Pages will drop the domain on the next deploy. (The default `granttremblay.github.io/earth_digital_twin/` URL still works and redirects here.)
 
 One-time setup on the GitHub repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
