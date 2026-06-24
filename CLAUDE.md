@@ -82,12 +82,15 @@ cd website && python -m http.server 8000
   (`https://granttremblay.github.io/earth_digital_twin/assets/og-card.png`) —
   social crawlers won't follow relative paths. If the Pages URL ever changes,
   update those two absolute URLs.
-- The card (1200×630) is **generated**, not hand-drawn:
-  `python3 scripts/make_og_card.py` bakes it from `earth_backdrop.png` (cover-fit,
+- **The live `og-card.png` is hand-authored by Grant** (he replaced the
+  generated one on 2026-06-24). It is 1200×630 — keep that size so the
+  `og:image:width`/`height` tags stay accurate. **Do NOT re-run
+  `scripts/make_og_card.py` against the default output path — it would overwrite
+  Grant's card.** Treat the script as an archival/fallback generator only; if you
+  ever need it, point it at a different filename and ask before replacing the
+  live card. The script bakes a card from `earth_backdrop.png` (cover-fit,
   darkened) + `digital_earth_logo_white-01.png` (tinted with the teal→blue→violet
-  brand gradient) + the local **Inter** variable font. It's currently
-  *event-focused* (title + "Innovation Workshop · Sept 14–16, 2026 · SAO
-  Cambridge MA"). Re-run the script after editing it and commit the new PNG.
+  brand gradient) + the local **Inter** variable font.
 - This is a **build-time asset script**, not a website or notebook dependency.
   It runs on the system `python3` that has Pillow (not the uv env) — do **not**
   `uv add pillow`; the lockfile stays clean. No build step is introduced for the

@@ -38,7 +38,7 @@ A project emblem — the LEDT globe mark — sits above the title in the hero. I
 
 ### Social sharing card
 
-Posting a link to Twitter/Facebook/Slack shows a 1200×630 preview card ([`website/assets/og-card.png`](website/assets/og-card.png)), wired up via Open Graph / Twitter `<meta>` tags. The card is generated — not hand-drawn — by [`scripts/make_og_card.py`](scripts/make_og_card.py) from the Earth backdrop, the gradient-tinted logo, and the Inter font. Regenerate it with `python3 scripts/make_og_card.py` (uses the system Python's Pillow; it's a build-time asset, not a project dependency) and commit the updated PNG.
+Posting a link to Twitter/Facebook/Slack shows a 1200×630 preview card ([`website/assets/og-card.png`](website/assets/og-card.png)), wired up via Open Graph / Twitter `<meta>` tags. The live card is hand-authored; if you swap it, keep it **1200×630** so the `og:image:width`/`height` tags stay correct. A fallback generator, [`scripts/make_og_card.py`](scripts/make_og_card.py), can bake a card from the Earth backdrop + gradient-tinted logo + Inter font — but note it writes to that same path, so it will overwrite the current card unless you point it elsewhere.
 
 ### Public deploy (GitHub Pages)
 
