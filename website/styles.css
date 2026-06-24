@@ -93,16 +93,26 @@ code {
 .brand-logo {
   display: block;
   width: 56px;
+  height: auto;
   aspect-ratio: 583.93 / 492.58;
-  background: #fff;
-  -webkit-mask: url('assets/digital_earth_logo_primary.svg') center / contain no-repeat;
-          mask: url('assets/digital_earth_logo_primary.svg') center / contain no-repeat;
+  fill: #fff;
+  transition: fill .4s ease, filter .4s ease;
+}
+/* Hover (or keyboard focus) the nav brand → the animated brand gradient sweeps in. */
+.brand:hover .brand-logo,
+.brand:focus-visible .brand-logo {
+  fill: url(#ledt-grad);
+  filter: drop-shadow(0 0 10px rgba(62, 225, 200, 0.5));
 }
 .brand-logo.footer-logo {
   width: 28px;
   display: inline-block;
   vertical-align: middle;
   margin-right: 6px;
+}
+.footer-brand:hover .footer-logo {
+  fill: url(#ledt-grad);
+  filter: drop-shadow(0 0 8px rgba(62, 225, 200, 0.4));
 }
 
 .nav-links {
@@ -213,8 +223,14 @@ code {
   isolation: isolate;
   filter: drop-shadow(0 0 24px rgba(62, 225, 200, 0.25));
 }
+.hero-emblem svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: url(#ledt-grad);
+}
 @media (prefers-reduced-motion: reduce) {
-  .hero-emblem svg animateTransform { display: none; }
+  #ledt-grad animateTransform { display: none; }
 }
 
 .hero-title {
@@ -1221,6 +1237,17 @@ code {
 }
 .foot-links a { color: var(--ink-dim); transition: color .2s; }
 .foot-links a:hover { color: var(--accent); }
+.foot-disclaimer {
+  margin: 28px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-mute);
+  max-width: 760px;
+  text-align: center;
+}
+.foot-disclaimer strong { color: var(--ink-dim); font-weight: 700; }
 
 /* ================= EARTH-2 SECTION ================= */
 .earth2 {

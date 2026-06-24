@@ -34,7 +34,11 @@ The hero background is an animated 3-D "plexus Earth" — a slowly-rotating sphe
 
 The hero title ("The Smithsonian / Living Earth / Digital Twin") is set in **Cormorant Garamond** — an elegant classical serif — with a blue-green gradient accent on "Living Earth". The rest of the site uses Inter / Space Grotesk / JetBrains Mono.
 
-A project emblem ([`website/assets/digital_earth_logo.svg`](website/assets/digital_earth_logo.svg)) sits above the title in the hero. It's rendered via CSS `mask-image` and filled with the same animated `--grad-hero` gradient as "Living Earth", so recoloring the gradient in one place updates both.
+A project emblem — the LEDT globe mark — sits above the title in the hero. Its paths are defined once as an inline `<symbol>` (`#ledt-mark`) at the top of `index.html` and reused via `<use>` for the hero, nav, and footer logos. The hero instance is always filled with the animated `#ledt-grad` gradient; the nav/footer logos are white and light up with that gradient on hover. (This inline-`<symbol>` approach replaced a CSS `mask-image`, which Chrome blocks when the page is opened directly from `file://`.)
+
+### Social sharing card
+
+Posting a link to Twitter/Facebook/Slack shows a 1200×630 preview card ([`website/assets/og-card.png`](website/assets/og-card.png)), wired up via Open Graph / Twitter `<meta>` tags. The card is generated — not hand-drawn — by [`scripts/make_og_card.py`](scripts/make_og_card.py) from the Earth backdrop, the gradient-tinted logo, and the Inter font. Regenerate it with `python3 scripts/make_og_card.py` (uses the system Python's Pillow; it's a build-time asset, not a project dependency) and commit the updated PNG.
 
 ### Public deploy (GitHub Pages)
 

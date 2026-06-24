@@ -44,7 +44,13 @@
       "Bash(git fetch *)",
       "Bash(git checkout *)",
       "Bash(gh pr create --base main --head lab --title 'Workshop banner, wordmarks, and confirmed Sept 14–16 Cambridge details' --body ' *)",
-      "Bash(which gh; ls /opt/homebrew/bin/gh /usr/local/bin/gh 2>&1; type gh 2>&1)"
+      "Bash(which gh; ls /opt/homebrew/bin/gh /usr/local/bin/gh 2>&1; type gh 2>&1)",
+      "Bash(command -v python3)",
+      "Bash(python3 -c \"import PIL; print\\('Pillow', PIL.__version__\\)\")",
+      "Bash(/opt/anaconda3/bin/python3 scripts/make_og_card.py)",
+      "Bash(awk 'NR>=123 && NR<=200 { if \\($0 ~ /<\\\\/svg>/\\) print NR\": \"$0; if \\($0 ~ /<\\\\/span>/ && NR>123\\) {print NR\": \"$0; exit} }' index.html)",
+      "Bash(/opt/anaconda3/bin/python3 -)",
+      "Bash(grep -n \"Hero emblem \\(.hero-emblem\\)\\\\|inline .<svg>.\\\\|notebooks/$\\\\|└── notebooks\\\\|class is\\\\|brand-mark\" CLAUDE.md)"
     ]
   }
 }

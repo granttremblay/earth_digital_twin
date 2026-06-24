@@ -33,7 +33,10 @@ earth_digital_twin/
 │   ├── earth-plexus-bg.js         # animated 3-D plexus-Earth hero background
 │   ├── arch-plexus-bg.js          # flowing-water plexus behind the architecture diagram
 │   └── assets/
-│       └── digital_earth_logo.svg # project emblem — rendered via CSS mask
+│       ├── digital_earth_logo_primary.svg # globe mark (source for the inline <symbol>)
+│       └── og-card.png            # social-share card (generated; see scripts/)
+├── scripts/
+│   └── make_og_card.py            # bakes website/assets/og-card.png (Pillow, build-time)
 └── notebooks/
     └── tempo_earth2_integration.ipynb   # CPU-only TEMPO → earth2studio demo
 ```
@@ -65,6 +68,30 @@ cd website && python -m http.server 8000
 - **Integration Target (Earth-2)** — 06 · NVIDIA cBottle / earth2studio integration story
 - **Architecture diagram** — 07 · Atmosphere → LEDT → Biosphere. The three rows of cells sit on top of a horizontally-flowing plexus background (`arch-plexus-bg.js`) that uses the same `earthColor()` mint→teal→ocean→navy ramp as the hero. Nodes drift left-to-right with a gentle vertical sine bob and wrap when they exit the right edge, reading as a "current of light" rather than a sphere. The old SVG `.arch-connector` dashed lines between rows were removed on 2026-06-02 in favour of this plexus.
 - **Field Network** — 08 · SAO / SERC / STRI cards
+- **Footer disclaimer** — a `.foot-disclaimer` line (centered, dim, divider rule
+  above) at the bottom of the `<footer>`: states LEDT is a *real* Smithsonian
+  project but that this is **not** an official Smithsonian-approved site and the
+  content doesn't necessarily represent the Smithsonian's position. Added
+  2026-06-24 at Grant's request — keep the "not official / doesn't represent the
+  Smithsonian" language; don't drop or soften it.
+
+### Social sharing card (Open Graph / Twitter)
+
+- `<head>` carries `og:*` + `twitter:card` (`summary_large_image`) tags pointing
+  at `assets/og-card.png`. **The `og:image` / `twitter:image` URLs are absolute**
+  (`https://granttremblay.github.io/earth_digital_twin/assets/og-card.png`) —
+  social crawlers won't follow relative paths. If the Pages URL ever changes,
+  update those two absolute URLs.
+- The card (1200×630) is **generated**, not hand-drawn:
+  `python3 scripts/make_og_card.py` bakes it from `earth_backdrop.png` (cover-fit,
+  darkened) + `digital_earth_logo_white-01.png` (tinted with the teal→blue→violet
+  brand gradient) + the local **Inter** variable font. It's currently
+  *event-focused* (title + "Innovation Workshop · Sept 14–16, 2026 · SAO
+  Cambridge MA"). Re-run the script after editing it and commit the new PNG.
+- This is a **build-time asset script**, not a website or notebook dependency.
+  It runs on the system `python3` that has Pillow (not the uv env) — do **not**
+  `uv add pillow`; the lockfile stays clean. No build step is introduced for the
+  site itself (the PNG is committed and served verbatim, like every other asset).
 - **Note:** the old "Methane-to-Mangrove pipeline" section was removed on 2026-04-21 during the pivot to Innovation-Workshop framing. Don't resurrect it without asking. The Principals/Team + Engaged partners block was also removed on 2026-06-02 — Grant will add a final cohort list later; don't re-add a placeholder grid in the meantime.
 
 ### NASA GIBS / TEMPO integration — CRITICAL FACTS
@@ -231,15 +258,34 @@ for the Year-2 TEMPO + MethaneSAT + DestinE fusion roadmap.
     height="201.53"`). Any future SVG used as a CSS `mask`/`-webkit-mask`
     source needs the same explicit dimensions. (The hero emblem is exempt —
     it's an *inline* `<svg>` in the markup, not an external mask file.)
-- Hero emblem (`.hero-emblem`) sits above the `<h1>` (between the kicker
-  and the title). It's an **inline `<svg>`** in `index.html` (not an external
-  file or a CSS mask): its paths use `fill: url(#ledt-grad)`, where
-  `#ledt-grad` is a `<linearGradient>` ramping teal → blue → violet → blue →
-  teal and animated by an embedded `<animateTransform>` (the SVG's own
-  8s gradient slide, mirroring the title's `gradShift`). The class is
-  **`.hero-emblem`**, NOT `.brand-mark` — the latter already exists on the
-  nav's `◉` icon and colliding classes caused a bug where the nav icon
-  turned into the whole emblem. Keep them separate.
+- **The LEDT globe mark is defined ONCE** as a hidden `<symbol id="ledt-mark">`
+  at the very top of `<body>` (along with the shared `<linearGradient
+  id="ledt-grad">`, which ramps teal → blue → violet → blue → teal and is
+  animated by an `<animateTransform>` for the 8s gradient slide). The hero
+  emblem, the nav brand logo, and the footer logo are all just
+  `<svg ...><use href="#ledt-mark" /></svg>` instances — edit the paths in the
+  one `<symbol>`, never in three places. The symbol's paths carry **no `fill`
+  attribute**, so each instance's fill is controlled from CSS (white by
+  default; `fill: url(#ledt-grad)` where we want the animated gradient).
+  - **Why `<use>` and not a CSS `mask`:** Chrome (and Safari/Firefox) block an
+    external SVG used as `mask`/`mask-image` when the page is opened over
+    `file://` — the masked element renders blank. The old hero `::after`
+    mask-image and the old `.brand-logo` `mask: url(...)` both broke this way
+    when Grant opened `index.html` directly. The inline `<symbol>` + `<use>`
+    approach has no external reference and works identically over `http://`
+    **and** `file://`. Don't reintroduce `mask: url('assets/...svg')` for the
+    logo. (Adding `fill="..."` to the symbol paths would also break per-instance
+    coloring — leave them fill-less.)
+  - **Hero emblem** (`.hero-emblem svg`) is always `fill: url(#ledt-grad)`
+    (gradient runs continuously). The class is **`.hero-emblem`**, NOT
+    `.brand-mark` — colliding classes once caused the nav icon to render the
+    whole emblem. Keep them separate.
+  - **Nav + footer brand logos** (`.brand-logo`) are white by default and
+    transition to `fill: url(#ledt-grad)` on hover/focus
+    (`.brand:hover .brand-logo`, `.footer-brand:hover .footer-logo`), with a
+    teal `drop-shadow` glow — i.e. the animated gradient "comes in" on hover.
+  - `prefers-reduced-motion: reduce` freezes the sweep via
+    `#ledt-grad animateTransform { display: none; }`.
 - Accent palette: `--accent` teal (#3ee1c8, "bio"), `--accent-2` blue (#7cc7ff,
   "atmosphere"), `--accent-ledt` violet (#c794ff, "LEDT layer"),
   `--accent-3` amber (#ffb347, "methane/sun"), `--accent-4` pink (#ff5e87,
