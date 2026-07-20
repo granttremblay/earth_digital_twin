@@ -1,0 +1,806 @@
+/* ============================================================
+   LEDT · Innovation Workshop — Attendee Portal
+   Page-specific styles. Loads AFTER styles.css and reuses its
+   tokens, nav, buttons, cards, form, and footer. Only what's
+   unique to this sub-page lives here.
+   ============================================================ */
+
+:root {
+  /* Mockup gradient: hot-pink → orchid → periwinkle → blue.
+     Used for the top wordmark and every Day/Travel/Homework glyph. */
+  --grad-workshop: linear-gradient(100deg,
+      #ff77c8 0%,
+      #d878d8 32%,
+      #a986ea 58%,
+      #7c9ff2 80%,
+      #5fb0f2 100%);
+}
+
+/* Animated gradient painted through an SVG-shaped mask.
+   Mirrors .hero-living-earth from styles.css but with the
+   workshop (pink→blue) ramp. gradShift keyframe lives in styles.css. */
+.grad-wordmark {
+  display: block;
+  background: var(--grad-workshop);
+  background-size: 220% 100%;
+  animation: gradShift 9s ease infinite;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+          mask-position: left center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+}
+@media (prefers-reduced-motion: reduce) {
+  .grad-wordmark { animation: none; background-position: 25% 50%; }
+}
+
+/* ============================================================
+   TOP HERO — workshop_earth_backdrop.png (Earth on the right)
+   Logo + copy sit on the LEFT; a left-side scrim keeps contrast.
+   ============================================================ */
+.wshero {
+  position: relative;
+  min-height: clamp(660px, 92vh, 1000px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 128px 0 96px;
+  background:
+    radial-gradient(ellipse at 78% 48%, rgba(5, 7, 13, 0) 0%, rgba(5, 7, 13, 0.35) 55%, rgba(5, 7, 13, 0.85) 100%),
+    #000 url('assets/workshop_earth_backdrop.png') 72% center / cover no-repeat;
+}
+.wshero::before {
+  /* left-side darkening so the wordmark always has contrast */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+      rgba(5, 7, 13, 0.92) 0%,
+      rgba(5, 7, 13, 0.7) 34%,
+      rgba(5, 7, 13, 0.15) 60%,
+      rgba(5, 7, 13, 0) 78%);
+  pointer-events: none;
+}
+.wshero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.wshero .hero-emblem {
+  margin: 0 0 22px;
+  width: clamp(84px, 8vw, 118px);
+}
+.wshero .kicker {
+  margin-bottom: 26px;
+}
+
+.wshero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+/* Smithsonian logo + "Living Earth Digital Twin" read as one sub-lockup,
+   set apart from (and beneath) the big "Innovation Workshop" headline. */
+.wshero-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(8px, 1.1vw, 14px);
+  margin-top: clamp(22px, 2.8vw, 38px);
+}
+.wshero-si-logo {
+  height: clamp(26px, 3.6vw, 46px);
+  width: auto;
+  display: block;
+}
+.ws-innovation {
+  width: clamp(280px, 44vw, 560px);
+  aspect-ratio: 143 / 47.34;
+  -webkit-mask-image: url('assets/innovation_workshop.svg');
+          mask-image: url('assets/innovation_workshop.svg');
+  filter: drop-shadow(0 6px 34px rgba(180, 130, 240, 0.28));
+}
+/* Inlined livingearthdigitaltwin.svg — "Living Earth" is gradient-filled
+   (#lw-grad, animated), "Digital Twin" is white. Sized by width; the SVG's
+   viewBox carries some vertical padding, so the -6px top margin snugs it up
+   under the Smithsonian logo. */
+.wshero-wordmark {
+  display: block;
+  width: clamp(300px, 50vw, 610px);
+  height: auto;
+  margin-top: -6px;
+  filter: drop-shadow(0 6px 30px rgba(180, 130, 240, 0.22));
+}
+@media (prefers-reduced-motion: reduce) {
+  #lw-grad animateTransform { display: none; }
+}
+.wshero-lede {
+  font-size: clamp(16px, 1.4vw, 19px);
+  color: var(--ink-dim);
+  max-width: 640px;
+  line-height: 1.65;
+  margin-bottom: 34px;
+}
+.wshero-lede strong { color: var(--ink); font-weight: 600; }
+.wshero-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.wshero .scroll-hint { color: var(--ink-mute); }
+
+@media (max-width: 820px) {
+  .wshero {
+    background:
+      linear-gradient(180deg, rgba(5, 7, 13, 0.55) 0%, rgba(5, 7, 13, 0.86) 100%),
+      #000 url('assets/workshop_earth_backdrop.png') 65% center / cover no-repeat;
+    min-height: 0;
+    padding: 120px 0 72px;
+  }
+  .wshero::before { display: none; }
+}
+
+/* ============================================================
+   AGENDA
+   ============================================================ */
+.agenda {
+  background: linear-gradient(to bottom, var(--bg-0) 0%, var(--bg-1) 100%);
+  border-top: 1px solid var(--line);
+}
+
+/* Sunday pre-event callout */
+.agenda-pre {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 24px;
+  margin: 0 0 40px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent-ledt);
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(199, 148, 255, 0.08), rgba(255, 255, 255, 0.01));
+}
+.agenda-pre-tag {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ledt);
+  padding: 6px 12px;
+  border: 1px solid rgba(199, 148, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(199, 148, 255, 0.08);
+}
+.agenda-pre-body {
+  font-size: 15px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+.agenda-pre-body strong { color: var(--ink); }
+
+.agenda-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.day-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.008) 100%);
+  padding: 30px 26px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s, transform .3s;
+}
+.day-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--grad-workshop);
+  opacity: 0.8;
+}
+.day-card:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+}
+.day-head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.day-word {
+  height: clamp(38px, 4.4vw, 52px);
+}
+.day-one   { width: clamp(150px, 22vw, 200px); aspect-ratio: 410.53 / 128.07;
+  -webkit-mask-image: url('assets/dayone.svg');   mask-image: url('assets/dayone.svg'); }
+.day-two   { width: clamp(150px, 22vw, 200px); aspect-ratio: 410.53 / 128.07;
+  -webkit-mask-image: url('assets/daytwo.svg');   mask-image: url('assets/daytwo.svg'); }
+.day-three { width: clamp(178px, 26vw, 236px); aspect-ratio: 483.51 / 128.07;
+  -webkit-mask-image: url('assets/daythree.svg'); mask-image: url('assets/daythree.svg'); }
+
+.day-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.day-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bg-0);
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--grad-workshop);
+}
+.day-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--ink-mute);
+}
+
+.day-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.day-list li {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+.slot-time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent-2);
+  letter-spacing: 0.02em;
+  padding-top: 1px;
+}
+.slot-body {
+  font-size: 14px;
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+.slot-body strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 940px) {
+  .agenda-grid { grid-template-columns: 1fr; }
+  .agenda-pre { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
+/* ============================================================
+   TRAVEL — workshop_bottom_backdrop.png (blue horizon, bottom)
+   ============================================================ */
+.travel {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(5, 7, 13, 0.82) 0%, rgba(5, 7, 13, 0.62) 42%, rgba(5, 7, 13, 0.9) 100%),
+    #000 url('assets/workshop_bottom_backdrop.png') center bottom / cover no-repeat;
+}
+.travel-inner {
+  position: relative;
+  z-index: 1;
+}
+.travel-word {
+  width: clamp(150px, 20vw, 220px);
+  aspect-ratio: 297.37 / 133.53;
+  height: auto;
+  margin-bottom: 22px;
+  -webkit-mask-image: url('assets/travel.svg');
+          mask-image: url('assets/travel.svg');
+  filter: drop-shadow(0 6px 30px rgba(120, 160, 240, 0.28));
+}
+.travel-lede { max-width: 760px; }
+.travel-lede a { color: var(--accent); border-bottom: 1px solid currentColor; }
+.travel-lede a:hover { color: var(--ink); }
+.travel-cards { margin-bottom: 32px; }
+.travel .card {
+  background: linear-gradient(180deg, rgba(10, 14, 26, 0.72) 0%, rgba(10, 14, 26, 0.5) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Date band */
+.travel-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--line);
+  margin-bottom: 32px;
+}
+.travel-band-col {
+  padding: 22px 20px;
+  background: rgba(8, 11, 20, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.tb-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+}
+.tb-value {
+  font-family: var(--font-disp);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.tb-sub {
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  line-height: 1.4;
+}
+.tb-deadline .tb-value {
+  background: var(--grad-workshop);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradShift 9s ease infinite;
+}
+.tb-deadline .tb-sub { color: var(--accent-4); }
+
+/* Reuse the deadline call-out look from styles.css .lab-deadline;
+   add a scrim so it reads over the backdrop. */
+.travel-deadline {
+  position: relative;
+}
+
+@media (max-width: 780px) {
+  .travel-band { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .travel {
+    background:
+      linear-gradient(180deg, rgba(5, 7, 13, 0.8) 0%, rgba(5, 7, 13, 0.92) 100%),
+      #000 url('assets/workshop_bottom_backdrop.png') center / cover no-repeat;
+  }
+}
+
+/* Shared deadline note (also used on homework). Modeled on the
+   site's .lab-note / .lab-deadline but defined here so this page
+   is self-contained if those classes ever change. */
+.lab-note {
+  margin-top: 8px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.lab-note strong { color: var(--ink); }
+.lab-note a { color: var(--accent); border-bottom: 1px solid currentColor; }
+.lab-note a:hover { color: var(--ink); }
+.lab-deadline {
+  border-left: 3px solid var(--accent-4);
+  background: linear-gradient(90deg, rgba(255, 94, 135, 0.08), rgba(255, 255, 255, 0.01));
+}
+.lab-deadline strong { color: var(--accent-4); }
+
+/* ============================================================
+   HEILMEIER CATECHISM — "what are we actually doing"
+   ============================================================ */
+.heilmeier {
+  background: linear-gradient(to bottom, var(--bg-0) 0%, var(--bg-1) 100%);
+  border-top: 1px solid var(--line);
+}
+/* Inlined heilmeier.svg — gradient on the "What are we actually doing?" line,
+   white on the "Our Heilmeier Catechism" line. */
+.heilmeier-word {
+  display: block;
+  width: clamp(280px, 48vw, 580px);
+  height: auto;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 6px 30px rgba(180, 130, 240, 0.22));
+}
+@media (prefers-reduced-motion: reduce) {
+  #heil-grad animateTransform { display: none; }
+}
+.heilmeier-def { max-width: 780px; }
+.catechism-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.cat-pill {
+  padding: 24px 26px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.008) 100%);
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+.cat-pill:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+.cat-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.cat-num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-family: var(--font-disp);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--bg-0);
+  background: var(--grad-workshop);
+  background-size: 180% 100%;
+  animation: gradShift 9s ease infinite;
+}
+.cat-q {
+  font-family: var(--font-disp);
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.cat-q-sub { color: var(--ink-mute); font-weight: 400; }
+.cat-a {
+  font-size: 15px;
+  color: var(--ink-dim);
+  line-height: 1.62;
+}
+.cat-a em { color: var(--accent); font-style: italic; }
+.cat-a strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 820px) {
+  .catechism-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   HOMEWORK
+   ============================================================ */
+.homework {
+  background: linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-0) 100%);
+}
+.homework-word {
+  width: clamp(240px, 44vw, 480px);
+  aspect-ratio: 740.35 / 106.47;
+  height: auto;
+  margin-bottom: 22px;
+  -webkit-mask-image: url('assets/homework.svg');
+          mask-image: url('assets/homework.svg');
+  filter: drop-shadow(0 6px 30px rgba(180, 130, 240, 0.22));
+}
+.homework-lede { max-width: 760px; }
+.hw-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 28px;
+}
+.hw-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.008) 100%);
+  transition: border-color .3s, transform .3s;
+}
+.hw-item:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+.hw-num {
+  font-family: var(--font-disp);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  background: var(--grad-workshop);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradShift 9s ease infinite;
+}
+.hw-body h3 {
+  font-family: var(--font-disp);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.hw-body p {
+  font-size: 14.5px;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+/* Compact "read the PDF" pill inside a homework card. */
+.hw-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  transition: border-color .2s, background .2s, color .2s;
+}
+.hw-link:hover {
+  border-color: var(--accent);
+  background: rgba(62, 225, 200, 0.08);
+  color: var(--ink);
+}
+/* ----- Workshop questionnaire (merged into the homework section) ----- */
+.hw-questions {
+  margin-top: 44px;
+  padding-top: 44px;
+  border-top: 1px solid var(--line);
+}
+.hw-q-heading {
+  font-family: var(--font-disp);
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+/* The "we really need you to respond" note — deliberately red. */
+.hw-required {
+  max-width: 720px;
+  margin-bottom: 8px;
+  padding: 16px 20px;
+  border: 1px solid rgba(255, 76, 92, 0.45);
+  border-left: 3px solid #ff4c5c;
+  border-radius: 12px;
+  background: rgba(255, 76, 92, 0.1);
+  color: #ffb0b8;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.hw-required strong { color: #ff5e6b; font-weight: 700; }
+/* Left-align the form under the section (override register-form's centered margin). */
+.hw-form {
+  margin: 24px 0 0;
+  max-width: 680px;
+}
+
+@media (max-width: 820px) {
+  .hw-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   POSTER — downloadable flyer with thumbnail
+   ============================================================ */
+.poster {
+  background: linear-gradient(to bottom, var(--bg-0) 0%, var(--bg-1) 100%);
+  border-top: 1px solid var(--line);
+}
+.poster-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 340px) 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.poster-thumb {
+  position: relative;
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #05070d;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+}
+.poster-thumb::before {
+  /* gradient hairline that lights up on hover */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: var(--grad-workshop);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+.poster-thumb:hover {
+  transform: translateY(-4px);
+  border-color: transparent;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(180, 130, 240, 0.25);
+}
+.poster-thumb:hover::before { opacity: 1; }
+.poster-thumb img { display: block; width: 100%; height: auto; }
+.poster-thumb-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--bg-0);
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--grad-workshop);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+.poster-heading {
+  font-family: var(--font-disp);
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+.poster-text {
+  font-size: 16px;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  max-width: 560px;
+  margin-bottom: 26px;
+}
+.poster-text em { color: var(--accent); font-style: italic; }
+.poster-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.poster-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+
+@media (max-width: 820px) {
+  .poster-grid { grid-template-columns: 1fr; gap: 32px; }
+  .poster-thumb { max-width: 340px; }
+}
+
+/* ============================================================
+   PARTICIPANTS — scrollable, manually editable list
+   ============================================================ */
+.participants {
+  background: var(--bg-0);
+  border-top: 1px solid var(--line);
+}
+.pt-scroll {
+  max-height: 460px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.005) 100%);
+  /* Fade the top/bottom edges so long lists read as "more below". */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22px, #000 calc(100% - 22px), transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 22px, #000 calc(100% - 22px), transparent 100%);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.pt-scroll::-webkit-scrollbar { width: 10px; }
+.pt-scroll::-webkit-scrollbar-track { background: transparent; }
+.pt-scroll::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.pt-list {
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+}
+.pt-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  transition: background .2s;
+}
+.pt-row + .pt-row {
+  border-top: 1px solid var(--line);
+}
+.pt-row:hover { background: rgba(255, 255, 255, 0.03); }
+.pt-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-family: var(--font-disp);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--bg-0);
+  background: var(--grad-workshop);
+  background-size: 180% 100%;
+  animation: gradShift 9s ease infinite;
+  flex-shrink: 0;
+}
+.pt-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.pt-name {
+  font-family: var(--font-disp);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.pt-affil {
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+.pt-role {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.pt-role-pi {
+  color: var(--bg-0);
+  border-color: transparent;
+  background: var(--grad-workshop);
+}
+.pt-foot {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--ink-mute);
+}
+.pt-foot a { color: var(--accent); border-bottom: 1px solid currentColor; }
+.pt-foot a:hover { color: var(--ink); }
+
+@media (max-width: 560px) {
+  .pt-role { display: none; }
+  .pt-row { grid-template-columns: auto 1fr; }
+}

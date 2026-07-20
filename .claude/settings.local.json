@@ -54,7 +54,14 @@
       "Bash(/opt/anaconda3/bin/python3 -c \"from PIL import Image; im=Image.open\\('website/assets/og-card.png'\\); print\\('size', im.size, 'mode', im.mode\\)\")",
       "Bash(awk '{print $5, $NF}')",
       "Bash(xxd website/CNAME)",
-      "Bash(curl -sI https://livingearthtwin.org/)"
+      "Bash(curl -sI https://livingearthtwin.org/)",
+      "Bash(sips -g pixelWidth -g pixelHeight assets/workshop_earth_backdrop.png assets/workshop_bottom_backdrop.png)",
+      "Bash(curl -sI http://localhost:8765/website/workshop.html)",
+      "Bash(curl -sI http://localhost:8765/workshop.html)",
+      "Bash(sips -g pixelWidth -g pixelHeight poster_preview.png)",
+      "Bash(curl -sI 'http://localhost:8765/assets/innovation_workshop_poster.pdf')",
+      "Bash(awk '{printf \"path %2d  x=%s\\\\n\", $1, $2}')",
+      "Bash(curl -sI 'http://localhost:8765/assets/DigitalTwin_Innovation_SAO_Proposal.pdf')"
     ]
   }
 }

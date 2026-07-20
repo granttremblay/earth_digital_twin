@@ -28,7 +28,9 @@ earth_digital_twin/
 │   └── Smithsonian Living Earth Digital Twin.pdf
 ├── website/                       # sophisticated landing page + live TEMPO map
 │   ├── index.html
-│   ├── styles.css
+│   ├── workshop.html              # attendee portal sub-page (agenda/travel/homework/participants/ask)
+│   ├── styles.css                 # shared design system (used by both pages)
+│   ├── workshop.css               # page-specific styles for workshop.html
 │   ├── app.js                     # TEMPO map + misc interactivity
 │   ├── earth-plexus-bg.js         # animated 3-D plexus-Earth hero background
 │   ├── arch-plexus-bg.js          # flowing-water plexus behind the architecture diagram
@@ -74,6 +76,98 @@ cd website && python -m http.server 8000
   content doesn't necessarily represent the Smithsonian's position. Added
   2026-06-24 at Grant's request — keep the "not official / doesn't represent the
   Smithsonian" language; don't drop or soften it.
+
+### Attendee portal — `workshop.html`
+
+A second page ([`website/workshop.html`](website/workshop.html), published at
+`https://livingearthtwin.org/workshop.html`) for confirmed workshop attendees.
+index.html links to it in three spots: a **"For Attendees ↗"** nav link, a
+**"For Workshop Attendees →"** ghost button in the `#workshop` banner (paired
+with Register Now via `.ws-cta-row`), and an *"Already registered?"*
+`.register-portal-note` line under the `#register` lede. It **reuses
+`styles.css`** for
+all shared components (nav, `.btn`, `.container`, `.card`, `.mission-grid`,
+`.register-form`, `.eyebrow`/`.h2`/`.lede`, footer) and adds a page-specific
+[`website/workshop.css`](website/workshop.css) for everything unique to it.
+Keep it that way — don't fork the shared components into workshop.css, and don't
+introduce a build step (same rules as index.html).
+
+Sections (in order):
+- **Top hero** (`.wshero`) — full-bleed `assets/workshop_earth_backdrop.png`
+  (Earth on the right); the animated-gradient **"Innovation Workshop"** wordmark
+  (`.ws-innovation`, masking `assets/innovation_workshop.svg`) sits on the
+  **left**, and beneath it a **sub-lockup** (`.wshero-lockup`): the Smithsonian
+  logo (`si_logo-primary-white.svg`) above the "Living Earth Digital Twin"
+  wordmark. That wordmark is **`assets/livingearthdigitaltwin.svg` inlined**
+  (`.wshero-wordmark`) and split into two `<g>`s — "Living Earth" (paths 1–11)
+  filled with an animated SVG gradient (`#lw-grad`, pink→purple→blue) and
+  "Digital Twin" (paths 12–22) filled white. Inlined (not masked) precisely so
+  the two words can carry different fills; don't collapse it back to a single
+  mask/`--grad-workshop` fill. With the emblem removed, copy and a left-side
+  scrim
+  (`.wshero::before`) for contrast. Matches the mockup Grant supplied. Same
+  emblem/`<use href="#ledt-mark">` and `#ledt-grad` symbol as index (copied into
+  this file's `<body>` top). (The earlier build used the Living Earth / Digital
+  Twin wordmark here — swapped to Innovation Workshop on 2026-07-20.)
+- **Agenda** (`#agenda`) — Sunday reception call-out + three `.day-card`s
+  (Day One · Discover / Day Two · Build / Day Three · Prototype), each a
+  time-slotted `.day-list`. Draft times; the framing (discover→build→prototype)
+  is the fixed part.
+- **Travel** (`#travel`) — logistics over `assets/workshop_bottom_backdrop.png`
+  (SAO 60 Garden St, BOS Logan, lodging TBD), a `.travel-band` date strip, and
+  the **July 25, 2026 booking deadline** call-out. Don't soften that deadline
+  (same rule as index).
+- **What & Why** (`#rationale`, nav "What & Why") — the "what are we actually doing"
+  wordmark: **`assets/heilmeier.svg` inlined** (`.heilmeier-word`) with its two
+  `<g>`s split — the first line ("What are we actually doing?") gets the animated
+  gradient (`#heil-grad`), the second line ("Our Heilmeier Catechism") is white.
+  Inlined (not masked) so the two lines can carry different fills. Then a
+  one-paragraph
+  definition of the Heilmeier Catechism, then eight `.cat-pill` pillboxes (a
+  gradient number badge + the question + a brief answer) in a `.catechism-grid`.
+  Answers are kept short and hedged per the "don't overclaim" rule. Sits right
+  before Homework.
+- **Your Homework** (`#homework`) — pre-work (item 01 "Read the proposal" links
+  to `assets/DigitalTwin_Innovation_SAO_Proposal.pdf` via a compact `.hw-link`
+  pill) + the **2–3 virtual mini-prep meetings in July/August**, and — merged in
+  from the former "Ask us" section —
+  a **required questionnaire** (`.hw-questions`, anchor `#questions`, which the
+  nav "Answer questions →" CTA and footer point to). It opens with a
+  deliberately-**red** `.hw-required` "we really need you to respond" note, then
+  a Formspree form (`.hw-form`) posting to **`https://formspree.io/f/xgogyqla`**
+  (Grant's dedicated questionnaire form — swap the ID to reroute). The questions
+  are plain
+  `<div class="field">` blocks between clearly-marked `EDIT THE QUESTIONS HERE`
+  comment fences so Grant can add/edit/remove them (the `name="…"` becomes the
+  Formspree column header). Same `_gotcha` honeypot pattern as the main-site
+  form.
+- **Poster** (`#poster`) — downloadable flyer. A `.poster-thumb`
+  (`assets/poster_preview.png`, 1836×2374) links to and previews
+  `assets/innovation_workshop_poster.pdf` (~16 MB); a `download` button + a
+  "preview in browser" button sit alongside. If the poster is re-exported, keep
+  both filenames (or update the `href`/`src` in workshop.html).
+- **Participants** (`#participants`) — a **scrollable, manually-editable**
+  `.pt-scroll` list. Grant adds people by copying a `<li class="pt-row">` block
+  (there's an HTML comment with instructions). Pre-seeded with the proposal
+  principals. Gradient initials avatars; PI/Co-I role pills.
+
+(The standalone "Ask us" section was removed 2026-07-20 — its form now lives
+inside Homework as the required questionnaire described above.)
+
+**Gradient wordmarks.** The hero "Innovation Workshop" and the "Day
+One/Two/Three", "Travel", and "Your Homework" headings are the supplied SVGs
+used as CSS
+`-webkit-mask`/`mask` sources over a **pink→purple→blue** gradient
+(`--grad-workshop`, defined in workshop.css to match the mockup Grant provided),
+animated with the shared `gradShift` keyframe from styles.css (via the
+`.grad-wordmark` helper). This is deliberately a *different* ramp from the
+site's teal→blue→violet `--grad-hero`/`#ledt-grad` — don't unify them.
+**The wordmark-mask SVGs** (`assets/innovation_workshop.svg`, `dayone.svg`,
+`daytwo.svg`, `daythree.svg`, `travel.svg`, `homework.svg`) had explicit
+`width`/`height` attributes added to their `<svg>` tags so Safari/Firefox size
+them as `mask-size: contain` sources
+(same fix as `living_earth_wordmark.svg`; see the mask-SVG note under Styling).
+Don't strip those attributes.
 
 ### Social sharing card (Open Graph / Twitter)
 

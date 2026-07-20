@@ -484,6 +484,26 @@ code {
 .ws-cta {
   display: inline-flex;
 }
+.ws-cta-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* "Already registered? → attendee portal" line under the registration lede */
+.register-portal-note {
+  max-width: 780px;
+  margin: -32px 0 44px;
+  font-size: 15px;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+.register-portal-note a {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+  transition: color .2s;
+}
+.register-portal-note a:hover { color: var(--ink); }
 @media (max-width: 900px) {
   .workshop {
     background:
