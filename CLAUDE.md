@@ -113,10 +113,37 @@ Sections (in order):
   (Day One · Discover / Day Two · Build / Day Three · Prototype), each a
   time-slotted `.day-list`. Draft times; the framing (discover→build→prototype)
   is the fixed part.
-- **Travel** (`#travel`) — logistics over `assets/workshop_bottom_backdrop.png`
-  (SAO 60 Garden St, BOS Logan, lodging TBD), a `.travel-band` date strip, and
-  the **July 25, 2026 booking deadline** call-out. Don't soften that deadline
-  (same rule as index).
+- **Travel** (`#travel`) — logistics over `assets/workshop_bottom_backdrop.png`.
+  Two `.card`s (venue · SAO 60 Garden St / flying in · BOS Logan) in a
+  **2-up `.travel-cards` grid**, then a full-width **"Where to stay"
+  postcard-collage feature** (`.stay-feature`), a `.travel-band` date strip,
+  and the **July 25, 2026 booking deadline** call-out. Don't soften that
+  deadline (same rule as index).
+  - **The postcard collage** (`.stay-feature` → `.stay-copy` + `.stay-collage`)
+    names the lodging — the **historic Sheraton Commander, 16 Garden Street**,
+    a two-minute walk from SAO — and leans on its Washington-Elm history. The
+    three hotel images (`assets/hotel-1.png` the whimsical "your hotel" street
+    photo, `assets/hotel-2.jpg` the modern hotel, `assets/hotel-3.jpg` the
+    vintage "The Commander" postcard) are `.postcard`s: cream-bordered,
+    slightly rotated, scattered with a hover parallax lift (frozen under
+    `prefers-reduced-motion`). Added 2026-07-20, replacing the old single
+    "Where to stay" card. **Clicking (or Enter/Space on) a `.postcard` opens
+    it in a lightbox** (`#pcLightbox` / `.pc-lightbox`): the image zooms up
+    into a centered, cream-framed full view with its `data-caption`; Esc, the
+    ✕ button, or a backdrop click closes it. **Once open, the ‹ › arrows, the
+    Left/Right arrow keys, or a horizontal touch swipe step through all the
+    postcards as a wrap-around loop** (`.pc-lightbox-nav` buttons + a
+    `.pc-lightbox-count` "n / total" readout); slides are built once in DOM
+    order and swapped with a quick opacity cross-fade (skipped under
+    `prefers-reduced-motion`). Driven by a small self-contained inline
+    `<script>` at the bottom of `workshop.html` — the page's only JS, no
+    dependencies; don't reach for a lightbox/carousel library. Each postcard's
+    `data-caption` (HTML allowed) is the lightbox caption, the current dialog
+    `aria-label` (tags stripped), and the card's own `aria-label`. **Images render at natural aspect (no `object-fit`
+    crop)** on purpose — the vintage postcards carry text that must stay
+    legible; don't switch them to fixed-height cover crops. If the hotel block
+    changes, swap the `<img>` srcs + `.stay-copy`. (`hotel-1.png` is a ~3.8 MB
+    PNG — fine as-is, but a candidate for compression if page weight matters.)
 - **What & Why** (`#rationale`, nav "What & Why") — the "what are we actually doing"
   wordmark: **`assets/heilmeier.svg` inlined** (`.heilmeier-word`) with its two
   `<g>`s split — the first line ("What are we actually doing?") gets the animated
@@ -127,10 +154,21 @@ Sections (in order):
   gradient number badge + the question + a brief answer) in a `.catechism-grid`.
   Answers are kept short and hedged per the "don't overclaim" rule. Sits right
   before Homework.
-- **Your Homework** (`#homework`) — pre-work (item 01 "Read the proposal" links
-  to `assets/DigitalTwin_Innovation_SAO_Proposal.pdf` via a compact `.hw-link`
-  pill) + the **2–3 virtual mini-prep meetings in July/August**, and — merged in
-  from the former "Ask us" section —
+- **Your Homework** (`#homework`) — a `.hw-grid` of five `.hw-item` steps.
+  Item 01 "Read the proposal" links to
+  `assets/DigitalTwin_Innovation_SAO_Proposal.pdf` via a compact `.hw-link`
+  pill; **item 02 "Get a basic familiarity with NVIDIA's Earth-2 models" is a
+  full-width `.hw-item-wide` card that embeds a YouTube video** in a responsive
+  16:9 `.hw-video` frame (privacy-mode `youtube-nocookie.com/embed/…?rel=0`,
+  `loading="lazy"`). Inside the card a `.hw-video-layout` grid puts the video on
+  the left (~1.5fr) and the supporting copy + a `.hw-video-note` line (linking a
+  second, shorter tutorial video) on the right (~1fr, vertically centered), so
+  no dead space is left beside the player; it collapses to stacked below 720px.
+  It's the only full-width step so the video gets a big presentation — the other
+  four (proposal / bring-a-problem / prep-calls / laptop) stay half-width, and
+  step numbers renumber if you insert more.
+  Items 03–05 plus the **2–3 virtual mini-prep meetings in July/August**, and
+  — merged in from the former "Ask us" section —
   a **required questionnaire** (`.hw-questions`, anchor `#questions`, which the
   nav "Answer questions →" CTA and footer point to). It opens with a
   deliberately-**red** `.hw-required` "we really need you to respond" note, then
