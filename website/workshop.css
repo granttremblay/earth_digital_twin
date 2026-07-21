@@ -218,6 +218,15 @@
   margin-bottom: 20px;
   border-bottom: 1px solid var(--line);
 }
+.agenda-word {
+  width: clamp(170px, 24vw, 268px);
+  aspect-ratio: 361.39 / 138.27;
+  height: auto;
+  margin-bottom: 24px;
+  -webkit-mask-image: url('assets/agenda.svg');
+          mask-image: url('assets/agenda.svg');
+  filter: drop-shadow(0 6px 30px rgba(120, 160, 240, 0.24));
+}
 .day-word {
   height: clamp(38px, 4.4vw, 52px);
 }
@@ -319,14 +328,16 @@
 .travel-lede a:hover { color: var(--ink); }
 .travel-cards { margin-bottom: 24px; grid-template-columns: repeat(2, 1fr); }
 .travel .card,
-.stay-feature {
+.stay-feature,
+.venue-feature {
   background: linear-gradient(180deg, rgba(10, 14, 26, 0.72) 0%, rgba(10, 14, 26, 0.5) 100%);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* ---- Where to stay · postcard-collage feature ---- */
-.stay-feature {
+/* ---- Postcard-collage feature (shared by "the space" + "where to stay") ---- */
+.stay-feature,
+.venue-feature {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 34px;
@@ -336,7 +347,8 @@
   padding: 34px;
   margin-bottom: 32px;
 }
-.stay-ey {
+.stay-ey,
+.venue-ey {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -344,25 +356,30 @@
   color: var(--accent-3);
   margin-bottom: 12px;
 }
-.stay-copy h3 {
+.stay-copy h3,
+.venue-copy h3 {
   font-family: var(--font-disp);
   font-size: 25px;
   font-weight: 700;
   letter-spacing: -0.01em;
   margin: 0 0 12px;
 }
-.stay-copy p {
+.stay-copy p,
+.venue-copy p {
   color: var(--ink-dim);
   font-size: 14.5px;
   line-height: 1.65;
   margin: 0 0 12px;
 }
-.stay-copy p strong { color: var(--ink); font-weight: 600; }
-.stay-copy p:last-child { margin-bottom: 0; }
+.stay-copy p strong,
+.venue-copy p strong { color: var(--ink); font-weight: 600; }
+.stay-copy p:last-child,
+.venue-copy p:last-child { margin-bottom: 0; }
 .stay-quip { font-style: italic; color: var(--accent-3); }
-.stay-note { color: var(--ink-mute); font-size: 13px; }
+.stay-note,
+.venue-note { color: var(--ink-mute); font-size: 13px; }
 
-.stay-collage {
+.pc-collage {
   position: relative;
   height: 340px;
 }
@@ -385,15 +402,15 @@
 .postcard.pc-1 { width: 56%; top: 8%;  left: 2%;  transform: rotate(-6deg); z-index: 2; }
 .postcard.pc-2 { width: 52%; top: 26%; right: 0;  transform: rotate(5deg);  z-index: 3; }
 .postcard.pc-3 { width: 46%; bottom: 0; left: 20%; transform: rotate(-2deg); z-index: 4; }
-.stay-collage:hover .pc-1 { transform: rotate(-9deg) translateY(-6px); }
-.stay-collage:hover .pc-2 { transform: rotate(8deg)  translateY(-4px); }
-.stay-collage:hover .pc-3 { transform: rotate(-1deg) translateY(-8px) scale(1.03); z-index: 5; }
+.pc-collage:hover .pc-1 { transform: rotate(-9deg) translateY(-6px); }
+.pc-collage:hover .pc-2 { transform: rotate(8deg)  translateY(-4px); }
+.pc-collage:hover .pc-3 { transform: rotate(-1deg) translateY(-8px) scale(1.03); z-index: 5; }
 
 @media (prefers-reduced-motion: reduce) {
   .postcard,
-  .stay-collage:hover .pc-1,
-  .stay-collage:hover .pc-2,
-  .stay-collage:hover .pc-3 { transition: none; }
+  .pc-collage:hover .pc-1,
+  .pc-collage:hover .pc-2,
+  .pc-collage:hover .pc-3 { transition: none; }
 }
 
 /* ---- Postcard lightbox ---- */
@@ -595,8 +612,8 @@
 @media (max-width: 780px) {
   .travel-band { grid-template-columns: repeat(2, 1fr); }
   .travel-cards { grid-template-columns: 1fr; }
-  .stay-feature { grid-template-columns: 1fr; gap: 28px; }
-  .stay-collage { height: 300px; margin-top: 4px; }
+  .stay-feature, .venue-feature { grid-template-columns: 1fr; gap: 28px; }
+  .pc-collage { height: 300px; margin-top: 4px; }
 }
 @media (max-width: 900px) {
   .travel {

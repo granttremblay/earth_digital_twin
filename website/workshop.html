@@ -130,7 +130,7 @@
     <div class="wshero-inner">
       <div class="kicker">
         <span class="dot"></span>
-        Sept 14-16, 2026
+        Sept 14-16, 2026, Cambridge, MA
       </div>
       <h1 class="wshero-title">
         <span class="grad-wordmark ws-innovation" role="img" aria-label="Innovation Workshop"></span>
@@ -189,11 +189,9 @@
           </svg>
       </h1>
       <p class="wshero-lede">
-        Welcome. This is your home base for the first <strong>LEDT Innovation Workshop</strong> — three days to
-        scope, build, and prototype the Smithsonian's ecological feedback layer together, in one room at
-        <strong>SAO in Cambridge</strong>. Everything you need is below: the agenda, travel logistics, your
-        pre-work, who's coming, and a direct line to ask us anything.
-      </p>
+        If you're here, you're (hopefully) regsitered to join your fellow Smithsonian colleagues this coming September
+        at SAO in Cambridge. We'll use this site as the central, constantly updated hub for all workshop logistics.
+        Bookmark it! </p>
       <div class="wshero-cta">
         <a href="#agenda" class="btn btn-primary">See the agenda →</a>
         <a href="#travel" class="btn btn-ghost">Travel logistics ↗</a>
@@ -208,7 +206,7 @@
   <section id="agenda" class="section agenda">
     <div class="container">
       <div class="eyebrow">01 · Three-Day Sprint</div>
-      <h2 class="h2">The agenda — <span class="grad">discover, build, prototype</span>.</h2>
+      <span class="grad-wordmark agenda-word" role="img" aria-label="Agenda"></span>
       <p class="lede">
         This is a working sprint, not a conference. Each day carries the last forward: we frame the problem
         together, form teams and build, then push toward working prototypes and a shared roadmap. Times below are a
@@ -329,6 +327,36 @@
           all three days</strong>.
       </p>
 
+      <!-- The space — full-width postcard-collage feature for the SAO venue.
+           Same postcard/lightbox pattern as the hotel collage below; images
+           render at natural aspect. Swap the <img> srcs / copy if rooms change. -->
+      <div class="venue-feature">
+        <div class="venue-copy">
+          <div class="venue-ey">◎ The space</div>
+          <h3>Room to spread out and build</h3>
+          <p>Sessions run across SAO's conference rooms up on Observatory Hill — light-filled spaces with big windows
+            over the campus, the <strong>Center for Astrophysics video wall</strong> for demos, and plenty of room to
+            cluster into teams and think out loud. Greeters and signage will steer you through our labyrinthine
+            buildings.</p>
+          <p class="venue-note"><strong>Lunch is provided on all three days.</strong></p>
+        </div>
+        <div class="pc-collage">
+          <figure class="postcard pc-1"
+            data-caption="An SAO conference space with the Center for Astrophysics video wall">
+            <img src="assets/venue-3.jpeg" loading="lazy" decoding="async"
+              alt="An SAO conference room with rows of chairs facing a large video wall showing the Center for Astrophysics logo.">
+          </figure>
+          <figure class="postcard pc-3" data-caption="Room to cluster into teams">
+            <img src="assets/venue-4.jpeg" loading="lazy" decoding="async"
+              alt="A flexible meeting room at SAO with round tables and chairs beside tall windows.">
+          </figure>
+          <figure class="postcard pc-2" data-caption="A light-filled common area on Observatory Hill">
+            <img src="assets/venue-5.jpeg" loading="lazy" decoding="async"
+              alt="A bright common room at SAO with globe pendant lights, tables, and big windows onto the wooded campus.">
+          </figure>
+        </div>
+      </div>
+
       <div class="mission-grid travel-cards">
         <div class="card">
           <div class="card-ico">⌖</div>
@@ -358,7 +386,7 @@
             center, and cool history.</p>
           <p class="stay-note"><strong>Our Travel team will forward you your reservation details.</strong></p>
         </div>
-        <div class="stay-collage">
+        <div class="pc-collage">
           <figure class="postcard pc-1"
             data-caption="&ldquo;Your hotel&rdquo; — Garden Street, by the site of the Washington Elm">
             <img src="assets/hotel-1.png" loading="lazy" decoding="async"
@@ -603,11 +631,11 @@
         <div class="hw-item hw-item-wide">
           <div class="hw-num">02</div>
           <div class="hw-body">
-            <h3>Get a basic familiarity with NVIDIA's Earth-2 models</h3>
+            <h3>Watch this video and get a basic familiarity with NVIDIA's Earth-2 models</h3>
             <div class="hw-video-layout">
               <div class="hw-video">
-                <iframe src="https://www.youtube-nocookie.com/embed/qo78lSBYi-U?rel=0"
-                  title="NVIDIA Earth-2 overview" loading="lazy"
+                <iframe src="https://www.youtube-nocookie.com/embed/qo78lSBYi-U?rel=0" title="NVIDIA Earth-2 overview"
+                  loading="lazy"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
               </div>
@@ -909,7 +937,7 @@
        Click / Enter / Space on a .postcard opens it; Esc, ✕, or a backdrop
        click closes. Once open, the ‹ › arrows, the Left/Right arrow keys, or
        a touch swipe step through all the postcards as a loop. -->
-  <div class="pc-lightbox" id="pcLightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Hotel photo">
+  <div class="pc-lightbox" id="pcLightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Photo">
     <button type="button" class="pc-lightbox-close" aria-label="Close">&times;</button>
     <button type="button" class="pc-lightbox-nav pc-prev" aria-label="Previous photo">&#8249;</button>
     <button type="button" class="pc-lightbox-nav pc-next" aria-label="Next photo">&#8250;</button>
@@ -933,20 +961,8 @@
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var lastFocus = null;
       var current = 0;
-
-      // Build the slide list once, in DOM order.
-      var cards = document.querySelectorAll('.stay-collage .postcard');
-      var items = [];
-      for (var i = 0; i < cards.length; i++) {
-        var img = cards[i].querySelector('img');
-        items.push({
-          src: img.currentSrc || img.src,
-          alt: img.alt || '',
-          caption: cards[i].getAttribute('data-caption') || img.alt || ''
-        });
-      }
-      var single = items.length < 2;
-      if (single) { prevBtn.style.display = 'none'; nextBtn.style.display = 'none'; }
+      var items = [];        // the active gallery's slides
+      var single = false;
 
       function apply(i) {
         current = (i + items.length) % items.length;
@@ -955,7 +971,7 @@
         lbImg.alt = it.alt;
         lbCap.innerHTML = it.caption;
         countEl.textContent = (current + 1) + ' / ' + items.length;
-        lb.setAttribute('aria-label', it.caption.replace(/<[^>]*>/g, '') || 'Hotel photo');
+        lb.setAttribute('aria-label', it.caption.replace(/<[^>]*>/g, '') || 'Photo');
       }
       function go(i) {
         if (reduce || single) { apply(i); return; }
@@ -966,7 +982,13 @@
         }, 130);
       }
 
-      function open(startIndex) {
+      // Open a gallery (its own slide list + start index).
+      function open(gallery, startIndex, focusEl) {
+        items = gallery;
+        single = items.length < 2;
+        prevBtn.style.display = single ? 'none' : '';
+        nextBtn.style.display = single ? 'none' : '';
+        lastFocus = focusEl;
         lbImg.style.opacity = '1';
         apply(startIndex);
         lb.classList.add('open');
@@ -983,16 +1005,32 @@
         if (lastFocus) lastFocus.focus();
       }
 
-      for (var j = 0; j < cards.length; j++) {
-        (function (card, index) {
-          card.setAttribute('role', 'button');
-          card.setAttribute('tabindex', '0');
-          card.setAttribute('aria-label', 'Enlarge photo: ' + (card.getAttribute('data-caption') || ''));
-          card.addEventListener('click', function () { lastFocus = card; open(index); });
-          card.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lastFocus = card; open(index); }
-          });
-        })(cards[j], j);
+      // Wire every collage on the page as its own independent gallery loop.
+      var collages = document.querySelectorAll('.pc-collage');
+      for (var c = 0; c < collages.length; c++) {
+        (function (collage) {
+          var cards = collage.querySelectorAll('.postcard');
+          var gallery = [];
+          for (var i = 0; i < cards.length; i++) {
+            var img = cards[i].querySelector('img');
+            gallery.push({
+              src: img.currentSrc || img.src,
+              alt: img.alt || '',
+              caption: cards[i].getAttribute('data-caption') || img.alt || ''
+            });
+          }
+          for (var j = 0; j < cards.length; j++) {
+            (function (card, index) {
+              card.setAttribute('role', 'button');
+              card.setAttribute('tabindex', '0');
+              card.setAttribute('aria-label', 'Enlarge photo: ' + (card.getAttribute('data-caption') || ''));
+              card.addEventListener('click', function () { open(gallery, index, card); });
+              card.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(gallery, index, card); }
+              });
+            })(cards[j], j);
+          }
+        })(collages[c]);
       }
 
       closeBtn.addEventListener('click', close);

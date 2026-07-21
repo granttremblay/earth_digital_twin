@@ -109,18 +109,34 @@ Sections (in order):
   emblem/`<use href="#ledt-mark">` and `#ledt-grad` symbol as index (copied into
   this file's `<body>` top). (The earlier build used the Living Earth / Digital
   Twin wordmark here — swapped to Innovation Workshop on 2026-07-20.)
-- **Agenda** (`#agenda`) — Sunday reception call-out + three `.day-card`s
+- **Agenda** (`#agenda`) — heading is the animated-gradient **`.agenda-word`
+  wordmark** (`assets/agenda.svg` masked over `--grad-workshop`, same
+  `.grad-wordmark` pattern as Travel/Homework/Day headings — swapped in
+  2026-07-21, replacing the old "The agenda — discover, build, prototype."
+  `<h2>`). Then a Sunday reception call-out + three `.day-card`s
   (Day One · Discover / Day Two · Build / Day Three · Prototype), each a
   time-slotted `.day-list`. Draft times; the framing (discover→build→prototype)
   is the fixed part.
 - **Travel** (`#travel`) — logistics over `assets/workshop_bottom_backdrop.png`.
-  Two `.card`s (venue · SAO 60 Garden St / flying in · BOS Logan) in a
-  **2-up `.travel-cards` grid**, then a full-width **"Where to stay"
-  postcard-collage feature** (`.stay-feature`), a `.travel-band` date strip,
-  and the **July 25, 2026 booking deadline** call-out. Don't soften that
+  Order: lede → a full-width **"The space" venue postcard-collage feature**
+  (`.venue-feature`, using `assets/venue-3/4/5.jpeg` — SAO's CfA-video-wall
+  conference room, a round-table room, and the light-filled common area; added
+  2026-07-21) → a **2-up `.travel-cards` grid** (venue · SAO 60 Garden St /
+  flying in · BOS Logan) → the full-width **"Where to stay"
+  postcard-collage feature** (`.stay-feature`) → a `.travel-band` date strip →
+  the **July 25, 2026 booking deadline** call-out. Don't soften that
   deadline (same rule as index).
-  - **The postcard collage** (`.stay-feature` → `.stay-copy` + `.stay-collage`)
-    names the lodging — the **historic Sheraton Commander, 16 Garden Street**,
+  - **The postcard-collage features** share styling: `.stay-feature` /
+    `.venue-feature` are the (identical) wrappers, `.stay-copy` / `.venue-copy`
+    the copy columns, and both scatter three `.postcard`s inside a shared
+    **`.pc-collage`** container. The `.venue-*` and `.stay-*` copy/feature
+    classes are grouped in CSS so they render the same; `.pc-collage` +
+    `.postcard`/`.pc-1`/`.pc-2`/`.pc-3` are the reusable collage primitives (add
+    another feature by reusing them). Venue photos are large iPhone shots
+    resized to ~1800px for web (originals were 5 MB); they carry EXIF rotation
+    that browsers apply, so they render right-side up.
+  - **The hotel collage** names the lodging — the **historic Sheraton
+    Commander, 16 Garden Street**,
     a two-minute walk from SAO — and leans on its Washington-Elm history. The
     three hotel images (`assets/hotel-1.png` the whimsical "your hotel" street
     photo, `assets/hotel-2.jpg` the modern hotel, `assets/hotel-3.jpg` the
@@ -133,9 +149,11 @@ Sections (in order):
     ✕ button, or a backdrop click closes it. **Once open, the ‹ › arrows, the
     Left/Right arrow keys, or a horizontal touch swipe step through all the
     postcards as a wrap-around loop** (`.pc-lightbox-nav` buttons + a
-    `.pc-lightbox-count` "n / total" readout); slides are built once in DOM
-    order and swapped with a quick opacity cross-fade (skipped under
-    `prefers-reduced-motion`). Driven by a small self-contained inline
+    `.pc-lightbox-count` "n / total" readout); slides are swapped with a quick
+    opacity cross-fade (skipped under `prefers-reduced-motion`). **The lightbox
+    JS wires every `.pc-collage` on the page as its own independent gallery
+    loop** — clicking a postcard cycles only within that collage (venue and
+    hotel don't mix). Driven by a small self-contained inline
     `<script>` at the bottom of `workshop.html` — the page's only JS, no
     dependencies; don't reach for a lightbox/carousel library. Each postcard's
     `data-caption` (HTML allowed) is the lightbox caption, the current dialog
@@ -192,7 +210,7 @@ Sections (in order):
 (The standalone "Ask us" section was removed 2026-07-20 — its form now lives
 inside Homework as the required questionnaire described above.)
 
-**Gradient wordmarks.** The hero "Innovation Workshop" and the "Day
+**Gradient wordmarks.** The hero "Innovation Workshop" and the "Agenda", "Day
 One/Two/Three", "Travel", and "Your Homework" headings are the supplied SVGs
 used as CSS
 `-webkit-mask`/`mask` sources over a **pink→purple→blue** gradient
@@ -200,9 +218,9 @@ used as CSS
 animated with the shared `gradShift` keyframe from styles.css (via the
 `.grad-wordmark` helper). This is deliberately a *different* ramp from the
 site's teal→blue→violet `--grad-hero`/`#ledt-grad` — don't unify them.
-**The wordmark-mask SVGs** (`assets/innovation_workshop.svg`, `dayone.svg`,
-`daytwo.svg`, `daythree.svg`, `travel.svg`, `homework.svg`) had explicit
-`width`/`height` attributes added to their `<svg>` tags so Safari/Firefox size
+**The wordmark-mask SVGs** (`assets/agenda.svg`, `innovation_workshop.svg`,
+`dayone.svg`, `daytwo.svg`, `daythree.svg`, `travel.svg`, `homework.svg`) had
+explicit `width`/`height` attributes added to their `<svg>` tags so Safari/Firefox size
 them as `mask-size: contain` sources
 (same fix as `living_earth_wordmark.svg`; see the mask-SVG note under Styling).
 Don't strip those attributes.

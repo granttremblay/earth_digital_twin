@@ -69,7 +69,14 @@
       "Bash(python3 -)",
       "Bash(grep -n \"^a\\\\b\\\\|^a \\\\|^a,\\\\|^a{\\\\|a {\\\\|a:hover\\\\|\\\\.slot-body\\\\|\\\\.slot-body a\\\\|\\\\.day-list a\\\\|\\\\.day-list \" /Users/grant/Repositories/earth_digital_twin/website/styles.css /Users/grant/Repositories/earth_digital_twin/website/workshop.css)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(awk '/^\\\\.h2 \\\\{/,/^\\\\}/' /Users/grant/Repositories/earth_digital_twin/website/styles.css)",
+      "Bash(awk '/^\\\\.grad \\\\{/,/^\\\\}/' /Users/grant/Repositories/earth_digital_twin/website/styles.css)",
+      "Bash(git rev-list *)",
+      "Bash(git push *)",
+      "Bash(file venue-* agenda.svg)",
+      "Bash(sips --getProperty pixelWidth --getProperty pixelHeight --getProperty orientation /Users/grant/Repositories/earth_digital_twin/website/assets/venue-3.jpeg)",
+      "Bash(grep -n \"postcard collage\\\\|stay-collage\\\\|stay-feature\\\\|Agenda \\(\\\\`#agenda\\\\`\\)\\\\|dayone.svg\\\\|homework.svg\\\\|used as CSS\\\\|mask-SVG\\\\|wordmark-mask\\\\|three .day-cards\\\\|three \\\\`.day-card\" CLAUDE.md)"
     ]
   }
 }
