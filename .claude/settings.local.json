@@ -61,7 +61,15 @@
       "Bash(sips -g pixelWidth -g pixelHeight poster_preview.png)",
       "Bash(curl -sI 'http://localhost:8765/assets/innovation_workshop_poster.pdf')",
       "Bash(awk '{printf \"path %2d  x=%s\\\\n\", $1, $2}')",
-      "Bash(curl -sI 'http://localhost:8765/assets/DigitalTwin_Innovation_SAO_Proposal.pdf')"
+      "Bash(curl -sI 'http://localhost:8765/assets/DigitalTwin_Innovation_SAO_Proposal.pdf')",
+      "Bash(file website/assets/hotel-*)",
+      "Bash(sips -s format jpeg -s formatOptions 72 -Z 900 __TRACKED_VAR__/hotel-1.png --out h1.jpg)",
+      "Bash(sips -s format jpeg -s formatOptions 72 -Z 900 __TRACKED_VAR__/hotel-2.jpg --out h2.jpg)",
+      "Bash(sips -s format jpeg -s formatOptions 72 -Z 900 __TRACKED_VAR__/hotel-3.jpg --out h3.jpg)",
+      "Bash(python3 -)",
+      "Bash(grep -n \"^a\\\\b\\\\|^a \\\\|^a,\\\\|^a{\\\\|a {\\\\|a:hover\\\\|\\\\.slot-body\\\\|\\\\.slot-body a\\\\|\\\\.day-list a\\\\|\\\\.day-list \" /Users/grant/Repositories/earth_digital_twin/website/styles.css /Users/grant/Repositories/earth_digital_twin/website/workshop.css)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
