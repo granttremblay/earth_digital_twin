@@ -24,8 +24,8 @@
   --grad-cta: linear-gradient(120deg, #3ee1c8, #7cc7ff);
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-disp: 'Space Grotesk', 'Inter', sans-serif;
-  --font-serif: 'Ropa Sans', 'Space Grotesk', sans-serif;
+  --font-disp: 'DM Sans', 'Inter', sans-serif;
+  --font-serif: 'Ropa Sans', 'DM Sans', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --container: 1240px;
