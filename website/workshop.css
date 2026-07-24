@@ -36,6 +36,71 @@
 }
 
 /* ============================================================
+   PROSE LINKS
+   One style for every inline <a> that lives inside body copy on
+   this page: teal, with a soft gradient underline that lights up
+   and thickens on hover. If you add a new copy block that can
+   contain links, add its selector to THIS list rather than
+   writing a one-off `a { color: … }` rule — that's how links
+   ended up invisible in the agenda call-out.
+   ============================================================ */
+:is(
+  .agenda-pre-body,
+  .slot-body,
+  .travel-lede,
+  .travel-body,
+  .stay-copy,
+  .venue-copy,
+  .lab-note,
+  .cat-a,
+  .hw-body,
+  .hw-video-note,
+  .hw-required,
+  .pt-foot
+) a:not(.btn):not(.hw-link) {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  /* Underline drawn as a background image so it can carry the
+     teal→blue ramp and animate its weight independently of the
+     text baseline. */
+  background-image: linear-gradient(90deg,
+      rgba(62, 225, 200, 0.55),
+      rgba(124, 199, 255, 0.55));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  padding-bottom: 1px;
+  transition: color .2s ease, background-size .2s ease, text-shadow .2s ease;
+}
+:is(
+  .agenda-pre-body,
+  .slot-body,
+  .travel-lede,
+  .travel-body,
+  .stay-copy,
+  .venue-copy,
+  .lab-note,
+  .cat-a,
+  .hw-body,
+  .hw-video-note,
+  .hw-required,
+  .pt-foot
+) a:not(.btn):not(.hw-link):is(:hover, :focus-visible) {
+  color: #8ff0dd;
+  background-image: linear-gradient(90deg, #3ee1c8, #7cc7ff);
+  background-size: 100% 2px;
+  text-shadow: 0 0 18px rgba(62, 225, 200, 0.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .agenda-pre-body, .slot-body, .travel-lede, .travel-body,
+    .stay-copy, .venue-copy, .lab-note, .cat-a,
+    .hw-body, .hw-video-note, .hw-required, .pt-foot
+  ) a { transition: none; }
+}
+
+/* ============================================================
    TOP HERO — workshop_earth_backdrop.png (Earth on the right)
    Logo + copy sit on the LEFT; a left-side scrim keeps contrast.
    ============================================================ */
@@ -134,6 +199,23 @@
 }
 .wshero .scroll-hint { color: var(--ink-mute); }
 
+/* Photo credit for workshop_earth_backdrop.png, tucked into the bottom-right
+   of the hero. Deliberately tiny and low-contrast — it should be findable,
+   not noticeable. `right` clears the .scroll-hint, which is centred at the
+   same bottom offset. */
+.wshero-credit {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.34);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
 @media (max-width: 820px) {
   .wshero {
     background:
@@ -143,6 +225,55 @@
     padding: 120px 0 72px;
   }
   .wshero::before { display: none; }
+  .wshero-credit { right: 16px; bottom: 16px; font-size: 8px; }
+  /* `min-height: 0` above lets the hero collapse to its content, so the
+     absolutely-positioned scroll hint lands on top of the stacked CTA buttons.
+     Drop it here rather than padding the hero out to make room — on a touch
+     screen a "scroll down" affordance earns none of that space. Scoped to
+     .wshero so index.html's taller hero keeps its hint. */
+  .wshero .scroll-hint { display: none; }
+}
+
+/* ============================================================
+   SMITHSON'S WILL — closing band, last thing above the footer
+   ============================================================ */
+/* Flat --bg-0, matching .participants above and .footer below, and
+   deliberately with no border-top of its own: the handwriting should read as
+   a closing beat drifting out of the participants list, not as another
+   section. The footer's own border-top is what closes it off. */
+.smithson {
+  background: var(--bg-0);
+  padding: clamp(56px, 8vw, 104px) 0 clamp(64px, 9vw, 116px);
+}
+.smithson-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(22px, 3vw, 34px);
+  text-align: center;
+}
+/* assets/smithson_handwriting.svg masked over --grad-workshop, same
+   .grad-wordmark helper as the Agenda/Travel/Day headings — but centred
+   rather than left-aligned, since this band is a centred set-piece.
+   Kept wide on purpose: it's cursive script, and it stops being readable
+   if it's sized like a heading. */
+.smithson-mark {
+  width: min(100%, 860px);
+  aspect-ratio: 574.59 / 186.23;
+  height: auto;
+  -webkit-mask-image: url('assets/smithson_handwriting.svg');
+          mask-image: url('assets/smithson_handwriting.svg');
+  -webkit-mask-position: center;
+          mask-position: center;
+  filter: drop-shadow(0 6px 34px rgba(160, 130, 240, 0.22));
+}
+.smithson-caption {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  color: var(--ink-mute);
+  max-width: 68ch;
 }
 
 /* ============================================================
@@ -189,7 +320,12 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+/* Flex column so .day-outro can be pushed to the bottom edge with
+   margin-top: auto — the cards are stretched to a common height by the grid,
+   and Day Three is the shortest, so it's the one that ends up with slack. */
 .day-card {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.008) 100%);
@@ -286,16 +422,49 @@
   line-height: 1.5;
 }
 .slot-body strong { color: var(--ink); font-weight: 600; }
-.slot-body a {
-  color: var(--accent);
-  border-bottom: 1px solid currentColor;
-  transition: color 0.2s ease;
+
+/* Sign-off at the foot of the Day Three card. The grid stretches all three
+   cards to the tallest (Day One), so Day Three trails ~450px of dead space.
+   Auto margins top AND bottom centre this block in whatever slack is left, so
+   the mark floats in the middle of that space rather than hugging the bottom
+   edge with a hole above it. Where there's no slack (stacked, single column)
+   both autos resolve to 0 and it just follows the last slot. */
+.day-outro {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
 }
-.slot-body a:hover { color: var(--ink); }
+/* Same globe as the nav/footer, but always carrying the animated
+   teal→blue→violet #ledt-grad (like the hero emblem on index.html).
+   Sized off the card so it fills the slack — capped at 132px so it stays a
+   sign-off rather than becoming the loudest thing in the agenda. */
+.day-outro-mark {
+  width: clamp(96px, 34%, 132px);
+  height: auto;
+  fill: url(#ledt-grad);
+  filter: drop-shadow(0 6px 30px rgba(62, 225, 200, 0.3));
+}
+.day-outro-line {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  line-height: 1.7;
+  max-width: 18ch;
+}
 
 @media (max-width: 940px) {
   .agenda-grid { grid-template-columns: 1fr; }
   .agenda-pre { flex-direction: column; align-items: flex-start; gap: 12px; }
+  /* Stacked single-column: no slack to fill, so keep it a tight sign-off
+     rather than a big gap under the last slot. */
+  .day-outro { padding-top: 24px; }
 }
 
 /* ============================================================
@@ -324,8 +493,6 @@
   filter: drop-shadow(0 6px 30px rgba(120, 160, 240, 0.28));
 }
 .travel-lede { max-width: 760px; }
-.travel-lede a { color: var(--accent); border-bottom: 1px solid currentColor; }
-.travel-lede a:hover { color: var(--ink); }
 .travel-cards { margin-bottom: 24px; grid-template-columns: repeat(2, 1fr); }
 .travel .card,
 .stay-feature,
@@ -637,8 +804,6 @@
   color: var(--ink-dim);
 }
 .lab-note strong { color: var(--ink); }
-.lab-note a { color: var(--accent); border-bottom: 1px solid currentColor; }
-.lab-note a:hover { color: var(--ink); }
 .lab-deadline {
   border-left: 3px solid var(--accent-4);
   background: linear-gradient(90deg, rgba(255, 94, 135, 0.08), rgba(255, 255, 255, 0.01));
@@ -653,13 +818,27 @@
   border-top: 1px solid var(--line);
 }
 /* Inlined heilmeier.svg — gradient on the "What are we actually doing?" line,
-   white on the "Our Heilmeier Catechism" line. */
+   white on the "Our Heilmeier Catechism" line.
+   This wordmark is ~5.96:1 (two stacked lines), where Agenda/Travel/Day are
+   ~2.2–2.6:1 single lines — so matching them on *box* height would render its
+   type at half their size. It's sized wide instead: the big first line only
+   occupies 92/170.57 of the box, so ~1040px of width puts that line at ~94px
+   tall, i.e. the same optical size as the other headings. Don't "fix" this
+   back to a narrow clamp. */
 .heilmeier-word {
   display: block;
-  width: clamp(280px, 48vw, 580px);
+  width: min(100%, 1040px);
   height: auto;
   margin-bottom: 24px;
   filter: drop-shadow(0 6px 30px rgba(180, 130, 240, 0.22));
+}
+/* Narrow screens: the sentence can't wrap inside an SVG, so the only way to
+   keep it legible is to run it out past the .container's 32px gutters. */
+@media (max-width: 720px) {
+  .heilmeier-word {
+    width: calc(100% + 44px);
+    margin-left: -22px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   #heil-grad animateTransform { display: none; }
@@ -783,6 +962,11 @@
   color: var(--ink-dim);
   line-height: 1.6;
 }
+/* Global reset zeroes margins, so multi-paragraph cards (step 5) need their
+   own rhythm. Child combinator on purpose: a descendant selector would also
+   outrank .hw-video-note's own margin inside the step-3 video card. */
+.hw-body > p + p { margin-top: 12px; }
+.hw-body p strong { color: var(--ink); font-weight: 600; }
 /* Compact "read the PDF" pill inside a homework card. */
 .hw-link {
   display: inline-flex;
@@ -804,7 +988,7 @@
   background: rgba(62, 225, 200, 0.08);
   color: var(--ink);
 }
-/* Full-width homework step (used for the Earth-2 video card). */
+/* Full-width homework step (the Earth-2 video card and the questions card). */
 .hw-item-wide { grid-column: 1 / -1; }
 /* Video left, supporting copy right — collapses to stacked on narrow screens
    so no dead space is left beside the player. */
@@ -836,14 +1020,128 @@
   display: block;
 }
 .hw-video-note { margin-top: 14px; }
-.hw-video-note a {
-  color: var(--accent);
-  border-bottom: 1px solid currentColor;
-  transition: color 0.2s ease;
-}
-.hw-video-note a:hover { color: var(--ink); }
 @media (max-width: 720px) {
   .hw-video-layout { grid-template-columns: 1fr; gap: 18px; }
+}
+
+/* ----- QUESTION CARDS (homework step 6) -----
+   Seven framing questions. The visual hierarchy is deliberate and is the
+   whole point of the block: the QUESTION reads brightest (accent-2 blue),
+   the examples under it are the faintest thing on the page (--ink-mute), and
+   the italic .q-note verdicts sit between the two. Don't level these out. */
+.hw-body .hw-q-lede { margin-bottom: 4px; }
+/* Masonry packing via CSS multi-column, NOT grid. A grid stretches every card
+   in a row to the tallest one, which left ragged whitespace under the short
+   cards (Q3 especially); columns let each card butt straight up against the
+   bottom of the one above it. The trade-off, and it's deliberate: reading
+   order becomes down-then-across (1,2,3 down the first column) instead of
+   across-then-down. That reads fine here because the questions are numbered.
+   `grid-template-rows: masonry` would preserve row order but is Firefox-only,
+   and a JS masonry lib is out of the question on a no-build page. */
+.q-grid {
+  list-style: none;
+  margin-top: 24px;
+  columns: 3 300px;
+  column-gap: 18px;
+}
+.q-card {
+  /* Keep a card from being split across a column break. */
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  /* Columns ignore row-gap, so the vertical rhythm is the card's own margin. */
+  margin-bottom: 18px;
+  padding: 22px 22px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.018);
+  transition: border-color .3s, background .3s;
+}
+.q-card:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+}
+/* The question itself — the one bright line in the card. */
+.q-card .q-ask {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-family: var(--font-disp);
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--accent-2);
+}
+/* Gradient numeral, matching .hw-num but at question scale. */
+.q-n {
+  flex-shrink: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+  background: var(--grad-workshop);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradShift 9s ease infinite;
+}
+/* Author's aside that sets up the examples ("Define the twin."). */
+.q-card .q-lead {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  font-style: italic;
+}
+.q-card .q-eg-label {
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0.75;
+}
+/* Faintest text in the block, by design. */
+.q-eg {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+.q-eg li {
+  padding-left: 14px;
+  position: relative;
+}
+.q-eg li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+}
+/* Q3's Essential / Helpful / Missing tiers — labels lift out of the grey. */
+.q-eg-defs { margin-top: 12px; }
+.q-eg-defs strong { color: var(--ink-dim); font-weight: 600; }
+/* Closing verdict ("...probably not a Digital Twin application"). */
+.q-card .q-note {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--ink-dim);
+}
+@media (max-width: 560px) {
+  .q-grid { columns: 1; }
+  .q-card { margin-bottom: 14px; padding: 18px 18px 16px; }
 }
 /* ----- Workshop questionnaire (merged into the homework section) ----- */
 .hw-questions {
@@ -1078,8 +1376,6 @@
   font-size: 14px;
   color: var(--ink-mute);
 }
-.pt-foot a { color: var(--accent); border-bottom: 1px solid currentColor; }
-.pt-foot a:hover { color: var(--ink); }
 
 @media (max-width: 560px) {
   .pt-role { display: none; }

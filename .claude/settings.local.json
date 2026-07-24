@@ -76,7 +76,21 @@
       "Bash(git push *)",
       "Bash(file venue-* agenda.svg)",
       "Bash(sips --getProperty pixelWidth --getProperty pixelHeight --getProperty orientation /Users/grant/Repositories/earth_digital_twin/website/assets/venue-3.jpeg)",
-      "Bash(grep -n \"postcard collage\\\\|stay-collage\\\\|stay-feature\\\\|Agenda \\(\\\\`#agenda\\\\`\\)\\\\|dayone.svg\\\\|homework.svg\\\\|used as CSS\\\\|mask-SVG\\\\|wordmark-mask\\\\|three .day-cards\\\\|three \\\\`.day-card\" CLAUDE.md)"
+      "Bash(grep -n \"postcard collage\\\\|stay-collage\\\\|stay-feature\\\\|Agenda \\(\\\\`#agenda\\\\`\\)\\\\|dayone.svg\\\\|homework.svg\\\\|used as CSS\\\\|mask-SVG\\\\|wordmark-mask\\\\|three .day-cards\\\\|three \\\\`.day-card\" CLAUDE.md)",
+      "Bash(grep -n \" a[ :,{]\" /Users/grant/Repositories/earth_digital_twin/website/workshop.css)",
+      "Bash(grep -n \"^svg\\\\|^img\\\\|img,\\\\|, *svg\\\\|svg *{\\\\|img *{\" styles.css)",
+      "Bash(sed -n '/^\\\\.hw-num/,/^}/p' workshop.css)",
+      "Bash(sed -n '/^\\\\.hw-grid/,/^}/p' workshop.css)",
+      "Bash(sed -n '/^\\\\.hw-item {/,/^}/p' workshop.css)",
+      "Bash(grep -n \"Top hero\\\\` \\(\\\\`.wshero\\\\`\\)\\\\|^- \\\\*\\\\*Top hero\\\\|dayone.svg\\\\`, \\\\`daytwo.svg\" CLAUDE.md)",
+      "Bash(sed -n '/^\\\\.participants {/,/^}/p' workshop.css)",
+      "Bash(sed -n '/^\\\\.footer {/,/^}/p' styles.css)",
+      "Bash(grep -n \"Top hero\\\\*\\\\* \\(\\\\`.wshero\\\\`\\)\" -A 3 CLAUDE.md)",
+      "Bash(ls -lt ~/Downloads 2>/dev/null | head -15; echo \"=== desktop ===\"; ls -lt ~/Desktop 2>/dev/null | head -15)",
+      "Bash(python3 -c \"import openpyxl; print\\('openpyxl ok'\\)\")",
+      "Bash(SCRATCH=/private/tmp/claude-501/-Users-grant-Repositories-earth-digital-twin/7e0e1b2b-bb12-4dfa-a0a6-110abe65b15f/scratchpad python3 -)",
+      "Bash(grep -n \"^p {\\\\|^\\\\*,\\\\|margin: 0\\\\|^\\\\* {\" styles.css)",
+      "Bash(python3 -c ' *)"
     ]
   }
 }

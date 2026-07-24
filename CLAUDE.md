@@ -109,6 +109,11 @@ Sections (in order):
   emblem/`<use href="#ledt-mark">` and `#ledt-grad` symbol as index (copied into
   this file's `<body>` top). (The earlier build used the Living Earth / Digital
   Twin wordmark here — swapped to Innovation Workshop on 2026-07-20.)
+  A tiny `.wshero-credit` photo credit ("Image credit: NASA/D. Pettit") sits in
+  the hero's **bottom-right** corner — 9px mono at 34% white, `pointer-events:
+  none`, offset to clear the centred `.scroll-hint`. Added 2026-07-23. Keep it
+  low-contrast; it's an attribution, not a design element. The photographer is
+  NASA astronaut **Don Pettit** — two t's, confirmed by Grant. Don't respell it.
 - **Agenda** (`#agenda`) — heading is the animated-gradient **`.agenda-word`
   wordmark** (`assets/agenda.svg` masked over `--grad-workshop`, same
   `.grad-wordmark` pattern as Travel/Homework/Day headings — swapped in
@@ -117,6 +122,17 @@ Sections (in order):
   (Day One · Discover / Day Two · Build / Day Three · Prototype), each a
   time-slotted `.day-list`. Draft times; the framing (discover→build→prototype)
   is the fixed part.
+  - **`.day-outro` sign-off** at the foot of the Day Three card (added
+    2026-07-23): the `#ledt-mark` globe filled with the animated `#ledt-grad`
+    (`.day-outro-mark`, same treatment as index.html's hero emblem) over a
+    small mono-caps `.day-outro-line` reading *"Big things have small
+    beginnings"*. It exists to absorb the ~450px of dead space the
+    equal-height grid leaves under Day Three, which is the shortest column —
+    `.day-card` was made `display: flex; flex-direction: column` for this, and
+    `.day-outro` uses **auto margins top and bottom** so it centres in the
+    slack instead of hugging the bottom edge. Stacked single-column (≤940px)
+    there's no slack, both autos resolve to 0, and it just follows the last
+    slot. Don't add one to Day One/Two — it's a closing mark, not a motif.
 - **Travel** (`#travel`) — logistics over `assets/workshop_bottom_backdrop.png`.
   Order: lede → a full-width **"The space" venue postcard-collage feature**
   (`.venue-feature`, using `assets/venue-3/4/5.jpeg` — SAO's CfA-video-wall
@@ -166,26 +182,59 @@ Sections (in order):
   wordmark: **`assets/heilmeier.svg` inlined** (`.heilmeier-word`) with its two
   `<g>`s split — the first line ("What are we actually doing?") gets the animated
   gradient (`#heil-grad`), the second line ("Our Heilmeier Catechism") is white.
-  Inlined (not masked) so the two lines can carry different fills. Then a
-  one-paragraph
+  Inlined (not masked) so the two lines can carry different fills.
+  **It is sized much wider than the other headings on purpose** — it's a
+  ~5.96:1 two-line wordmark where Agenda/Travel/Day are ~2.2–2.6:1 single
+  lines, so matching them on box height renders its type at half their size.
+  `width: min(100%, 1040px)` puts its big first line at ~94px tall, optically
+  level with Agenda (~102px) and Travel (~99px). Below 720px it runs out past
+  the `.container` gutters (`width: calc(100% + 44px); margin-left: -22px`)
+  because the sentence can't wrap inside an SVG and that's the only remaining
+  lever on phone legibility. Don't "tidy" this back to a narrow `clamp()`
+  (changed 2026-07-23 — it previously read far too small, badly so on mobile).
+  Then a one-paragraph
   definition of the Heilmeier Catechism, then eight `.cat-pill` pillboxes (a
   gradient number badge + the question + a brief answer) in a `.catechism-grid`.
   Answers are kept short and hedged per the "don't overclaim" rule. Sits right
   before Homework.
-- **Your Homework** (`#homework`) — a `.hw-grid` of five `.hw-item` steps.
-  Item 01 "Read the proposal" links to
+- **Your Homework** (`#homework`) — a `.hw-grid` of six `.hw-item` steps, in
+  order: **1** read the proposal · **2** show up to the prep calls · **3** watch
+  the Earth-2 video · **4** bring a problem · **5** pack a laptop · **6** think
+  about these questions. The
+  `.hw-num`s are **plain single digits (1, 2, 3…), not zero-padded** — Grant
+  asked for that on 2026-07-23; don't reformat them to "01/02".
+  The two-column `.hw-grid` pairs 1+2 on the first row and 4+5 on the last, with
+  the wide video card spanning between — **that pairing is why "prep calls" sits
+  at position 2**; moving it back would leave a hole beside item 1 (which is
+  what it looked like before).
+  Item 1 "Read the proposal" links to
   `assets/DigitalTwin_Innovation_SAO_Proposal.pdf` via a compact `.hw-link`
-  pill; **item 02 "Get a basic familiarity with NVIDIA's Earth-2 models" is a
+  pill; **item 3 "Watch this video and get a basic familiarity with NVIDIA's
+  Earth-2 models" is a
   full-width `.hw-item-wide` card that embeds a YouTube video** in a responsive
   16:9 `.hw-video` frame (privacy-mode `youtube-nocookie.com/embed/…?rel=0`,
   `loading="lazy"`). Inside the card a `.hw-video-layout` grid puts the video on
   the left (~1.5fr) and the supporting copy + a `.hw-video-note` line (linking a
   second, shorter tutorial video) on the right (~1fr, vertically centered), so
   no dead space is left beside the player; it collapses to stacked below 720px.
-  It's the only full-width step so the video gets a big presentation — the other
-  four (proposal / bring-a-problem / prep-calls / laptop) stay half-width, and
-  step numbers renumber if you insert more.
-  Items 03–05 plus the **2–3 virtual mini-prep meetings in July/August**, and
+  **Item 6 "Think about these questions" is the second `.hw-item-wide` card**
+  (added 2026-07-23): Grant's seven framing questions — the ones that separate a
+  real Digital Twin application from an interesting analysis — as a `.q-grid` of
+  `.q-card`s (`auto-fit, minmax(300px, 1fr)`, so 3-up at 1440px, 1-up under
+  560px). **The colour hierarchy inside a card is the whole point of the block
+  and Grant asked for it explicitly** — the question (`.q-ask`) is the brightest
+  line in blue `--accent-2` with a gradient numeral (`.q-n`, same ramp as
+  `.hw-num`); the examples (`.q-eg`) are the faintest text on the page in
+  `--ink-mute`; the italic verdicts (`.q-note`, e.g. *"if nothing changes, it's
+  probably not a good application"*) and lead-ins (`.q-lead`) sit between them in
+  `--ink-dim`. Don't flatten those three levels. Note the `.q-*` `<p>` rules are
+  **scoped as `.q-card .q-ask` etc. on purpose** — bare `.q-ask` (0,1,0) loses
+  the cascade to `.hw-body p` (0,1,1) and the questions silently render grey.
+  Question 3 uses `.q-eg-defs` instead of examples for its
+  Essential/Helpful/Missing tiers.
+  Items 3 and 6 are the two full-width steps; the other four stay half-width,
+  and step numbers renumber if you insert more.
+  Then the **2–3 virtual mini-prep meetings in July/August**, and
   — merged in from the former "Ask us" section —
   a **required questionnaire** (`.hw-questions`, anchor `#questions`, which the
   nav "Answer questions →" CTA and footer point to). It opens with a
@@ -204,11 +253,63 @@ Sections (in order):
   both filenames (or update the `href`/`src` in workshop.html).
 - **Participants** (`#participants`) — a **scrollable, manually-editable**
   `.pt-scroll` list. Grant adds people by copying a `<li class="pt-row">` block
-  (there's an HTML comment with instructions). Pre-seeded with the proposal
-  principals. Gradient initials avatars; PI/Co-I role pills.
+  (there's an HTML comment with instructions). Gradient initials avatars.
+  Populated 2026-07-23 from Grant's Formspree registration export
+  (`formspree_xdabeeow`): **56 people, sorted alphabetically by surname**,
+  the proposal's principals merged in among the registrants rather than
+  listed first.
+  - **Role pills are for the proposal's PI and Co-Is only** — the ten named
+    under "Principals" below. Ordinary registrants get **no `.pt-role` span
+    at all**; don't invent pills for them. (`.pt-role` is hidden under 560px
+    by a pre-existing rule, so pills never show on phones either way.)
+  - **Affiliations are normalized to a fixed set of strings**, listed in the
+    HTML comment above the list. The registration sheet spelled the same unit
+    a dozen ways ("SERC", "SERC- Watershed Science Lab", "SERC, Senior
+    Scientist", "Smithsonian Environmental Research Center"…) and sub-group
+    detail (AstroAI, TEMPO science team, IDSC, SED, Marine Conservation Lab)
+    was deliberately dropped so the column reads cleanly. **Reuse an existing
+    string verbatim when adding someone**; only add a new one for a genuinely
+    new institution. Two judgment calls worth knowing: Anna Kelbert's "Center
+    for Astrophysics | Harvard & Smithsonian" was filed under the Astrophysical
+    Observatory, and Suvarna Punalekar's dual "SERC and NZCBI" kept both.
+  - **Institution names are spelled out in full — no acronyms.** Grant asked
+    for this explicitly on 2026-07-23, replacing an earlier
+    `SAO — Smithsonian Astrophysical Observatory` prefix form. Write
+    "Smithsonian Astrophysical Observatory", never "SAO" or "SAO — …".
+    (Acronyms are still fine in prose elsewhere on the page, e.g. the Day Two
+    group-photo slot — this rule is about the `.pt-affil` column.)
+- **Smithson's will** (`.smithson`, no anchor) — the **last section on the
+  page, directly above the footer**, added 2026-07-23. It's
+  `assets/smithson_handwriting.svg` — James Smithson's own hand in his will,
+  reading *"increase & diffusion of knowledge"* — masked over the animated
+  `--grad-workshop` via the usual `.grad-wordmark` helper, but with
+  `mask-position: center` instead of the helper's `left center`. Capped at
+  `min(100%, 860px)`: it's cursive script and stops being readable if sized
+  like a heading, so **don't shrink it to heading scale**. Below it a small
+  centred mono `.smithson-caption` (68ch measure) explains the artifact and
+  ties it to the project. Flat `var(--bg-0)` and **no `border-top`** — it
+  should read as a closing beat drifting out of the participants list, with
+  the footer's own rule closing it off. Grant put it here specifically so it's
+  the last thing attendees see; it briefly sat between the hero and Agenda
+  before being moved on the same day. **Don't move it back up into the flow.**
 
 (The standalone "Ask us" section was removed 2026-07-20 — its form now lives
 inside Homework as the required questionnaire described above.)
+
+**Prose links.** Inline `<a>`s inside body copy on workshop.html are styled by
+**one grouped rule at the top of workshop.css** (`PROSE LINKS`): teal
+(`var(--accent)`), no `text-decoration`, with the underline drawn as a
+`background-image` teal→blue gradient (`background-size: 100% 1px`) that
+brightens and thickens to 2px on `:hover`/`:focus-visible`. The selector is an
+`:is(.agenda-pre-body, .slot-body, .travel-lede, …) a:not(.btn):not(.hw-link)`
+list — **when you add a new copy block that can contain links, add its class to
+that list** instead of writing another one-off `a { color: … }` rule. The
+`:not()`s keep the `.hw-link` pill and any `.btn` from picking up the underline.
+Added 2026-07-23 because the link in the Sunday-reception `.agenda-pre` callout
+had no rule at all and rendered as plain body text. Teal is intentional here
+even inside the violet callout — it's the site-wide link color, and the earlier
+per-section rules it replaced (`.travel-lede a`, `.lab-note a`, `.pt-foot a`,
+`.hw-video-note a`, `.slot-body a`) all used it too.
 
 **Gradient wordmarks.** The hero "Innovation Workshop" and the "Agenda", "Day
 One/Two/Three", "Travel", and "Your Homework" headings are the supplied SVGs
@@ -219,7 +320,8 @@ animated with the shared `gradShift` keyframe from styles.css (via the
 `.grad-wordmark` helper). This is deliberately a *different* ramp from the
 site's teal→blue→violet `--grad-hero`/`#ledt-grad` — don't unify them.
 **The wordmark-mask SVGs** (`assets/agenda.svg`, `innovation_workshop.svg`,
-`dayone.svg`, `daytwo.svg`, `daythree.svg`, `travel.svg`, `homework.svg`) had
+`dayone.svg`, `daytwo.svg`, `daythree.svg`, `travel.svg`, `homework.svg`,
+`smithson_handwriting.svg`) had
 explicit `width`/`height` attributes added to their `<svg>` tags so Safari/Firefox size
 them as `mask-size: contain` sources
 (same fix as `living_earth_wordmark.svg`; see the mask-SVG note under Styling).
