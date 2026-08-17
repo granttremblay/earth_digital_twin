@@ -40,6 +40,7 @@ earth_digital_twin/
 ├── scripts/
 │   └── make_og_card.py            # bakes website/assets/og-card.png (Pillow, build-time)
 └── notebooks/
+    ├── demo_earth2_tempo.ipynb          # beginner Earth2Studio tutorial (GPU hub + laptop dry-run)
     └── tempo_earth2_integration.ipynb   # CPU-only TEMPO → earth2studio demo
 ```
 
@@ -592,6 +593,77 @@ Rules when modifying deps:
 - When you add a Python dependency for the notebook, update both this file's
   dependency list mentions (if any) and the README's deps section if the
   change is user-visible.
+
+---
+
+## The workshop tutorial (`notebooks/demo_earth2_tempo.ipynb`)
+
+The hand-out notebook for the September Innovation Workshop: a **very
+beginner-friendly, step-by-step introduction to NVIDIA Earth2Studio** for
+Smithsonian scientists who have never touched it. Added 2026-08-17.
+
+The filename is deliberate — the hosted-GPU requirements document
+(JupyterHub on GCP) specifies `demo_earth2_tempo.ipynb` as the notebook to
+pre-load into every attendee's session directory. **Don't rename it** without
+also telling whoever is building the hub.
+
+### The three-mode design (the important part)
+
+The notebook detects its environment in Step 1 and sets `MODE`:
+
+| `MODE` | When | What runs |
+|---|---|---|
+| `gpu` | `earth2studio` importable **and** `torch.cuda.is_available()` | The real thing: `FCN.load_model(...)`, `run.deterministic`, `run.diagnostic` on the GPU |
+| `cpu` | `earth2studio` importable, no CUDA | Real Earth2Studio API + real GFS data, with `Persistence` as the prognostic. Runs on a MacBook. |
+| `dry` | no `earth2studio` | A `SimulatedForecast` stand-in that mimics `ZarrBackend`'s `__getitem__`, so every cell still executes and plots |
+
+`os.environ["LEDT_MODE"] = "dry"` forces a mode (used to generate the committed
+outputs). **This three-way structure is the whole point of the notebook** —
+Grant asked for something attendees can click through on a Mac with no NVIDIA
+GPU and still see what the GPU path would look like. Don't collapse it to a
+single path, and don't let the simulated path masquerade as real: every
+simulated plot carries a `SIMULATED` / `PERSISTENCE` watermark and title tag.
+
+### Verified facts (checked against earth2studio 0.17.0 source, don't "fix" these)
+
+- **`FCN` uses 720 latitudes** (`np.linspace(90, -90, 720, endpoint=False)`);
+  `SFNO`, `DLWP` and `FCN3` use **721**. The tutorial pairs `TEMPONO2Diagnostic`
+  with `FCN`, so `E2_LAT` is the 720 grid. The `cpu`-mode `Persistence` model is
+  built on GFS's native **721** grid instead, because that's what `GFS()` serves
+  and `map_coords` will refuse a mismatch.
+- **Install extras**: `fcn` and `precip-afno` only pull `nvidia-physicsnemo`,
+  which is why the tutorial uses them. `sfno` needs `makani` plus a
+  git-installed `torch-harmonics` and is a bad first install.
+- `run.diagnostic(time, nsteps, prognostic, diagnostic, data, io)` — argument
+  order matters; the diagnostic goes after the prognostic.
+- The diagnostic contract, the `@batch_coords()` / `@batch_func()` decorators
+  and the `handshake_dim` / `handshake_coords` validators follow
+  `examples/08_extend/02_custom_diagnostic.py` exactly.
+
+The notebook defines **no-op stand-ins** for those four imports when
+earth2studio is absent, so the `TEMPONO2Diagnostic` class body is character-for-
+character what you'd write with it installed. The class was validated both ways:
+under the real decorators it produces an identical result (96.3 % NaN, same
+shape) and `run.diagnostic` accepts it.
+
+### TEMPO data path
+
+`load_tempo()` tries, in order: (1) a **pre-cached local file** —
+`$LEDT_TEMPO_FILE`, else `data/tempo/*.nc` — which is the hook for the hub's
+pre-staged granules; (2) **`earthaccess`**, but *only* if `~/.netrc` or
+`EARTHDATA_USERNAME` already exists, so nobody gets a surprise password prompt
+mid-workshop; (3) a **synthetic TEMPO-shaped field**. Keep that order and keep
+the credential guard.
+
+### Housekeeping
+
+- **Committed with its dry-run outputs executed**, so it previews on GitHub and
+  attendees can compare against what they get. Re-execute from `notebooks/`
+  with `LEDT_MODE=dry uv run jupyter nbconvert --to notebook --execute --inplace
+  demo_earth2_tempo.ipynb` if you change it.
+- It writes to `notebooks/outputs/` — gitignored.
+- Adds **no dependencies**. Everything it needs (numpy, xarray, torch,
+  matplotlib, cartopy, earthaccess) is already in `pyproject.toml`.
 
 ---
 

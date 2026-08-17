@@ -12,6 +12,7 @@ Seed-award prototype repository for the **Living Earth Digital Twin** (LEDT) —
 |---|---|
 | [`proposal/`](proposal/) | The authoritative OUSSR proposal PDF. Read first. |
 | [`website/`](website/) | Interactive landing site with live NASA GIBS TEMPO tiles, field-network map, architecture diagram, team / pipeline. |
+| [`notebooks/demo_earth2_tempo.ipynb`](notebooks/demo_earth2_tempo.ipynb) | **Start here.** Beginner's tutorial on NVIDIA Earth2Studio for workshop attendees — runs on the GPU hub *and* on a MacBook with nothing installed. See [Workshop tutorial notebook](#workshop-tutorial-notebook) below. |
 | [`notebooks/tempo_earth2_integration.ipynb`](notebooks/tempo_earth2_integration.ipynb) | Runnable CPU-only demo: fetches TEMPO NO₂, wraps it as an `earth2studio`-compatible diagnostic model, sketches the TEMPO → ecological-response linkage. |
 | [`pyproject.toml`](pyproject.toml) / [`uv.lock`](uv.lock) | Python deps for the notebook, managed with [`uv`](https://docs.astral.sh/uv/). See [Python environment](#python-environment-uv) below. |
 | [`CLAUDE.md`](CLAUDE.md) | Working notes for anyone (human or AI) picking up this repo — repo layout, GIBS/TEMPO gotchas, conventions, don'ts. |
@@ -80,9 +81,31 @@ Notes:
 - Commit **`uv.lock`** and **`.python-version`** — they're the reproducibility guarantee (the conda equivalent of a frozen env spec).
 - uv will auto-download Python 3.12 if your machine doesn't have it — no `pyenv` needed.
 - In JupyterLab, pick the **"Python 3 (ipykernel)"** kernel when launched via `uv run jupyter lab`.
-- `earth2studio` is intentionally **not** pinned here — it's GPU-only and gated behind the "needs GPU" cell at the end of the notebook. Install it separately on a GPU host when you need it.
+- `earth2studio` is intentionally **not** pinned here — it's GPU-only, and both notebooks are written to run without it. Install it separately on a GPU host when you need it: `pip install "earth2studio[fcn,precip-afno,data]==0.17.0"` (install PyTorch first, matched to your CUDA version).
 
-## Running the notebook
+## Workshop tutorial notebook
+
+[`notebooks/demo_earth2_tempo.ipynb`](notebooks/demo_earth2_tempo.ipynb) is the hand-out for the September Innovation Workshop: a step-by-step, no-prior-knowledge introduction to **NVIDIA Earth2Studio**. In about twenty minutes it walks an attendee through running a real AI weather forecast, loading a slice of TEMPO NO₂, **writing their own Earth-2 diagnostic model** in ~40 lines of PyTorch, and plugging it into the forecast pipeline — which is precisely the mechanism the LEDT proposes to use to bolt an ecological feedback layer onto a planetary digital twin.
+
+```bash
+uv run jupyter lab notebooks/demo_earth2_tempo.ipynb
+```
+
+**It runs in three modes, and works out which one applies by itself:**
+
+| Where | Mode | What happens |
+|---|---|---|
+| The workshop GPU hub (or any NVIDIA GPU) | `gpu` | Real Earth2Studio, real FourCastNet weights, real inference on the GPU |
+| A laptop with `earth2studio` installed | `cpu` | Real Earth2Studio API and real GFS data, with a trivial `Persistence` model — no GPU needed |
+| A laptop with just this repo | `dry` | A stand-in mimics the Earth2Studio API so every cell still runs and plots, watermarked `SIMULATED` |
+
+So **an attendee on a MacBook with no NVIDIA GPU can click through the entire notebook** and see the shape of the workflow before they get to the hub. Set `os.environ["LEDT_MODE"] = "dry"` to force the laptop experience anywhere. The committed notebook carries its `dry`-mode outputs so it previews on GitHub.
+
+TEMPO data comes from a pre-cached local file if one exists (`$LEDT_TEMPO_FILE` or `data/tempo/*.nc` — the hook for the hub's pre-staged granules), otherwise from NASA Earthdata via `earthaccess` if you already have credentials, otherwise from a clearly-labelled synthetic field. Nobody gets an unexpected password prompt mid-workshop. The notebook adds **no new dependencies**; it writes results to a gitignored `notebooks/outputs/`.
+
+The filename matches the one named in the hosted-JupyterHub requirements document, which specifies `demo_earth2_tempo.ipynb` as the notebook pre-loaded into each attendee session — so don't rename it without telling whoever is building the hub.
+
+## Running the prototype notebook
 
 ```bash
 uv run jupyter lab notebooks/tempo_earth2_integration.ipynb
