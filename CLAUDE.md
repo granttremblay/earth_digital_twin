@@ -34,6 +34,8 @@ earth_digital_twin/
 │   ├── app.js                     # TEMPO map + misc interactivity
 │   ├── earth-plexus-bg.js         # animated 3-D plexus-Earth hero background
 │   ├── arch-plexus-bg.js          # flowing-water plexus behind the architecture diagram
+│   ├── hub/index.html             # redirect stub → the CfA JupyterHub
+│   ├── slack/index.html           # redirect stub → the Slack join invite
 │   └── assets/
 │       ├── digital_earth_logo_primary.svg # globe mark (source for the inline <symbol>)
 │       └── og-card.png            # social-share card (generated; see scripts/)
@@ -398,6 +400,45 @@ the map code:
    is the standard GIBS empty/transparent PNG and means the tile you requested
    has no data at that time (likely outside TEMPO's current scan strip — pick
    a different tile or hour).
+
+### Short-link redirects (`/hub`, `/slack`)
+
+Two vanity paths on the published site are plain redirect stubs — a directory
+with a single `index.html` each, so GitHub Pages serves `/<slug>` (301 to
+`/<slug>/`) → the stub → the destination:
+
+| Path | Destination |
+|---|---|
+| `https://livingearthtwin.org/hub` | `https://living-earth-twin-hub.cfa.harvard.edu/hub/login` (the project JupyterHub) |
+| `https://livingearthtwin.org/slack` | the workspace's Slack `join.slack.com/…/shared_invite/…` link |
+
+Each stub redirects **three ways** on purpose, and all three carry the same URL —
+change one, change all of them:
+
+1. `<meta http-equiv="refresh" content="0; url=…">` — the no-JS path.
+2. `<link rel="canonical" href="…">` + `<meta name="robots" content="noindex">`
+   so crawlers attribute the page to the destination and don't index the stub.
+3. An inline `location.replace('…')` at the bottom — the fast path. `replace()`
+   (not `location.href =`) so the stub doesn't land in back-button history and
+   trap the user in a redirect loop when they hit Back.
+
+Visible content is a branded fallback card (dark, LEDT globe from
+`assets/digital_earth_logo_primary.svg`, a manual "open it" button, a link back
+to the site root) for the case where both automatic paths fail. It's
+**self-contained** — inline `<style>`, no `styles.css` — because the stubs sit
+one directory deep and shouldn't take a dependency on the design system for
+five seconds of screen time. Asset/home links use `../` (never root-relative;
+same rule as everywhere else on the site).
+
+**To add another short link:** copy either directory, rename it, and swap the
+URL in all four places (meta refresh, canonical, button `href`,
+`location.replace`) plus the title/heading/button label. **To change where an
+existing one points:** swap the URL in those same four places in that stub.
+
+**Slack invite links expire** (Slack's shared invites are time- or use-limited).
+If `/slack` starts 404-ing at Slack's end, generate a fresh invite from the
+workspace and replace the URL — the stub itself doesn't need to change
+otherwise.
 
 ### GitHub Pages deploy
 

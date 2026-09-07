@@ -44,6 +44,17 @@ A project emblem — the LEDT globe mark — sits above the title in the hero. I
 
 Posting a link to Twitter/Facebook/Slack shows a 1200×630 preview card ([`website/assets/og-card.png`](website/assets/og-card.png)), wired up via Open Graph / Twitter `<meta>` tags. The live card is hand-authored; if you swap it, keep it **1200×630** so the `og:image:width`/`height` tags stay correct. A fallback generator, [`scripts/make_og_card.py`](scripts/make_og_card.py), can bake a card from the Earth backdrop + gradient-tinted logo + Inter font — but note it writes to that same path, so it will overwrite the current card unless you point it elsewhere.
 
+### Short links
+
+Two vanity paths redirect off-site, so they can be handed out verbatim:
+
+| Link | Goes to |
+|---|---|
+| **https://livingearthtwin.org/hub** | the project JupyterHub, `https://living-earth-twin-hub.cfa.harvard.edu/hub/login` |
+| **https://livingearthtwin.org/slack** | the Slack workspace join invite |
+
+Each is a one-file redirect stub ([`website/hub/index.html`](website/hub/index.html), [`website/slack/index.html`](website/slack/index.html)) that fires via `<meta http-equiv="refresh">`, a `rel="canonical"` + `noindex` pair, and an inline `location.replace()`, with a branded fallback card if all three somehow miss. To repoint one, swap the URL in all four places inside that file (meta refresh, canonical, button `href`, `location.replace`). To add another, copy a directory and rename it. Note that **Slack shared invites expire** — if `/slack` stops working, generate a fresh invite and replace the URL.
+
 ### Public deploy (GitHub Pages)
 
 The site auto-publishes to its custom domain **https://livingearthtwin.org/** on every push to `main` that touches `website/`. The deploy is driven by [`.github/workflows/pages.yml`](.github/workflows/pages.yml), which uploads the `website/` directory as-is — no build step, no branch dance. The custom domain is bound by [`website/CNAME`](website/CNAME); don't delete it or Pages will drop the domain on the next deploy. (The default `granttremblay.github.io/earth_digital_twin/` URL still works and redirects here.)
