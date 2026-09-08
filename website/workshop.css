@@ -277,6 +277,126 @@
 }
 
 /* ============================================================
+   QUICK LINKS — Slack + Cloud Compute Hub
+   The band directly under the hero. Two big destination cards;
+   each carries its own colour wash that fades in on hover
+   (Slack's own four-colour ramp, the site's teal→blue for the
+   Hub). Background is var(--bg-0) so it reads as one continuous
+   surface with the top of .agenda, which starts from the same
+   colour — the agenda's border-top is the only seam.
+   ============================================================ */
+.ws-links {
+  padding: 56px 0 0;
+  background: var(--bg-0);
+}
+.ws-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.ws-link {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 26px 28px;
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+/* Colour wash, revealed on hover. Sits under the content, which is
+   lifted above it by `.ws-link > *` below. */
+.ws-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease;
+}
+.ws-link > * { position: relative; }
+.ws-link-slack::before {
+  background: linear-gradient(120deg,
+      rgba(224, 30, 90, 0.16),
+      rgba(54, 197, 240, 0.13) 48%,
+      rgba(236, 178, 46, 0.14));
+}
+.ws-link-hub::before {
+  background: linear-gradient(120deg, rgba(62, 225, 200, 0.17), rgba(124, 199, 255, 0.13));
+}
+.ws-link:is(:hover, :focus-visible) {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+.ws-link:is(:hover, :focus-visible)::before { opacity: 1; }
+.ws-link-slack:is(:hover, :focus-visible) { border-color: rgba(236, 178, 46, 0.55); }
+.ws-link-hub:is(:hover, :focus-visible) { border-color: var(--accent); }
+
+.ws-link-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+.ws-link-icon svg { width: 100%; height: 100%; }
+/* The Hub glyph is drawn with stroke: currentColor, so it takes the
+   site accent. The Slack mark carries its own brand fills — leave it. */
+.ws-link-hub .ws-link-icon {
+  color: var(--accent);
+  filter: drop-shadow(0 0 18px rgba(62, 225, 200, 0.35));
+}
+
+.ws-link-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.ws-link-title {
+  font-family: var(--font-disp);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.ws-link-sub {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+}
+.ws-link-arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 20px;
+  color: var(--ink-mute);
+  transition: transform .28s ease, color .28s ease;
+}
+.ws-link:is(:hover, :focus-visible) .ws-link-arrow {
+  transform: translateX(4px);
+  color: var(--ink);
+}
+
+@media (max-width: 940px) {
+  .ws-links-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .ws-link { padding: 22px; gap: 16px; }
+  .ws-link-icon { width: 36px; height: 36px; }
+  .ws-link-title { font-size: 17px; }
+  .ws-link-arrow { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ws-link,
+  .ws-link::before,
+  .ws-link-arrow { transition: none; }
+  .ws-link:is(:hover, :focus-visible) { transform: none; }
+  .ws-link:is(:hover, :focus-visible) .ws-link-arrow { transform: none; }
+}
+
+/* ============================================================
    AGENDA
    ============================================================ */
 .agenda {
@@ -422,6 +542,41 @@
   line-height: 1.5;
 }
 .slot-body strong { color: var(--ink); font-weight: 600; }
+
+/* Nested talk list — used by the Day One "Introductory talks" slot to break
+   one agenda block into its individual talks without giving each its own
+   top-level time. The duration column is a quieter echo of .slot-time; the
+   left rule ties the run of talks back to its parent slot. Links inside
+   .talk-body are already covered by the .slot-body rule at the top of this
+   file, since .talk-list nests inside .slot-body. */
+.talk-list {
+  list-style: none;
+  margin: 13px 0 2px;
+  padding-left: 15px;
+  border-left: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.talk-list li {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+.talk-dur {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-mute);
+}
+.talk-body {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+.talk-body strong { color: var(--ink); font-weight: 600; }
 
 /* Sign-off at the foot of the Day Three card. The grid stretches all three
    cards to the tallest (Day One), so Day Three trails ~450px of dead space.

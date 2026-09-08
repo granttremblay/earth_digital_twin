@@ -116,6 +116,21 @@ Sections (in order):
   none`, offset to clear the centred `.scroll-hint`. Added 2026-07-23. Keep it
   low-contrast; it's an attribution, not a design element. The photographer is
   NASA astronaut **Don Pettit** — two t's, confirmed by Grant. Don't respell it.
+- **Quick links** (`.ws-links`, no anchor) — the band **directly under the
+  hero**, added 2026-09-08 at Grant's request for "pretty, prominent" links.
+  Two big `.ws-link` destination cards: **Join the Slack** (Slack's own
+  four-colour mark, inline SVG with brand fills) and **LEDT Cloud Compute
+  Hub** (a stroked terminal glyph taking `var(--accent)`). Each has a
+  `.ws-link::before` colour wash that fades in on hover — Slack's four-colour
+  ramp, the site's teal→blue for the Hub.
+  - **Both `href`s are this site's own short links** (`slack/`, `hub/` —
+    relative, so they work on the custom domain *and* the github.io subpath),
+    **not** the raw Slack invite or Hub URL. That's deliberate: a destination
+    is repointed in `website/slack/index.html` or `website/hub/index.html` and
+    every link to it follows. Don't inline the real URLs here.
+  - Background is flat `var(--bg-0)` so it reads as one continuous surface
+    with the top of `.agenda` (which starts from the same colour); the
+    agenda's own `border-top` is the only seam.
 - **Agenda** (`#agenda`) — heading is the animated-gradient **`.agenda-word`
   wordmark** (`assets/agenda.svg` masked over `--grad-workshop`, same
   `.grad-wordmark` pattern as Travel/Homework/Day headings — swapped in
@@ -124,6 +139,26 @@ Sections (in order):
   (Day One · Discover / Day Two · Build / Day Three · Prototype), each a
   time-slotted `.day-list`. Draft times; the framing (discover→build→prototype)
   is the fixed part.
+  - **Every day opens 09:00 coffee &amp; pastries, 09:30 proper start**
+    (set 2026-09-08). Keep that shape if you re-time the days.
+  - **Day One's 09:30 "Introductory talks" slot nests a `.talk-list`** — a
+    sub-list inside the `.slot-body` that breaks the block into individual
+    talks with a *duration* column (`.talk-dur`, e.g. "20 min") rather than a
+    clock time, tied to its parent by a left rule. Use it for any slot that's
+    really several back-to-back items; there are `EDIT THE TALKS HERE`
+    comment fences around it. Links inside `.talk-body` need no new CSS —
+    `.talk-list` nests inside `.slot-body`, which is already in the PROSE
+    LINKS `:is()` list.
+  - The talks are Lisa Kewley's 5-min welcome → Grant's 20 min → TEMPO 15 →
+    GCReW 15 → a **30-minute open placeholder** held for STRI / NZCBI / NMNH /
+    PNNL colleagues. That last one is a real reserved slot, not filler — don't
+    quietly delete it to tighten the day.
+  - **14:00 Day One is NVIDIA Earth-2**, a virtual talk by Sepideh Khajehei
+    (NVIDIA). It's a fixed external commitment — everything else on Day One
+    afternoon moves around it, not the other way round.
+  - Day One is now much the longest column, so the equal-height grid leaves
+    Day Two a large empty tail. That's cosmetic and known; `.day-outro`
+    only fills Day Three's.
   - **`.day-outro` sign-off** at the foot of the Day Three card (added
     2026-07-23): the `#ledt-mark` globe filled with the animated `#ledt-grad`
     (`.day-outro-mark`, same treatment as index.html's hero emblem) over a

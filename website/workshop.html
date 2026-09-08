@@ -187,6 +187,7 @@
               <path d="M677.79,17.67v26.32h-2.57V14.52h4.1l12.15,26.19V14.52h2.56v29.47h-3.92l-12.33-26.32Z" />
             </g>
           </svg>
+        </span>
       </h1>
       <p class="wshero-lede">
         If you're here, you're (hopefully) registered to join your fellow Smithsonian colleagues this coming September
@@ -204,6 +205,65 @@
     </a>
     <p class="wshero-credit">Image credit: NASA/D. Pettit</p>
   </header>
+
+  <!-- ================= QUICK LINKS (Slack + Compute Hub) ================= -->
+  <!-- The two standing destinations attendees need all week, parked directly
+       under the hero so nobody has to hunt for them. Both point at this site's
+       own short links (slack/, hub/ — see CLAUDE.md), NOT the raw Slack invite
+       or Hub URL, so a destination can be repointed in
+       website/slack/index.html or website/hub/index.html without editing this
+       page. Relative hrefs, as everywhere else. -->
+  <section class="ws-links" aria-label="Workshop resources">
+    <div class="container">
+      <div class="ws-links-grid">
+
+        <a class="ws-link ws-link-slack" href="slack/" target="_blank" rel="noopener">
+          <span class="ws-link-icon">
+            <svg viewBox="0 0 122.8 122.8" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25.8,77.6c0,7.1-5.8,12.9-12.9,12.9S0,84.7,0,77.6s5.8-12.9,12.9-12.9h12.9v12.9Z" fill="#e01e5a" />
+              <path d="M32.3,77.6c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v32.3c0,7.1-5.8,12.9-12.9,12.9s-12.9-5.8-12.9-12.9v-32.3Z"
+                fill="#e01e5a" />
+              <path d="M45.2,25.8c-7.1,0-12.9-5.8-12.9-12.9S38.1,0,45.2,0s12.9,5.8,12.9,12.9v12.9h-12.9Z" fill="#36c5f0" />
+              <path d="M45.2,32.3c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9H12.9C5.8,58.1,0,52.3,0,45.2s5.8-12.9,12.9-12.9h32.3Z"
+                fill="#36c5f0" />
+              <path d="M97,45.2c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9-5.8,12.9-12.9,12.9h-12.9v-12.9Z" fill="#2eb67d" />
+              <path d="M90.5,45.2c0,7.1-5.8,12.9-12.9,12.9s-12.9-5.8-12.9-12.9V12.9c0-7.1,5.8-12.9,12.9-12.9s12.9,5.8,12.9,12.9v32.3Z"
+                fill="#2eb67d" />
+              <path d="M77.6,97c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9-12.9-5.8-12.9-12.9v-12.9h12.9Z" fill="#ecb22e" />
+              <path d="M77.6,90.5c-7.1,0-12.9-5.8-12.9-12.9s5.8-12.9,12.9-12.9h32.3c7.1,0,12.9,5.8,12.9,12.9s-5.8,12.9-12.9,12.9h-32.3Z"
+                fill="#ecb22e" />
+            </svg>
+          </span>
+          <span class="ws-link-text">
+            <span class="ws-link-title">Join the Slack</span>
+            <span class="ws-link-sub">Where the workshop actually happens — questions, team channels, and day-of
+              logistics. Join before you arrive.</span>
+          </span>
+          <span class="ws-link-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a class="ws-link ws-link-hub" href="hub/" target="_blank" rel="noopener">
+          <span class="ws-link-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2.4" y="4.2" width="19.2" height="15.6" rx="2.6" />
+              <path d="M2.4 8.7h19.2" />
+              <path d="M5.6 6.45h.01M8.2 6.45h.01M10.8 6.45h.01" />
+              <path d="M6.6 12.6l2.6 2.6-2.6 2.6" />
+              <path d="M12.2 17.8h5.2" />
+            </svg>
+          </span>
+          <span class="ws-link-text">
+            <span class="ws-link-title">LEDT Cloud Compute Hub</span>
+            <span class="ws-link-sub">Your JupyterHub for the workshop — notebooks, shared data, and GPUs, with nothing
+              to install locally.</span>
+          </span>
+          <span class="ws-link-arrow" aria-hidden="true">→</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ================= AGENDA ================= -->
   <section id="agenda" class="section agenda">
@@ -246,20 +306,41 @@
             </div>
           </header>
           <ol class="day-list">
-            <li><span class="slot-time">09:00</span><span class="slot-body"><strong>Coffee &amp; kickoff.</strong> Why
-                we're here, how the three days run, and the outcomes we're chasing. Pastries and coffee will be
-                provided.</span></li>
-            <li><span class="slot-time">09:45</span><span class="slot-body"><strong>Lightning talks.</strong> SAO, SERC
-                &amp; STRI each frame their data, their questions, and their constraints. We're aiming for 10ish minute
-                talks on e.g. TEMPO, GCREW, ForestGEO etc. Grant will also give a "what is a digital twin and what the
-                heck are we doing" introductory talk.</span></li>
-            <li><span class="slot-time">11:15</span><span class="slot-body"><strong>Data &amp; asset inventory.</strong>
+            <li><span class="slot-time">09:00</span><span class="slot-body"><strong>Coffee &amp; pastries.</strong>
+                Arrive, caffeinate, say hello. Provided every morning — we start properly at 9:30.</span></li>
+            <li><span class="slot-time">09:30</span><span class="slot-body"><strong>Introductory talks.</strong> The
+                only real block of people-talking-at-you all week. Who we are, what we've each got, and what a digital
+                twin actually is.
+                <!-- EDIT THE TALKS HERE: each <li> is one talk. -->
+                <ol class="talk-list">
+                  <li><span class="talk-dur">5 min</span><span class="talk-body"><strong>Welcome.</strong> Lisa Kewley,
+                      Director of the Smithsonian Astrophysical Observatory.</span></li>
+                  <li><span class="talk-dur">20 min</span><span class="talk-body"><strong>Why we're all
+                        here.</strong> Grant Tremblay — workshop logistics, an introduction to Earth digital twins, and
+                      the origins and goals of this meeting.</span></li>
+                  <li><span class="talk-dur">15 min</span><span class="talk-body"><strong>An introduction to
+                        TEMPO.</strong> The SAO <a href="https://tempo.si.edu" target="_blank"
+                        rel="noopener">TEMPO</a> team on hourly, neighborhood-scale air chemistry over North
+                      America.</span></li>
+                  <li><span class="talk-dur">15 min</span><span class="talk-body"><strong>An introduction to
+                        GCReW.</strong> The SERC <a href="https://serc.si.edu/gcrew" target="_blank"
+                        rel="noopener">Global Change Research Wetland</a> team on decades of whole-ecosystem
+                      manipulation and carbon flux.</span></li>
+                  <li><span class="talk-dur">30 min</span><span class="talk-body"><strong>Open slot —
+                        placeholder.</strong> Reserved for colleagues from STRI, NZCBI, NMNH, and Pacific Northwest
+                      National Laboratory. Want one of these? Email Grant.</span></li>
+                </ol>
+              </span></li>
+            <li><span class="slot-time">11:00</span><span class="slot-body"><strong>Data &amp; asset inventory.</strong>
                 What we actually have in hand: TEMPO, MethaneSAT, ForestGEO, GCReW, Coastal Carbon Network.</span></li>
             <li><span class="slot-time">12:30</span><span class="slot-body"><strong>Lunch</strong> (provided) + informal
                 cross-unit mixing.</span></li>
-            <li><span class="slot-time">14:00</span><span class="slot-body"><strong>Problem framing.</strong> Cluster
+            <li><span class="slot-time">14:00</span><span class="slot-body"><strong>NVIDIA Earth-2 — a special virtual
+                  introduction.</strong> Sepideh Khajehei (NVIDIA) joins us remotely to introduce Earth-2, the platform
+                we're proposing to plug the biosphere into. Don't miss this one.</span></li>
+            <li><span class="slot-time">15:00</span><span class="slot-body"><strong>Problem framing.</strong> Cluster
                 the questions worth three days of effort. Kill the ones that aren't.</span></li>
-            <li><span class="slot-time">15:30</span><span class="slot-body"><strong>Team formation &amp;
+            <li><span class="slot-time">16:00</span><span class="slot-body"><strong>Team formation &amp;
                   scoping.</strong> Self-organize around problems; write a one-paragraph goal per team.</span></li>
             <li><span class="slot-time">17:00</span><span class="slot-body"><strong>Day-one readout.</strong> Each team
                 states what it will build and what it needs.</span></li>
@@ -282,9 +363,11 @@
             </div>
           </header>
           <ol class="day-list">
-            <li><span class="slot-time">09:00</span><span class="slot-body"><strong>Stand-up.</strong> Two minutes per
+            <li><span class="slot-time">09:00</span><span class="slot-body"><strong>Coffee &amp; pastries.</strong>
+                Same as yesterday. We start properly at 9:30.</span></li>
+            <li><span class="slot-time">09:30</span><span class="slot-body"><strong>Stand-up.</strong> Two minutes per
                 team: plan for the day, blockers on the table.</span></li>
-            <li><span class="slot-time">09:30</span><span class="slot-body"><strong>Deep work — build block I.</strong>
+            <li><span class="slot-time">09:45</span><span class="slot-body"><strong>Deep work — build block I.</strong>
                 Heads down. </span></li>
             <li><span class="slot-time">12:30</span><span class="slot-body"><strong>Lunch</strong> + optional whiteboard
                 clinics for stuck teams.</span></li>
@@ -313,9 +396,11 @@
             </div>
           </header>
           <ol class="day-list">
-            <li><span class="slot-time">09:00</span><span class="slot-body"><strong>Stand-up.</strong> Final sprint plan
+            <li><span class="slot-time">09:00</span><span class="slot-body"><strong>Coffee &amp; pastries.</strong>
+                Last one. We start properly at 9:30.</span></li>
+            <li><span class="slot-time">09:30</span><span class="slot-body"><strong>Stand-up.</strong> Final sprint plan
                 — what makes the demo, what doesn't.</span></li>
-            <li><span class="slot-time">09:30</span><span class="slot-body"><strong>Finish block.</strong> Lock the
+            <li><span class="slot-time">09:45</span><span class="slot-body"><strong>Finish block.</strong> Lock the
                 prototypes. Prepare a 5-minute story per team.</span></li>
             <li><span class="slot-time">11:30</span><span class="slot-body"><strong>Demos &amp; show-and-tell.</strong>
                 Everyone presents. Working code and honest lessons both count.</span></li>
