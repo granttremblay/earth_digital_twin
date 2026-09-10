@@ -141,24 +141,45 @@ Sections (in order):
   is the fixed part.
   - **Every day opens 09:00 coffee &amp; pastries, 09:30 proper start**
     (set 2026-09-08). Keep that shape if you re-time the days.
-  - **Day One's 09:30 "Introductory talks" slot nests a `.talk-list`** — a
-    sub-list inside the `.slot-body` that breaks the block into individual
-    talks with a *duration* column (`.talk-dur`, e.g. "20 min") rather than a
-    clock time, tied to its parent by a left rule. Use it for any slot that's
-    really several back-to-back items; there are `EDIT THE TALKS HERE`
-    comment fences around it. Links inside `.talk-body` need no new CSS —
+  - **Day One's introductory talks nest a `.talk-list`** — a sub-list inside
+    the `.slot-body` that breaks a block into individual talks with a
+    *duration* column (`.talk-dur`, e.g. "20 min") rather than a clock time,
+    tied to its parent by a left rule. Use it for any slot that's really
+    several back-to-back items; there are `EDIT THE TALKS HERE` comment fences
+    around the first one. Links inside `.talk-body` need no new CSS —
     `.talk-list` nests inside `.slot-body`, which is already in the PROSE
     LINKS `:is()` list.
-  - The talks are Lisa Kewley's 5-min welcome → Grant's 20 min → TEMPO 15 →
-    GCReW 15 → a **30-minute open placeholder** held for STRI / NZCBI / NMNH /
-    PNNL colleagues. That last one is a real reserved slot, not filler — don't
-    quietly delete it to tighten the day.
+  - **Every talk uses the same three-part shape** (Grant asked for this
+    explicitly on 2026-09-10): `.talk-dur` duration → `.talk-title` → a
+    `.talk-who` line of `Speaker(s) · Affiliation`. Title and speaker are both
+    block-level so the speaker always starts its own line however long the
+    title runs. **Don't fold speakers into the title, and don't reintroduce
+    the free-prose talk descriptions** the earlier build had — nine talks in a
+    column only stay scannable because every row is identical in shape. Where
+    a talk names a thing with a homepage (TEMPO, GCReW, Coastal Carbon
+    Network) the link goes *on the title*, not in a trailing sentence.
+    Affiliations reuse the same normalized strings as the participants list.
+  - **The talks run in two blocks with a break between them**, because nine
+    back-to-back talks is 110 minutes: 09:30 part one (Kewley 5 · Tremblay
+    20 · TEMPO 15 · GCReW 15 = 55 min) → **10:25 ten-minute coffee break** →
+    10:35 part two (Wildlife Digital Twins 15 · Coastal Carbon Network 10 ·
+    PNNL 10 · NASA SciX 10 · NMNH 10 = 55 min) → 11:30. The break is load-
+    bearing arithmetic, not decoration: it's exactly what makes the demo land
+    at 11:30 and lunch stay at 12:00. **If you add or resize a talk, re-add
+    the column and move the break, the demo, or lunch to match** — don't let
+    the printed clock times drift out of sync with the durations.
   - **14:00 Day One is NVIDIA Earth-2**, a virtual talk by Sepideh Khajehei
     (NVIDIA). It's a fixed external commitment — everything else on Day One
     afternoon moves around it, not the other way round.
   - Day One is now much the longest column, so the equal-height grid leaves
     Day Two a large empty tail. That's cosmetic and known; `.day-outro`
     only fills Day Three's.
+  - **11:30 is Grant's live platform demo** (Claude + the Google Cloud GPU
+    Hub against an example science question, plus the data-in-hand
+    discussion). It was 60 minutes; Grant cut it to 30 on 2026-09-10 to make
+    room for the added talks. It's carrying two agenda items in half the
+    time — if the morning needs to give somewhere, the data-inventory half of
+    it is the natural thing to push into the afternoon's problem framing.
   - **`.day-outro` sign-off** at the foot of the Day Three card (added
     2026-07-23): the `#ledt-mark` globe filled with the animated `#ledt-grad`
     (`.day-outro-mark`, same treatment as index.html's hero emblem) over a

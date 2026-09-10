@@ -578,6 +578,19 @@
 }
 .talk-body strong { color: var(--ink); font-weight: 600; }
 
+/* Every talk is rendered in the same shape: duration, then title, then a
+   "Speaker(s) · Affiliation" line. Both parts are block-level so the speaker
+   always starts its own line no matter how long the title runs — that's what
+   keeps a nine-talk list scannable. Don't put speakers in the title. */
+.talk-title { display: block; }
+.talk-who {
+  display: block;
+  margin-top: 3px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-mute);
+}
+
 /* Sign-off at the foot of the Day Three card. The grid stretches all three
    cards to the tallest (Day One), so Day Three trails ~450px of dead space.
    Auto margins top AND bottom centre this block in whatever slack is left, so
