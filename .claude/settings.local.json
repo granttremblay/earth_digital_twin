@@ -90,7 +90,10 @@
       "Bash(python3 -c \"import openpyxl; print\\('openpyxl ok'\\)\")",
       "Bash(SCRATCH=/private/tmp/claude-501/-Users-grant-Repositories-earth-digital-twin/7e0e1b2b-bb12-4dfa-a0a6-110abe65b15f/scratchpad python3 -)",
       "Bash(grep -n \"^p {\\\\|^\\\\*,\\\\|margin: 0\\\\|^\\\\* {\" styles.css)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(curl -sL \"https://docs.google.com/spreadsheets/d/1jti224OiNr1aY3MOD0fVO1ige8W5A4Y3j4QNDSi3xGU/export?format=csv\" -o sheet.csv)",
+      "Bash(awk '/<li class=\"pt-row\"/{c++} c>=1 && c<=2{print} /D&#x27;Abrusco/{found=1} found&&/<li class=\"pt-row\"/{p=1} p&&d<6{print; d++}' workshop.html)",
+      "Bash(awk '/<ul class=\"pt-list\">/{p=1} p{print NR\": \"$0} /<\\\\/ul>/{if\\(p\\)exit}' workshop.html)"
     ]
   }
 }

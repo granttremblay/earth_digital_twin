@@ -313,9 +313,15 @@ Sections (in order):
   `.pt-scroll` list. Grant adds people by copying a `<li class="pt-row">` block
   (there's an HTML comment with instructions). Gradient initials avatars.
   Populated 2026-07-23 from Grant's Formspree registration export
-  (`formspree_xdabeeow`): **56 people, sorted alphabetically by surname**,
-  the proposal's principals merged in among the registrants rather than
-  listed first.
+  (`formspree_xdabeeow`) and refreshed 2026-09-11 from Grant's Google-Sheet
+  roster (`1jti224O…`, exported as CSV): **71 people, sorted alphabetically by
+  surname**, the proposal's principals merged in among the registrants rather
+  than listed first. The 2026-09-11 refresh added 15 names; the sheet is now
+  the authoritative roster, but note it does **not** contain 6 of the
+  principals (PI Tremblay + Co-Is Megonigal, J. Nowakowski, Sanjur, R. Smith,
+  Torchin) — those are kept regardless, per the rule below. ("Mike McCarthy"
+  in the sheet is the same person as principal **Michael McCarthy**; kept as
+  the proposal's formal name with his Co-I pill.)
   - **Role pills are for the proposal's PI and Co-Is only** — the ten named
     under "Principals" below. Ordinary registrants get **no `.pt-role` span
     at all**; don't invent pills for them. (`.pt-role` is hidden under 560px
@@ -329,7 +335,12 @@ Sections (in order):
     string verbatim when adding someone**; only add a new one for a genuinely
     new institution. Two judgment calls worth knowing: Anna Kelbert's "Center
     for Astrophysics | Harvard & Smithsonian" was filed under the Astrophysical
-    Observatory, and Suvarna Punalekar's dual "SERC and NZCBI" kept both.
+    Observatory, and Suvarna Punalekar's dual "SERC and NZCBI" kept both. The
+    2026-09-11 refresh added two non-Smithsonian institutions — **NVIDIA** and
+    **Glue Solutions** — left as their own proper names (NVIDIA is a company
+    name, not an acronym to expand). Alyssa Goodman stayed "Harvard University"
+    even though the sheet lists her as SAO, matching her CfA/Harvard-side
+    appointment and the existing entry — flag to Grant if he wants her moved.
   - **Institution names are spelled out in full — no acronyms.** Grant asked
     for this explicitly on 2026-07-23, replacing an earlier
     `SAO — Smithsonian Astrophysical Observatory` prefix form. Write
