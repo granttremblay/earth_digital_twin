@@ -34,6 +34,7 @@ earth_digital_twin/
 │   └── assets/
 │       └── digital_earth_logo.svg # project emblem — rendered via CSS mask
 └── notebooks/
+    ├── demo_earth2_tempo.ipynb          # beginner Earth2Studio tutorial (GPU hub + laptop dry-run)
     └── tempo_earth2_integration.ipynb   # CPU-only TEMPO → earth2studio demo
 ```
 
@@ -237,6 +238,38 @@ Rules when modifying deps:
 - When you add a Python dependency for the notebook, update both this file's
   dependency list mentions (if any) and the README's deps section if the
   change is user-visible.
+
+---
+
+## The workshop tutorial (`notebooks/demo_earth2_tempo.ipynb`)
+
+The hand-out notebook for the September Innovation Workshop — a very
+beginner-friendly, step-by-step introduction to NVIDIA Earth2Studio. Added
+2026-08-17. The filename matches the hosted-JupyterHub requirements document,
+which pre-loads `demo_earth2_tempo.ipynb` into every attendee session; don't
+rename it without telling whoever is building the hub.
+
+It detects its environment in Step 1 and sets `MODE`:
+
+- **`gpu`** — earth2studio importable *and* CUDA available: the real
+  `FCN` + `GFS` + `run.deterministic` / `run.diagnostic` pipeline.
+- **`cpu`** — earth2studio importable, no CUDA: real API and real GFS data with
+  `Persistence` as the prognostic. Runs on a MacBook.
+- **`dry`** — no earth2studio: a `SimulatedForecast` stand-in mimics
+  `ZarrBackend` so every cell still runs and plots.
+
+`os.environ["LEDT_MODE"]` forces a mode. **Keep all three paths** — the point is
+that an attendee with no NVIDIA GPU can click through the whole thing. Every
+simulated plot is watermarked `SIMULATED` / `PERSISTENCE`; don't let the
+stand-in pass for real output.
+
+Grid gotcha, verified against earth2studio 0.17.0: **`FCN` uses 720 latitudes**,
+while `SFNO` / `DLWP` / `FCN3` and the `GFS` data source use **721**. The
+tutorial's diagnostic is built on the 720 grid to pair with `FCN`; the
+`cpu`-mode `Persistence` model uses 721 to match `GFS()`.
+
+Committed with its `dry`-mode outputs executed. Adds no dependencies. Writes to
+a gitignored `notebooks/outputs/`. Full details in `CLAUDE.md`.
 
 ---
 
