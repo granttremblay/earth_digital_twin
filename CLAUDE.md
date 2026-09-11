@@ -36,13 +36,21 @@ earth_digital_twin/
 │   ├── arch-plexus-bg.js          # flowing-water plexus behind the architecture diagram
 │   ├── hub/index.html             # redirect stub → the CfA JupyterHub
 │   ├── slack/index.html           # redirect stub → the Slack join invite
+│   ├── drive/index.html           # redirect stub → public workshop Google Drive
+│   ├── github/index.html          # redirect stub → workshop-products GitHub repo
+│   ├── ai-agent-context/index.html# redirect stub → AI-agent context Drive folder
+│   ├── ai-policy/index.html       # redirect stub → assets/smithsonian_ai_handbook.pdf (local)
+│   ├── code-of-conduct/index.html # redirect stub → CfA General Conduct Policy PDF
+│   ├── safety/index.html          # redirect stub → safety-info Google Doc
 │   └── assets/
 │       ├── digital_earth_logo_primary.svg # globe mark (source for the inline <symbol>)
+│       ├── smithsonian_ai_handbook.pdf # Smithsonian AI Handbook (served at /ai-policy)
 │       └── og-card.png            # social-share card (generated; see scripts/)
 ├── scripts/
 │   └── make_og_card.py            # bakes website/assets/og-card.png (Pillow, build-time)
 └── notebooks/
-    └── tempo_earth2_integration.ipynb   # CPU-only TEMPO → earth2studio demo
+    ├── tempo_earth2_integration.ipynb   # CPU-only TEMPO → earth2studio demo
+    └── storm_nitrogen_tempo.ipynb       # hub-only: TEMPO NO₂ vs post-storm N loading
 ```
 
 External repository used but not vendored: NVIDIA's `earth2studio` lives at
@@ -468,9 +476,9 @@ the map code:
    has no data at that time (likely outside TEMPO's current scan strip — pick
    a different tile or hour).
 
-### Short-link redirects (`/hub`, `/slack`)
+### Short-link redirects (`/hub`, `/slack`, `/drive`, `/github`, …)
 
-Two vanity paths on the published site are plain redirect stubs — a directory
+Vanity paths on the published site are plain redirect stubs — a directory
 with a single `index.html` each, so GitHub Pages serves `/<slug>` (301 to
 `/<slug>/`) → the stub → the destination:
 
@@ -478,6 +486,18 @@ with a single `index.html` each, so GitHub Pages serves `/<slug>` (301 to
 |---|---|
 | `https://livingearthtwin.org/hub` | `https://living-earth-twin-hub.cfa.harvard.edu/hub/login` (the project JupyterHub) |
 | `https://livingearthtwin.org/slack` | the workspace's Slack `join.slack.com/…/shared_invite/…` link |
+| `https://livingearthtwin.org/drive` | the public workshop Google Drive folder |
+| `https://livingearthtwin.org/github` | the workshop products GitHub repo (`granttremblay/living_earth_digital_twin_workshop_producuts`) |
+| `https://livingearthtwin.org/ai-agent-context` | a Google Drive folder of AI-agent context files |
+| `https://livingearthtwin.org/ai-policy` | the Smithsonian AI Handbook, served locally from `assets/smithsonian_ai_handbook.pdf` (a `../assets/…` relative URL, not an external link) |
+| `https://livingearthtwin.org/code-of-conduct` | the CfA General Conduct Policy PDF (cfa.harvard.edu) |
+| `https://livingearthtwin.org/safety` | a Google Doc with safety information |
+
+The last six were added 2026-09-11. `/ai-policy` is the one that points at a
+**local** asset rather than an off-site URL — the handbook PDF lives in
+`website/assets/`, so if that PDF is renamed, update the stub's four URL spots
+to match. (`/github` currently points at a repo name containing "producuts",
+copied verbatim from Grant — see the flag below if it 404s.)
 
 Each stub redirects **three ways** on purpose, and all three carry the same URL —
 change one, change all of them:
@@ -740,6 +760,51 @@ A CPU-only, runnable prototype demonstrating:
   the proposal targets.
 
 ---
+
+## The storm-nitrogen notebook (`notebooks/storm_nitrogen_tempo.ipynb`)
+
+Added 2026-09-11. **This one does NOT run locally and does not use the uv env.** It targets
+the workshop JupyterHub (`livingearthtwin.org/hub`) and imports `tempo_earth2`, which only
+exists in that image. Written against `LEDT-AGENT-CONTEXT.md` (the environment brief for the
+hub) — read that file before touching this notebook.
+
+Question: does antecedent TEMPO NO₂ column exposure (1/3/7/14-day windows) explain any
+variance in event-integrated stream nitrogen loading that precipitation and antecedent dry
+days don't already explain, for one small watershed?
+
+Design decisions that are load-bearing — **don't quietly relax these**:
+
+- **One parameter cell.** USGS site numbers, date range, bboxes, event thresholds, screening
+  thresholds and the decision rule all live in a single fenced cell. Nothing below it is
+  hard-coded. Grant asked for that shape explicitly.
+- **The site numbers in it are unverified guesses** and are labelled as such; the next cell
+  checks them against the NWIS site service and there's a bbox-search cell as the fallback.
+  Don't restate them as facts.
+- **Feasibility gate before the regression.** The staged TEMPO store is time-limited and its
+  span is not documented; the notebook measures coverage and sets
+  `REGRESSION_IS_INTERPRETABLE`. The conclusion distinguishes *"TEMPO adds nothing"* from
+  *"this test was underpowered"* — those are different findings and the gate is what keeps
+  them apart. Don't collapse them.
+- **Four coverage numbers, not one** (`cov_of_window` / `cov_of_daylight` / `cov_of_scans` /
+  `day_coverage`). `cov_of_window` is the honest headline and can never exceed ~50% for a
+  daylight instrument. Quoting `cov_of_scans` alone would flatter the result.
+- **Pre-registered decision rule** (power + LOO-CV RMSE gain + permutation p at a
+  Bonferroni-corrected α + coefficient sign stability), stated in markdown *before* any model
+  is fit, then applied mechanically in the conclusion cell. Eight configurations are tested;
+  the correction is what stops post-hoc window picking.
+- **The discharge stand-in is flagged loudly** (`TARGET_IS_STAND_IN`) everywhere it appears,
+  including in `summary.json`. If the gauge has no nitrate (NWIS parameter `99133`), the
+  target is runoff volume, which is near-collinear with the precipitation baseline — so a
+  result from that configuration is a plumbing check, not science. Keep the banners.
+- **The assumption chain section** (column → surface → V_d → dry deposition → watershed input)
+  multiplies out to 1–2 orders of magnitude, and the notebook says so in a cell that prints
+  the arithmetic. Its numeric ranges are order-of-magnitude, written from memory, and the
+  notebook says *verify before citing*. Keep that caveat if you touch them.
+- Column names from `sources.*` and coordinate names in the TEMPO Zarr are **detected at
+  runtime, not assumed** — they could not be verified from this machine. Keep the detectors.
+- Frame-level rules inherited from the hub brief: no `pip install`, screen TEMPO with
+  `apply_quality_mask(max_flag=0, max_cloud_fraction=0.2)`, carry a baseline, leave-one-group-out
+  or time-ordered splits only, bound every request, write to `config.outputs`.
 
 ## Conventions & preferences
 

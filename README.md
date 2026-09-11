@@ -13,6 +13,7 @@ Seed-award prototype repository for the **Living Earth Digital Twin** (LEDT) —
 | [`proposal/`](proposal/) | The authoritative OUSSR proposal PDF. Read first. |
 | [`website/`](website/) | Interactive landing site with live NASA GIBS TEMPO tiles, field-network map, architecture diagram, team / pipeline. |
 | [`notebooks/tempo_earth2_integration.ipynb`](notebooks/tempo_earth2_integration.ipynb) | Runnable CPU-only demo: fetches TEMPO NO₂, wraps it as an `earth2studio`-compatible diagnostic model, sketches the TEMPO → ecological-response linkage. |
+| [`notebooks/storm_nitrogen_tempo.ipynb`](notebooks/storm_nitrogen_tempo.ipynb) | **Runs on the workshop JupyterHub, not locally.** Tests whether antecedent TEMPO NO₂ column exposure predicts post-storm nitrogen loading in a small watershed, against a precipitation-only baseline. Built around a pre-registered decision rule so a null result is reportable. |
 | [`pyproject.toml`](pyproject.toml) / [`uv.lock`](uv.lock) | Python deps for the notebook, managed with [`uv`](https://docs.astral.sh/uv/). See [Python environment](#python-environment-uv) below. |
 | [`CLAUDE.md`](CLAUDE.md) | Working notes for anyone (human or AI) picking up this repo — repo layout, GIBS/TEMPO gotchas, conventions, don'ts. |
 
