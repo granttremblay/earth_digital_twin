@@ -591,6 +591,11 @@
   color: var(--ink-mute);
 }
 
+/* Team placeholders under the build/finish blocks (Days Two & Three) reuse the
+   .talk-list primitives verbatim; the only difference is a wider label column,
+   because "Team A" doesn't fit the 46px duration column. */
+.team-list li { grid-template-columns: 58px 1fr; }
+
 /* Sign-off at the foot of the Day Three card. The grid stretches all three
    cards to the tallest (Day One), so Day Three trails ~450px of dead space.
    Auto margins top AND bottom centre this block in whatever slack is left, so

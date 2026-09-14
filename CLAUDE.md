@@ -203,6 +203,14 @@ Sections (in order):
     II → check-in → group photo; Day Three is stand-up → finish block → demos
     (11:00, *before* lunch, so the 14:00 roadmap and the 15:00 early closeout
     both survive the two-hour break) → lunch → roadmap → closeout.
+  - **Day Two's two build blocks and Day Three's finish block each nest a
+    `.talk-list team-list` sub-list of three team placeholders** (added
+    2026-09-14): "Team A / [problem we will define] / Meeting in [this breakout
+    room]". Same three-part shape as a talk — `.talk-dur` label, `.talk-title`
+    problem, `.talk-who` room — reusing the talks CSS; `.team-list` only widens
+    the label column from 46px to 58px so "Team A" fits. Grant fills the
+    brackets in once teams, problems, and rooms are settled; there are
+    `EDIT THE TEAMS HERE` comment fences on each list.
   - **Keep the slot descriptions terse.** Grant stripped the narrative tails
     on 2026-09-14 ("Honest status — what's working, what to cut to reach a
     demo", "optional whiteboard clinics for stuck teams", "Working code and
