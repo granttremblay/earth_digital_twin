@@ -162,32 +162,54 @@ Sections (in order):
     `.talk-who` line of `Speaker(s) · Affiliation`. Title and speaker are both
     block-level so the speaker always starts its own line however long the
     title runs. **Don't fold speakers into the title, and don't reintroduce
-    the free-prose talk descriptions** the earlier build had — nine talks in a
-    column only stay scannable because every row is identical in shape. Where
+    the free-prose talk descriptions** the earlier build had — eleven talks in
+    a column only stay scannable because every row is identical in shape. Where
     a talk names a thing with a homepage (TEMPO, GCReW, Coastal Carbon
     Network) the link goes *on the title*, not in a trailing sentence.
     Affiliations reuse the same normalized strings as the participants list.
-  - **The talks run in two blocks with a break between them**, because nine
-    back-to-back talks is 110 minutes: 09:30 part one (Kewley 5 · Tremblay
-    20 · TEMPO 15 · GCReW 15 = 55 min) → **10:25 ten-minute coffee break** →
-    10:35 part two (Wildlife Digital Twins 15 · Coastal Carbon Network 10 ·
-    PNNL 10 · NASA SciX 10 · NMNH 10 = 55 min) → 11:30. The break is load-
-    bearing arithmetic, not decoration: it's exactly what makes the demo land
-    at 11:30 and lunch stay at 12:00. **If you add or resize a talk, re-add
-    the column and move the break, the demo, or lunch to match** — don't let
-    the printed clock times drift out of sync with the durations.
+  - **The talks run in two blocks with a break between them**, because eleven
+    back-to-back talks is 125 minutes: 09:30 part one (Kewley 5 · Tremblay
+    20 · TEMPO 15 · TEMPO LITE 10 · GCReW 15 = 65 min) → **10:35 ten-minute
+    coffee break** → 10:45 part two (STRI 5 · Wildlife Digital Twins 15 ·
+    Coastal Carbon Network 10 · PNNL 10 · NASA SciX 10 · NMNH 10 = 60 min) →
+    11:45. The break is load-bearing arithmetic, not decoration: it's exactly
+    what makes the demo land at 11:45 and lunch stay at 12:00. **If you add or
+    resize a talk, re-add the column and move the break, the demo, or lunch to
+    match** — don't let the printed clock times drift out of sync with the
+    durations. (Re-timed 2026-09-14 when the STRI and TEMPO LITE talks were
+    added.)
+  - The TEMPO LITE talk's speakers are **John Lewis &amp; Jonathan Carifo ·
+    Harvard University** — both are in the roster under "Harvard", so the
+    `.talk-who` string follows it. Grant refers to Carifo as "Jon"; the site
+    uses the roster's formal "Jonathan" in both the talk and the participants
+    list, same call as Michael/Mike McCarthy.
   - **14:00 Day One is NVIDIA Earth-2**, a virtual talk by Sepideh Khajehei
     (NVIDIA). It's a fixed external commitment — everything else on Day One
     afternoon moves around it, not the other way round.
   - Day One is now much the longest column, so the equal-height grid leaves
     Day Two a large empty tail. That's cosmetic and known; `.day-outro`
     only fills Day Three's.
-  - **11:30 is Grant's live platform demo** (Claude + the Google Cloud GPU
-    Hub against an example science question, plus the data-in-hand
-    discussion). It was 60 minutes; Grant cut it to 30 on 2026-09-10 to make
-    room for the added talks. It's carrying two agenda items in half the
-    time — if the morning needs to give somewhere, the data-inventory half of
-    it is the natural thing to push into the afternoon's problem framing.
+  - **11:45 is Grant's live platform demo** (Claude + the Google Cloud GPU
+    Hub against an example science question). It was 60 minutes, cut to 30 on
+    2026-09-10 and to **15 on 2026-09-14** to pay for the STRI and TEMPO LITE
+    talks — Grant chose that trade explicitly both times. The data-inventory
+    half of it was dropped in the 2026-09-14 pass; that conversation now
+    belongs to the afternoon's problem framing. It cannot absorb another talk
+    without eating into lunch.
+  - **Lunch starts at 12:00 and runs two hours on all three days** (set
+    2026-09-14 at Grant's request). That is a hard frame — re-time the
+    surrounding blocks, never the lunch. Days Two and Three were simplified in
+    the same pass: Day Two is stand-up → build block I → lunch → build block
+    II → check-in → group photo; Day Three is stand-up → finish block → demos
+    (11:00, *before* lunch, so the 14:00 roadmap and the 15:00 early closeout
+    both survive the two-hour break) → lunch → roadmap → closeout.
+  - **Keep the slot descriptions terse.** Grant stripped the narrative tails
+    on 2026-09-14 ("Honest status — what's working, what to cut to reach a
+    demo", "optional whiteboard clinics for stuck teams", "Working code and
+    honest lessons both count"). A slot gets a bold label and, at most, one
+    short clause. The exceptions that keep their prose are the ones carrying
+    real information: the Sunday reception, the Day One dinner links, the
+    Day Two group photo, and the Day Three closeout.
   - **`.day-outro` sign-off** at the foot of the Day Three card (added
     2026-07-23): the `#ledt-mark` globe filled with the animated `#ledt-grad`
     (`.day-outro-mark`, same treatment as index.html's hero emblem) over a
@@ -321,15 +343,34 @@ Sections (in order):
   `.pt-scroll` list. Grant adds people by copying a `<li class="pt-row">` block
   (there's an HTML comment with instructions). Gradient initials avatars.
   Populated 2026-07-23 from Grant's Formspree registration export
-  (`formspree_xdabeeow`) and refreshed 2026-09-11 from Grant's Google-Sheet
-  roster (`1jti224O…`, exported as CSV): **71 people, sorted alphabetically by
+  (`formspree_xdabeeow`) and refreshed from Grant's Google-Sheet roster on
+  2026-09-11 and again 2026-09-14: **74 people, sorted alphabetically by
   surname**, the proposal's principals merged in among the registrants rather
-  than listed first. The 2026-09-11 refresh added 15 names; the sheet is now
-  the authoritative roster, but note it does **not** contain 6 of the
-  principals (PI Tremblay + Co-Is Megonigal, J. Nowakowski, Sanjur, R. Smith,
-  Torchin) — those are kept regardless, per the rule below. ("Mike McCarthy"
-  in the sheet is the same person as principal **Michael McCarthy**; kept as
-  the proposal's formal name with his Co-I pill.)
+  than listed first.
+
+  **The sheet is the authoritative roster** and is world-readable, so it can
+  be re-diffed without credentials:
+
+  ```bash
+  curl -sL "https://docs.google.com/spreadsheets/d/1jti224OiNr1aY3MOD0fVO1ige8W5A4Y3j4QNDSi3xGU/export?format=csv&gid=0"
+  ```
+
+  It carries `Name, Email, Affiliation, Badge Made?` with **acronym**
+  affiliations (SAO / SERC / STRI / NMNH / NZCBI / ODI / PNNL / SFSU /
+  Harvard / NVIDIA / Glue Solutions / "SERC and NZCBI") that must be expanded
+  to the normalized strings below before they go on the page. The 2026-09-14
+  refresh added Lisa Kewley, Kari Haworth, and Kim-Vy Tran (all Smithsonian
+  Astrophysical Observatory) and moved **Patricia Udomprasert** to Harvard
+  University to match the sheet.
+
+  Two standing reconciliations between sheet and site:
+  - The sheet does **not** contain 5 of the principals (Co-Is Megonigal,
+    J. Nowakowski, Sanjur, R. Smith, Torchin). **Keep them regardless** — a
+    name on the site that is absent from the sheet is not automatically stale.
+    (It does now list PI Tremblay, who was missing from it on 2026-09-11.)
+  - "Mike McCarthy" in the sheet is principal **Michael McCarthy**; keep the
+    proposal's formal name and his Co-I pill. Same call for Jonathan/Jon
+    Carifo.
   - **Role pills are for the proposal's PI and Co-Is only** — the ten named
     under "Principals" below. Ordinary registrants get **no `.pt-role` span
     at all**; don't invent pills for them. (`.pt-role` is hidden under 560px
