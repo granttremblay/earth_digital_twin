@@ -42,6 +42,8 @@ earth_digital_twin/
 │   ├── ai-policy/index.html       # redirect stub → assets/smithsonian_ai_handbook.pdf (local)
 │   ├── code-of-conduct/index.html # redirect stub → CfA General Conduct Policy PDF
 │   ├── safety/index.html          # redirect stub → safety-info Google Doc
+│   ├── questions/index.html       # redirect stub → workshop questions Google Doc
+│   ├── tempolab/index.html        # redirect stub → CosmicDS TEMPO Lab
 │   └── assets/
 │       ├── digital_earth_logo_primary.svg # globe mark (source for the inline <symbol>)
 │       ├── smithsonian_ai_handbook.pdf # Smithsonian AI Handbook (served at /ai-policy)
@@ -541,8 +543,11 @@ with a single `index.html` each, so GitHub Pages serves `/<slug>` (301 to
 | `https://livingearthtwin.org/ai-policy` | the Smithsonian AI Handbook, served locally from `assets/smithsonian_ai_handbook.pdf` (a `../assets/…` relative URL, not an external link) |
 | `https://livingearthtwin.org/code-of-conduct` | the CfA General Conduct Policy PDF (cfa.harvard.edu) |
 | `https://livingearthtwin.org/safety` | a Google Doc with safety information |
+| `https://livingearthtwin.org/questions` | a Google Doc of workshop questions |
+| `https://livingearthtwin.org/tempolab` | the CosmicDS TEMPO Lab (`projects.cosmicds.cfa.harvard.edu/tempo-lab/`) |
 
-The last six were added 2026-09-11. `/ai-policy` is the one that points at a
+The middle six were added 2026-09-11; `/questions` and `/tempolab`
+were added 2026-09-14. `/ai-policy` is the one that points at a
 **local** asset rather than an off-site URL — the handbook PDF lives in
 `website/assets/`, so if that PDF is renamed, update the stub's four URL spots
 to match. (`/github` currently points at a repo name containing "producuts",

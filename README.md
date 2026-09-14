@@ -47,14 +47,22 @@ Posting a link to Twitter/Facebook/Slack shows a 1200×630 preview card ([`websi
 
 ### Short links
 
-Two vanity paths redirect off-site, so they can be handed out verbatim:
+Ten vanity paths redirect to their destinations, so they can be handed out verbatim:
 
 | Link | Goes to |
 |---|---|
 | **https://livingearthtwin.org/hub** | the project JupyterHub, `https://living-earth-twin-hub.cfa.harvard.edu/hub/login` |
 | **https://livingearthtwin.org/slack** | the Slack workspace join invite |
+| **https://livingearthtwin.org/drive** | the public workshop Google Drive folder |
+| **https://livingearthtwin.org/github** | the workshop products GitHub repo |
+| **https://livingearthtwin.org/ai-agent-context** | a Google Drive folder of AI-agent context files |
+| **https://livingearthtwin.org/ai-policy** | the Smithsonian AI Handbook (served locally from `website/assets/`) |
+| **https://livingearthtwin.org/code-of-conduct** | the CfA General Conduct Policy PDF |
+| **https://livingearthtwin.org/safety** | a Google Doc with safety information |
+| **https://livingearthtwin.org/questions** | a Google Doc of workshop questions |
+| **https://livingearthtwin.org/tempolab** | the CosmicDS TEMPO Lab, `https://projects.cosmicds.cfa.harvard.edu/tempo-lab/` |
 
-Each is a one-file redirect stub ([`website/hub/index.html`](website/hub/index.html), [`website/slack/index.html`](website/slack/index.html)) that fires via `<meta http-equiv="refresh">`, a `rel="canonical"` + `noindex` pair, and an inline `location.replace()`, with a branded fallback card if all three somehow miss. To repoint one, swap the URL in all four places inside that file (meta refresh, canonical, button `href`, `location.replace`). To add another, copy a directory and rename it. Note that **Slack shared invites expire** — if `/slack` stops working, generate a fresh invite and replace the URL.
+Each is a one-file redirect stub (e.g. [`website/hub/index.html`](website/hub/index.html), [`website/slack/index.html`](website/slack/index.html)) that fires via `<meta http-equiv="refresh">`, a `rel="canonical"` + `noindex` pair, and an inline `location.replace()`, with a branded fallback card if all three somehow miss. To repoint one, swap the URL in all four places inside that file (meta refresh, canonical, button `href`, `location.replace`). To add another, copy a directory and rename it. Note that **Slack shared invites expire** — if `/slack` stops working, generate a fresh invite and replace the URL.
 
 ### Public deploy (GitHub Pages)
 
