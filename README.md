@@ -47,7 +47,7 @@ Posting a link to Twitter/Facebook/Slack shows a 1200×630 preview card ([`websi
 
 ### Short links
 
-Ten vanity paths redirect to their destinations, so they can be handed out verbatim:
+Eleven vanity paths redirect to their destinations, so they can be handed out verbatim:
 
 | Link | Goes to |
 |---|---|
@@ -61,6 +61,7 @@ Ten vanity paths redirect to their destinations, so they can be handed out verba
 | **https://livingearthtwin.org/safety** | a Google Doc with safety information |
 | **https://livingearthtwin.org/questions** | a Google Doc of workshop questions |
 | **https://livingearthtwin.org/tempolab** | the CosmicDS TEMPO Lab, `https://projects.cosmicds.cfa.harvard.edu/tempo-lab/` |
+| **https://livingearthtwin.org/zoom** | the Smithsonian Zoom meeting room (passcode embedded in the URL) |
 
 Each is a one-file redirect stub (e.g. [`website/hub/index.html`](website/hub/index.html), [`website/slack/index.html`](website/slack/index.html)) that fires via `<meta http-equiv="refresh">`, a `rel="canonical"` + `noindex` pair, and an inline `location.replace()`, with a branded fallback card if all three somehow miss. To repoint one, swap the URL in all four places inside that file (meta refresh, canonical, button `href`, `location.replace`). To add another, copy a directory and rename it. Note that **Slack shared invites expire** — if `/slack` stops working, generate a fresh invite and replace the URL.
 
