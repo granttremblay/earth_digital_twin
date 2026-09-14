@@ -45,6 +45,7 @@ earth_digital_twin/
 │   ├── questions/index.html       # redirect stub → workshop questions Google Doc
 │   ├── tempolab/index.html        # redirect stub → CosmicDS TEMPO Lab
 │   ├── zoom/index.html            # redirect stub → Smithsonian Zoom meeting
+│   ├── teams/index.html           # redirect stub → workshop teams Google Doc
 │   └── assets/
 │       ├── digital_earth_logo_primary.svg # globe mark (source for the inline <symbol>)
 │       ├── smithsonian_ai_handbook.pdf # Smithsonian AI Handbook (served at /ai-policy)
@@ -547,9 +548,10 @@ with a single `index.html` each, so GitHub Pages serves `/<slug>` (301 to
 | `https://livingearthtwin.org/questions` | a Google Doc of workshop questions |
 | `https://livingearthtwin.org/tempolab` | the CosmicDS TEMPO Lab (`projects.cosmicds.cfa.harvard.edu/tempo-lab/`) |
 | `https://livingearthtwin.org/zoom` | the Smithsonian Zoom meeting room (`smithsonian.zoom.us/j/…`, passcode embedded in the URL) |
+| `https://livingearthtwin.org/teams` | a Google Doc of the workshop's breakout teams |
 
 The middle six were added 2026-09-11; `/questions`, `/tempolab`, and
-`/zoom` were added 2026-09-14. `/ai-policy` is the one that points at a
+`/zoom`, and `/teams` were added 2026-09-14. `/ai-policy` is the one that points at a
 **local** asset rather than an off-site URL — the handbook PDF lives in
 `website/assets/`, so if that PDF is renamed, update the stub's four URL spots
 to match. (`/github` currently points at a repo name containing "producuts",
